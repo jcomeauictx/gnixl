@@ -1,11 +1,7 @@
-SERVER := gnixl.com
-DOCROOT := /var/www/
+SHELL := /bin/bash
+WEBSITES := $(wildcard *.com *.net *.org)
+UPLOADS: $(addsuffix .upload, $(WEBSITES))
 DRYRUN ?= --dry-run
-
-upload:
-	rsync -avuz \
-	 $(DRYRUN) \
-	 --exclude=.git \
-	 --exclude=Makefile \
-	 --exclude=README.md \
-	 . $(SERVER):$(DOCROOT)/
+upload: $(UPLOADS)
+%.upload: %
+	cd $< && $(MAKE) upload
