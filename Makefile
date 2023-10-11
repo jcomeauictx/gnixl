@@ -3,6 +3,7 @@ WEBSITES := $(wildcard *.com *.net *.org)
 UPLOADS: $(addsuffix .upload, $(WEBSITES))
 SERVER := $(notdir $(PWD))
 DRYRUN ?= --dry-run
+DOCROOT := /var/www
 uploads: $(UPLOADS)
 %.upload: %
 	cd $< && $(MAKE) upload
@@ -11,4 +12,4 @@ upload:
 	rsync -avuz $(DRYRUN) $(DELETE) \
 	 --exclude='Makefile' \
 	 --exclude='README.md' \
-	 . root@$(SERVER):$(DOCROOT)/$(SERVER)
+	 . root@$(SERVER):$(DOCROOT)/$(SERVER)/
