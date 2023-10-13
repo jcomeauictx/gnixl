@@ -1,7 +1,7 @@
 SHELL := /bin/bash
 WEBSITES := $(wildcard *.com *.net *.org)
 WEBSITES += flyxwyrk.com w-a-s-t-e.org johnlocketheumpteenth.com rawlsian.org
-WEBSITES += kybyz.com kybytz.com umanure.com umanure.net
+WEBSITES += kybyz.com kybytz.com umanure.com umanure.net casperscript.com
 UPLOADS: $(addsuffix .upload, $(WEBSITES))
 SERVER := $(notdir $(PWD))
 DRYRUN ?= --dry-run
@@ -17,4 +17,4 @@ upload:
 	rsync -avuz $(DRYRUN) $(DELETE) \
 	 --exclude='Makefile' \
 	 --exclude='README.md' \
-	 . root@$(SERVER):$(DOCROOT)/$(SERVER)/
+	 . $(SERVER):$(DOCROOT)/$(SERVER)/
