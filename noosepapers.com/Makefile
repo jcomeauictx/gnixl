@@ -12,4 +12,4 @@ upload:
 	rsync -avuz $(DRYRUN) $(DELETE) \
 	 --exclude='Makefile' \
 	 --exclude='README.md' \
-	 . root@$(SERVER):$(DOCROOT)/$(SERVER)/
+	 . $(SERVER):$(DOCROOT)/$(SERVER)/
