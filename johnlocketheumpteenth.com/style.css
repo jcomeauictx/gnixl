@@ -1,0 +1,22 @@
+html {
+	font-size: calc(1rem + 1vw);
+}
+.container {
+	border: 1px solid black;
+	display: table-row;
+}
+.inlineblock { /* only works if NO SPACES between elements */
+	display: inline-block;
+	border: 1px solid red;
+	padding: 1rem;
+	vertical-align: middle;
+}
+.sidebyside {
+	display: table-cell;
+	/*border: 1px solid red;*/
+	padding: 1em;
+	vertical-align: middle;
+}
+div {
+	margin: 1em 0
+}
