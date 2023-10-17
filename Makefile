@@ -1,7 +1,7 @@
 SHELL := /bin/bash
 WEBSITES := $(wildcard *.com *.net *.org)
-WEBSITES += flyxwyrk.com w-a-s-t-e.org johnlocketheumpteenth.com rawlsian.org
-WEBSITES += kybyz.com kybytz.com umanure.com umanure.net casperscript.com
+WEBSITES += flyxwyrk.com w-a-s-t-e.org
+WEBSITES += kybyz.com kybytz.com umanure.com umanure.net
 UPLOADS: $(addsuffix .upload, $(WEBSITES))
 SERVER := $(notdir $(PWD))
 DRYRUN ?= --dry-run
