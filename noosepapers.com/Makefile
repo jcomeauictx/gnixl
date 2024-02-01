@@ -3,8 +3,6 @@ DOCROOT := /var/www
 DRYRUN ?= --dry-run
 gallows.pgm: gallows.png
 	pngtopnm $< | pnmnoraw > $@
-%.ps: %.ps.template
-	envsubst < $< > $@
 %.view: %.pgm ../../casperscript
 	cs -- ../../casperscript/lib/viewpbm.ps $<
 %.view: %.cs noosefonts.ps
