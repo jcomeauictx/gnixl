@@ -8,8 +8,10 @@ gallows.pgm: gallows.png
 	pngtopnm $< | pnmnoraw > $@
 %.view: %.pgm ../../casperscript
 	cs -- ../../casperscript/lib/viewpbm.ps $<
-%.view: %.cs noosefonts.ps
+%.gv: %.cs noosefonts.ps
 	/usr/bin/gs -sFONTMAP=$(PWD)/noosefonts.ps -I $(PWD) <(tail -n +2 $<)
+%.view: %.cs noosefonts.ps
+	./$<
 ../casperscript:
 	@echo Must git clone casperscript to the parent directory. >&2
 	false
