@@ -1,4 +1,4 @@
-#!/usr/local/casperscript/bin/cs -S -sFONTMAP=noosefonts.ps -sFONTPATH=.
+#!/usr/local/casperscript/bin/gs -S -sFONTMAP=noosefonts.ps -sFONTPATH=. -C
 /CloisterBlack 47 selectfont
 /inch {72 mul} def
 2 inch 2 inch moveto
