@@ -1,4 +1,4 @@
-#!/home/default/bin/cs --
+#!/usr/local/casperscript/bin/cs --
 % insert pnm image at currentpoint
 % code stolen from casperscript/vdiff.cs
 
@@ -99,7 +99,7 @@
 % test run using `cs -- pnmimage gallows.pgm`
 scriptname (pnmimage) eq {
   1 inch 1 inch moveto
-  argv 1 get pnmimage
+  sys.argv 1 get pnmimage
   showpage
 } if
 % vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2
