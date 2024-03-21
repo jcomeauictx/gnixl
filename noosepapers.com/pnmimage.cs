@@ -96,7 +96,7 @@
   currentpoint translate scale image
 } bind def
 
-% test run using `cs -- pnmimage gallows.pgm`
+% test run using `cs -- pnmimage.cs gallows.pgm`
 scriptname (pnmimage) eq {
   1 inch 1 inch moveto
   sys.argv 1 get pnmimage
