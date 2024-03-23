@@ -90,16 +90,22 @@
   instance dup (instance: ) print === colorspace
 } bind def
 
-/pnmimage { % filename -
+/pnmimage {  % filename -
   % insert image from pnm (pgm, pbm) file on page at currentpoint
   readpnm setcolorspace dup dup /Width get exch /Height get
   currentpoint translate scale image
 } bind def
 
+/pnmtopage {  % filename -
+  % insert image from pnm (pgm, pbm) file to fit page height
+  readpnm setcolorspace dup dup /Width get exch /Height get pop pop  % discard
+  0.5 inch 0.5 inch moveto
+  pagesize 1 inch sub exch 1 inch sub scale image
+} bind def
+
 % test run using `cs -- pnmimage.cs gallows.pgm`
 scriptname (pnmimage) eq {
-  1 inch 1 inch moveto
-  sys.argv 1 get pnmimage
+  sys.argv 1 get pnmtopage
   showpage
 } if
 % vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2
