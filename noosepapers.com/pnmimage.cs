@@ -120,10 +120,12 @@
   exch readpnm setcolorspace dup dup /Width get exch /Height get
   % at this point stack has: desiredheight imagedict imagewidth imageheight
   3 index exch div mul  % multiply image width by height ratio
+  dup 4 1 roll  % save width to adjust x after image
   (pstack: ) print pstack
   3 -1 roll (pstack: ) print pstack
   currentpoint translate scale image
   grestore
+  0 rmoveto  % move adjustedwidth pixels to the right
 } bind def
   
 % test run using `cs -- pnmimage.cs gallows.pgm`
