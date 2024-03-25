@@ -99,8 +99,17 @@
 /pnmtopage {  % filename -
   % insert image from pnm (pgm, pbm) file to fit page height
   readpnm setcolorspace dup dup /Width get exch /Height get pop pop  % discard
-  0.5 inch 0.5 inch moveto
+  0.5 inch 0.5 inch moveto currentpoint translate
   pagesize 1 inch sub exch 1 inch sub scale image
+} bind def
+
+/fontheight {  % string - totalheight descender  % descender typically negative
+  gsave 0 0 moveto false charpath flattenpath [ pathbbox ]
+  dup 1 get  % lower left y
+  exch 3 get  % upper right y
+  1 index sub  % total height ury-lly
+  exch  % return in correct order
+  grestore
 } bind def
 
 % test run using `cs -- pnmimage.cs gallows.pgm`
