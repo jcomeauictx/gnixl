@@ -5,7 +5,5 @@
 2 inch 2 inch moveto
 (The Noose Papers) show
 2 inch 4 inch moveto
-(The Noose ) show
-gsave 0.1 0.1 scale (gallows.pgm) pnmimage grestore
-( Papers) show
+(The Noose ) show (gallows.pgm) (TNPp) pnminline ( Papers) show
 showpage

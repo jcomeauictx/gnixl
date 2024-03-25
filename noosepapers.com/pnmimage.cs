@@ -112,6 +112,20 @@
   grestore
 } bind def
 
+/pnminline {  % filename string -
+  % draw image in correct aspect ratio using string as height limits
+  % don't put descenders in string if you want image on baseline of font
+  fontheight
+  gsave 0 exch rmoveto  % adjust y to that of string given
+  exch readpnm setcolorspace dup dup /Width get exch /Height get
+  % at this point stack has: desiredheight imagedict imagewidth imageheight
+  3 index exch div mul  % multiply image width by height ratio
+  (pstack: ) print pstack
+  3 -1 roll (pstack: ) print pstack
+  currentpoint translate scale image
+  grestore
+} bind def
+  
 % test run using `cs -- pnmimage.cs gallows.pgm`
 scriptname (pnmimage) eq {
   sys.argv 1 get pnmtopage
