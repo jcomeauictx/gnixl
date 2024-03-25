@@ -100,7 +100,7 @@
   % insert image from pnm (pgm, pbm) file to fit page height
   readpnm setcolorspace dup dup /Width get exch /Height get pop pop  % discard
   0.5 inch 0.5 inch moveto currentpoint translate
-  pagesize 1 inch sub exch 1 inch sub scale image
+  pagesize 1 inch sub exch 1 inch sub exch scale image
 } bind def
 
 /fontheight {  % string - totalheight descender  % descender typically negative
