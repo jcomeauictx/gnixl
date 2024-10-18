@@ -6,5 +6,10 @@
 2 inch 2 inch moveto
 (The Noose Papers) show
 2 inch 4 inch moveto
+save
+/image {pop} def
+/show {true charpath} def
 (The Noose ) show (gallows.pgm) (TNPp) pnminline ( Papers) show
+(pathbbox: ) print [ pathbbox ] ==
+restore
 showpage

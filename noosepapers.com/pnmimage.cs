@@ -94,14 +94,14 @@
   % insert image from pnm (pgm, pbm) file on page at currentpoint
   readpnm setcolorspace dup dup /Width get exch /Height get
   currentpoint translate scale image
-} bind def
+} def
 
 /pnmtopage {  % filename -
   % insert image from pnm (pgm, pbm) file to fit page height
   readpnm setcolorspace dup dup /Width get exch /Height get pop pop  % discard
   0.5 inch 0.5 inch moveto currentpoint translate
   pagesize 1 inch sub exch 1 inch sub exch scale image
-} bind def
+} def
 
 /fontheight {  % string - totalheight descender  % descender typically negative
   gsave 0 0 moveto false charpath flattenpath [ pathbbox ]
@@ -121,12 +121,13 @@
   % at this point stack has: desiredheight imagedict imagewidth imageheight
   3 index exch div mul  % multiply image width by height ratio
   dup 4 1 roll  % save width to adjust x after image
-  (pstack: ) print pstack
-  3 -1 roll (pstack: ) print pstack
+  (stack before `3 -1 roll`: ) print pstack
+  3 -1 roll (stack before `currentpoint translate scale image`: ) print pstack
   currentpoint translate scale image
   grestore
   0 rmoveto  % move adjustedwidth pixels to the right
-} bind def
+  (stack at end of pnminline: ) print pstack
+} def
   
 % test run using `cs -- pnmimage.cs gallows.pgm`
 scriptname (pnmimage) eq {
