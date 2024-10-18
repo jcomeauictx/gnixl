@@ -27,7 +27,7 @@
 /CloisterBlack 47 selectfont
 /inch {72 mul} def
 2 inch 2 inch moveto
-(The Noose Papers) true true centershow
+(The Noose Papers) dup dup dup show true true centershow true false centershow false true centershow
 (
 2 inch 4 inch moveto
 save
