@@ -12,12 +12,14 @@
   gsave
   centerhorizontally {
     (centering horizontally;) print
-    widthcenter pathwidth 2 div sub 0 translate
-  } if
+    widthcenter pathwidth 2 div sub
+  }{currentpoint pop} ifelse
   centervertically {
     (centering vertically;) print
-    heightcenter pathheight 2 div add 0 exch translate
-  } if
+    heightcenter pathheight 2 div add
+  }{currentpoint exch pop} ifelse
+  (translating to: ) print pstack
+  translate
   show
   grestore
   (stack at end of centershow: ) print pstack
