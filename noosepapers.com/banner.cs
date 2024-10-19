@@ -47,8 +47,9 @@ save
 /image {pop} def
 /show {true charpath} def
 (The Noose ) show (gallows.pgm) (TNPp) pnminline ( Papers) show
-(pathbbox: ) print [pathbbox] dup ==
-dup 2 get exch 0 get sub == % x width of banner from pathbbox
+(pathbbox: ) print [pathbbox] ==
+% pathbbox exch 4 -1 roll sub 3 1 roll exch sub pageheight printstack
 restore
+1 inch 10 inch moveto (The Noose ) show (gallows.pgm) (TNPp) pnminline ( Papers) show
 printstack
 showpage
