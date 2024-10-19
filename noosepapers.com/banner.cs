@@ -49,6 +49,7 @@ save
   image
 } bind def
 /show {true charpath} def  % just append to path rather than show on page
+1 inch 8 inch moveto
 (first: ) print [pathbbox] == (The Noose ) show
 (second: ) print [pathbbox] == (gallows.pgm) (TNPp) pnminline
 (third: ) print [pathbbox] == ( Papers) show
