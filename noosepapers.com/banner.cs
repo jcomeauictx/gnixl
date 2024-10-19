@@ -46,8 +46,10 @@
 save
 /image {pop} def
 /show {true charpath} def
-(The Noose ) show (gallows.pgm) (TNPp) pnminline ( Papers) show
-(pathbbox: ) print [pathbbox] ==
+(first: ) print [pathbbox] == (The Noose ) show
+(second: ) print [pathbbox] == (gallows.pgm) (TNPp) pnminline
+(third: ) print [pathbbox] == ( Papers) show
+(final: ) print [pathbbox] ==
 % pathbbox exch 4 -1 roll sub 3 1 roll exch sub pageheight printstack
 restore
 1 inch 10 inch moveto (The Noose ) show (gallows.pgm) (TNPp) pnminline ( Papers) show
