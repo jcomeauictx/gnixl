@@ -55,6 +55,6 @@ save
 (final: ) print [pathbbox] ==
 % pathbbox exch 4 -1 roll sub 3 1 roll exch sub pageheight printstack
 restore
-1 inch 10 inch moveto (The Noose ) show (gallows.pgm) (TNPp) pnminline ( Papers) show
+1 inch 8 inch moveto (The Noose ) show (gallows.pgm) (TNPp) pnminline ( Papers) show
 (stack: ) print printstack
 showpage
