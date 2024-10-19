@@ -126,9 +126,10 @@
   (stack before `3 -1 roll`: ) print printstack
   3 -1 roll (stack before `currentpoint translate scale image`: ) print printstack
   currentpoint translate scale image
+  (stack before grestore dup: ) print printstack
   grestore
-  dup 128 string (moving %d pixels to the right)
-    3 -1 rotate (stack before 1 array astore: ) print printstack 1 array astore sprintf pop =
+  dup 128 string (moving %.2f pixels to the right)
+    3 -1 roll (stack before 1 array astore: ) print printstack 1 array astore sprintf pop =
   (stack before 0 rmoveto: ) print printstack 0 rmoveto
   (pathbbox at end of pnminline: ) print [pathbbox] ==
   (stack at end of pnminline: ) print printstack
