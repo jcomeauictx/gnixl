@@ -27,9 +27,9 @@
     (centering vertically; ) print
     heightcenter pathheight 2 div sub
   }{currentpoint exch pop} ifelse
-  (translating to: ) print 2 copy 2 array astore ==
+  (moving to: ) print 2 copy 2 array astore ==
   printstack
-  translate
+  moveto
   show
   grestore
   printstack
