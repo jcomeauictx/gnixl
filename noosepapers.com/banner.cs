@@ -1,9 +1,6 @@
 #!/usr/local/casperscript/bin/gs -S -I. -sFONTMAP=noosefonts.ps -sFONTPATH=. -C
 % NY POST banner font is about 1/12 page height
 (pnmimage.cs) run
-/printstack {
-  (current stack: ) print count array astore dup == aload pop
-} bind def
 /centershow { % bool bool -
   % show centered on page, vertically and/or horizontally
   /centerhorizontally exch def /centervertically exch def
@@ -28,11 +25,11 @@
     heightcenter pathheight 2 div sub
   }{currentpoint exch pop} ifelse
   (moving to: ) print 2 copy 2 array astore ==
-  printstack
+  (stack: ) print printstack
   moveto
   show
   grestore
-  printstack
+  (stack: ) print printstack
 } def
 /CloisterBlack 47 selectfont
 /inch {72 mul} def
@@ -53,5 +50,5 @@ save
 % pathbbox exch 4 -1 roll sub 3 1 roll exch sub pageheight printstack
 restore
 1 inch 10 inch moveto (The Noose ) show (gallows.pgm) (TNPp) pnminline ( Papers) show
-printstack
+(stack: ) print printstack
 showpage
