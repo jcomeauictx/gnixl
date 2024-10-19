@@ -38,7 +38,7 @@
 /inch {72 mul} def
 (page height: ) print pageheight =
 (page width: ) print pagewidth =
-1 inch 1 inch moveto (The Noose Papers) show
+1 inch 1 inch moveto (The Noose Papers) false false centershow
 1 inch 2 inch moveto (The Noose Papers 2) true false centershow
 1 inch 3 inch moveto (The Noose Papers 3) false true centershow
 1 inch 4 inch moveto (The Noose Papers 4) true true centershow
