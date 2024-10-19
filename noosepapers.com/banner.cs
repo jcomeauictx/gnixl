@@ -7,18 +7,24 @@
 /centershow { % bool bool -
   % show centered on page, vertically and/or horizontally
   /centerhorizontally exch def /centervertically exch def
+  gsave
+  dup true charpath
+  (pathbbox: ) print [pathbbox] ==
   pathbbox /ury exch def /urx exch def /lly exch def /llx exch def
+  grestore
   pagewidth 2 div /widthcenter exch def
   pageheight 2 div /heightcenter exch def
   /pathwidth urx llx sub def
+  (pathwidth: ) print pathwidth =
   /pathheight ury lly sub def
+  (pathheight: ) print pathheight =
   gsave
   centerhorizontally {
-    (centering horizontally;) print
+    (centering horizontally; ) print
     widthcenter pathwidth 2 div sub
   }{currentpoint pop} ifelse
   centervertically {
-    (centering vertically;) print
+    (centering vertically; ) print
     heightcenter pathheight 2 div sub
   }{currentpoint exch pop} ifelse
   (translating to: ) print 2 copy 2 array astore ==
@@ -30,7 +36,9 @@
 } def
 /CloisterBlack 47 selectfont
 /inch {72 mul} def
-2 inch 2 inch moveto
+(page height: ) print pageheight =
+(page width: ) print pagewidth =
+1 inch 1 inch moveto
 (The Noose Papers) dup dup dup show true true centershow true false centershow false true centershow
 (
 2 inch 4 inch moveto
@@ -38,7 +46,7 @@ save
 /image {pop} def
 /show {true charpath} def
 (The Noose ) show (gallows.pgm) (TNPp) pnminline ( Papers) show
-(pathbbox: ) print [ pathbbox ] ==
+(pathbbox: ) print [pathbbox] ==
 restore
 ) pop
 showpage
