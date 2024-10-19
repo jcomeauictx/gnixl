@@ -44,7 +44,7 @@ save
 /image {
   dup /Decode get /decoder exch def
   % translate all values to 1 (white)
-  0 1 decoder length 1 sub {decoder exch 1 put} for
+  0 1 decoder length 1 sub {decoder exch 0 put} for
   (/Decoder: ) print dup /Decode get ===
   image
 } bind def
