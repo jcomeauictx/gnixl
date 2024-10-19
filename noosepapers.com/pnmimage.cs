@@ -115,6 +115,8 @@
 /pnminline {  % filename string -
   % draw image in correct aspect ratio using string as height limits
   % don't put descenders in string if you want image on baseline of font
+  (pathbbox at start of pnminline: ) print [pathbbox] ==
+  (stack at start of pnminline: ) print pstack
   fontheight
   gsave 0 exch rmoveto  % adjust y to that of string given
   exch readpnm setcolorspace dup dup /Width get exch /Height get
@@ -125,7 +127,10 @@
   3 -1 roll (stack before `currentpoint translate scale image`: ) print pstack
   currentpoint translate scale image
   grestore
-  0 rmoveto  % move adjustedwidth pixels to the right
+  dup 128 string (moving %d pixels to the right)
+    3 -1 rotate 1 array astore sprintf pop =
+  0 rmoveto
+  (pathbbox at end of pnminline: ) print [pathbbox] ==
   (stack at end of pnminline: ) print pstack
 } def
   
