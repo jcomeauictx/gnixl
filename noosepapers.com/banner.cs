@@ -41,8 +41,14 @@
 1 inch 4 inch moveto (The Noose Papers 4) true true centershow
 2 inch 10 inch moveto
 save
-/image {pop} def
-/show {true charpath} def
+/image {
+  dup /Decode get /decoder exch def
+  % translate all values to 1 (white)
+  0 1 decoder length 1 sub {decoder exch 1 put} for
+  (/Decoder: ) print dup /Decode get ===
+  image
+} bind def
+/show {true charpath} def  % just append to path rather than show on page
 (first: ) print [pathbbox] == (The Noose ) show
 (second: ) print [pathbbox] == (gallows.pgm) (TNPp) pnminline
 (third: ) print [pathbbox] == ( Papers) show
