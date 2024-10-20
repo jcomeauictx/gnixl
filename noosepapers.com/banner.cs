@@ -55,7 +55,7 @@
   restore
   1 inch 7 inch moveto (The Noose ) show (gallows.pgm) (TNPp) pnminline ( Papers) show
   (stack: ) print =stack
-} bind def
+} def
 
 % test run using `cs -- banner`
 scriptname (banner) eq {
