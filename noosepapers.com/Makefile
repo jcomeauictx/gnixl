@@ -3,15 +3,15 @@ SERVER := $(notdir $(PWD))
 DOCROOT := /var/www
 DRYRUN ?= --dry-run
 PATH := /usr/local/casperscript/bin:$(PATH)
-all: banner.view
+all: banner.log
 gallows.pgm: gallows.png
 	pngtopnm $< | pnmnoraw > $@
-%.view: %.pgm ../../casperscript
-	cs -- ../../casperscript/lib/viewpbm.ps $<
+%.log: %.pgm ../../casperscript
+	cs -- ../../casperscript/lib/viewpbm.ps $< | tee $@
 %.gv: %.cs noosefonts.ps
 	/usr/bin/gs -sFONTMAP=$(PWD)/noosefonts.ps -I $(PWD) <(tail -n +2 $<)
-%.view: %.cs noosefonts.ps
-	./$<
+%.log: %.cs noosefonts.ps
+	./$< | tee $@
 ../casperscript:
 	@echo Must git clone casperscript to the parent directory. >&2
 	false

@@ -120,8 +120,9 @@
   fontheight
   gsave 0 exch rmoveto  % adjust y to that of string given
   exch readpnm setcolorspace dup dup /Width get exch /Height get
-  % at this point stack has: desiredheight imagedict imagewidth imageheight
+  (desiredheight imagedict imagewidth imageheight: ) print printstack
   3 index exch div mul  % multiply image width by height ratio
+  (X adjustment for scaled image in pixels: ) print dup =
   dup 4 1 roll  % save width to adjust x after image
   (stack before `3 -1 roll`: ) print printstack
   3 -1 roll (stack before `currentpoint translate scale image`: ) print printstack

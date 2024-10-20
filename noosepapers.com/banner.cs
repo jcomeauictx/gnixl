@@ -49,13 +49,13 @@ save
   image
 } bind def
 /show {true charpath} def  % just append to path rather than show on page
-1 inch 8 inch moveto
+1 inch 7 inch moveto
 (first: ) print [pathbbox] == (The Noose ) show
 (second: ) print [pathbbox] == (gallows.pgm) (TNPp) pnminline
 (third: ) print [pathbbox] == ( Papers) show
 (final: ) print [pathbbox] ==
 % pathbbox exch 4 -1 roll sub 3 1 roll exch sub pageheight printstack
 restore
-1 inch 8 inch moveto (The Noose ) show (gallows.pgm) (TNPp) pnminline ( Papers) show
+1 inch 7 inch moveto (The Noose ) show (gallows.pgm) (TNPp) pnminline ( Papers) show
 (stack: ) print printstack
 showpage
