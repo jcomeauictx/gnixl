@@ -78,7 +78,7 @@
       instance /Height infile token pop cvi dup /height exch def put
     }
   ifelse
-  (stack remaining after processing 2nd line: ) print printstack
+  (stack remaining after processing 2nd line: ) print =stack
   instance /ImageMatrix get dup dup  % we're going to overwrite the /w etc.
     0 width put
     3 height neg put
@@ -116,24 +116,24 @@
   % draw image in correct aspect ratio using string as height limits
   % don't put descenders in string if you want image on baseline of font
   (pathbbox at start of pnminline: ) print [pathbbox] ==
-  (stack at start of pnminline: ) print printstack
+  (stack at start of pnminline: ) print =stack
   fontheight dup (fontheight: ) print =
   gsave 0 exch rmoveto  % adjust y to that of string given
   exch readpnm setcolorspace dup dup /Width get exch /Height get
-  (desiredheight imagedict imagewidth imageheight: ) print printstack
+  (desiredheight imagedict imagewidth imageheight: ) print =stack
   3 index exch div mul  % multiply image width by height ratio
   (X adjustment for scaled image in pixels: ) print dup =
   dup 4 1 roll  % save width to adjust x after image
-  (stack before `3 -1 roll`: ) print printstack
-  3 -1 roll (stack before `currentpoint translate scale image`: ) print printstack
+  (stack before `3 -1 roll`: ) print =stack
+  3 -1 roll (stack before `currentpoint translate scale image`: ) print =stack
   currentpoint translate scale image
-  (stack before grestore dup: ) print printstack
+  (stack before grestore dup: ) print =stack
   grestore
   dup 128 string (moving %.2f pixels to the right)
-    3 -1 roll (stack before 1 array astore: ) print printstack 1 array astore sprintf pop =
-  (stack before 0 rmoveto: ) print printstack 0 rmoveto
+    3 -1 roll (stack before 1 array astore: ) print =stack 1 array astore sprintf pop =
+  (stack before 0 rmoveto: ) print =stack 0 rmoveto
   (pathbbox at end of pnminline: ) print [pathbbox] ==
-  (stack at end of pnminline: ) print printstack
+  (stack at end of pnminline: ) print =stack
 } def
   
 % test run using `cs -- pnmimage.cs gallows.pgm`
