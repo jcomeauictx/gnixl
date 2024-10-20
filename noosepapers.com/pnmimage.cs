@@ -66,6 +66,7 @@
   /colorspace colorspaces pnmtype get def
   % read and discard the expected comment.
   % if not a comment, parse the width and height
+  (stack before processing 2nd line of PNM file: ) print =stack
   infile buffer readline pop dup 0 get comment ne
     { (not a comment, parsing width and height from string) =
       token pop instance /Width 3 -1 roll cvi dup /width exch def put
@@ -118,7 +119,9 @@
   (pathbbox at start of pnminline: ) print [pathbbox] ==
   (stack at start of pnminline: ) print =stack
   fontheight dup (fontheight: ) print =
+  (stack after fontheight: ) print =stack
   gsave 0 exch rmoveto  % adjust y to that of string given
+  (stack after 0 y removeto: ) print =stack
   exch readpnm setcolorspace dup dup /Width get exch /Height get
   (desiredheight imagedict imagewidth imageheight: ) print =stack
   3 index exch div mul  % multiply image width by height ratio
