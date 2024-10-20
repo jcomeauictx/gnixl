@@ -105,7 +105,9 @@
 } def
 
 /fontheight {  % string - totalheight descender  % descender typically negative
-  gsave 0 0 moveto false charpath flattenpath [ pathbbox ]
+  % NOTE: must use `newpath` because `moveto` only appends to current path
+  % (it wasn't scaling image properly when moving from lower on the page)
+  gsave newpath 0 0 moveto false charpath flattenpath [ pathbbox ]
   dup 1 get  % lower left y
   exch 3 get  % upper right y
   1 index sub  % total height ury-lly
