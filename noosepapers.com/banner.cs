@@ -1,6 +1,7 @@
 #!/usr/local/casperscript/bin/gs -S -I. -sFONTMAP=noosefonts.ps -sFONTPATH=. -C --
 % NY POST banner font is about 1/12 page height
 (pnmimage.cs) run
+/inch {72 mul} def
 /topmargin 0.25 inch def  % leave a little room at top of page
 /centershow { % bool bool -
   % show centered on page, vertically and/or horizontally
@@ -34,6 +35,7 @@
 } def
 
 /banner {
+  /CloisterBlack 47 selectfont
   save
   % first, a dry run to get the banner size
   % redefine `image` and `show` for that purpose
@@ -65,7 +67,6 @@
 % test run using `cs -- banner`
 scriptname (banner) eq {
   /CloisterBlack 47 selectfont
-  /inch {72 mul} def
   (page height: ) print pageheight =
   (page width: ) print pagewidth =
   1 inch 1 inch moveto (The Noose Papers) false false centershow
