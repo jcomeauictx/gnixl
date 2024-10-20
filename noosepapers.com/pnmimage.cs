@@ -67,12 +67,12 @@
   % read and discard the expected comment.
   % if not a comment, parse the width and height
   infile buffer readline pop dup 0 get comment ne
-    {  % not a comment, parse width and height from string
+    { (not a comment, parsing width and height from string) =
       token pop instance /Width 3 -1 roll cvi dup /width exch def put
       token pop instance /Height 3 -1 roll cvi dup /height exch def put
       pop  % now-empty string
     }
-    {  % comment found, toss it and parse width and height from infile
+    { (comment found, toss it and parse width and height from infile) =
       pop  % discard comment
       instance /Width infile token pop cvi dup /width exch def put
       instance /Height infile token pop cvi dup /height exch def put
