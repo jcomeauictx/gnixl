@@ -15,8 +15,8 @@ gallows.pgm: gallows.png
 %.log: %.cs noosefonts.ps .FORCE
 	[ -f $@ ] && mv -f $@ $*.$(TIMESTAMP).log
 	./$< | tee $@
-../casperscript:
-	@echo Must git clone casperscript to the parent directory. >&2
+../../casperscript:
+	@echo Must git clone casperscript to the grandparent directory. >&2
 	false
 upload:
 	rsync -avuz $(DRYRUN) $(DELETE) \
