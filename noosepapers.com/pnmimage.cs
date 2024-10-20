@@ -117,7 +117,7 @@
   % don't put descenders in string if you want image on baseline of font
   (pathbbox at start of pnminline: ) print [pathbbox] ==
   (stack at start of pnminline: ) print printstack
-  fontheight
+  fontheight dup (fontheight: ) print =
   gsave 0 exch rmoveto  % adjust y to that of string given
   exch readpnm setcolorspace dup dup /Width get exch /Height get
   (desiredheight imagedict imagewidth imageheight: ) print printstack
