@@ -5,5 +5,4 @@ sys.argv dup length 1 gt
   {loremipsum << /EODCount 0 /EODString () >> /SubFileDecode filter}
   ifelse /datasource exch def
 /buffer 128 string def
-datasource buffer readstring
- {=}{= exit} ifelse
+{datasource buffer readstring {=}{= exit} ifelse} loop
