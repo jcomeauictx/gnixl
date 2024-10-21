@@ -1,11 +1,11 @@
-#!/usr/local/casperscript/bin/ccs --
-  scriptname (columns) eq {
-  (lorem_ipsum.cs) run
-  sys.argv dup length 1 gt
-    {1 get (r) file false}
-    {LoremIpsum true}
-    ifelse /infinite exch def /datasource exch def
-  /buffer 128 string def
+#!/usr/local/casperscript/bin/cs --
+(lorem_ipsum.cs) run
+sys.argv dup length 1 gt
+  {1 get (r) file false}
+  {LoremIpsum true}
+  ifelse /infinite exch def /datasource exch def
+/buffer 128 string def
+scriptname (columns) eq {
   {datasource buffer readstring
     {print}
     {
