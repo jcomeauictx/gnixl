@@ -18,11 +18,11 @@ sys.argv dup length 1 gt
     % readstring through wordparse filter will almost always return false
     % (only true with 128-character word)
     buffer readstring {
-      /rangecheck signalerror  % word too long
+      buffer /rangecheck signalerror  % word too long
     }{
       line exch stradd (stack after line exch stradd: ) print =stack
       dup xwidth width (stack after dup xwidth width: ) print =stack gt
-        {gsave line show /line () def grestore 0 -10 rmoveto}
+        {gsave line show /line exch def grestore 0 -10 rmoveto}
         {( ) (stack before append space: ) print =stack stradd /line exch def}
         ifelse
     } ifelse
