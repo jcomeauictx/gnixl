@@ -5,15 +5,15 @@ sys.argv dup length 1 gt
   {pop LoremIpsum}
   ifelse /datasource exch def
 /wordparse {
-  <</EODCount 1 /EODString ( )>>
+  <</EODCount 0 /EODString ( )>>
   /SubFileDecode
 } bind def
 scriptname (columns) eq {
   /buffer 128 string def
-  datasource wordparse filter
-  {dup buffer readstring
+  {datasource wordparse filter
+    buffer readstring
     {print}
-    {print exit}
+    {dup length 0 gt {print} {exit} ifelse}
     ifelse
   } loop
 } if
