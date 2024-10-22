@@ -33,7 +33,7 @@ scriptname (columns) eq {
     {dup length 0 gt {print} {pop exit} ifelse}
     ifelse
   } loop
-  datasource resetfile
+  datasource dup resetfile dup (bytes available: ) print bytesavailable =
   /Helvetica 12 selectfont
   0 pageheight 10 sub moveto
   (now showing column on page) =
