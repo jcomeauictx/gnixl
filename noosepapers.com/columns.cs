@@ -1,5 +1,6 @@
 #!/usr/local/casperscript/bin/cs --
 (lorem_ipsum.cs) run
+(latin1font.ps) run
 sys.argv dup length 1 gt
   {1 get (r) file}
   {pop LoremIpsum}
@@ -39,7 +40,7 @@ scriptname (columns) eq {
   } loop
   % if the above loop ended, we must be using a regular file, not LoremIpsum
   % `resetfile` doesn't necessarily, work, so just reopen the file 
-  /Helvetica 12 selectfont
+  /Helvetica-Latin1 12 selectfont
   0 pageheight 10 sub moveto
   (now showing column on page) =
   sys.argv 1 get (r) file column

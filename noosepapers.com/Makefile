@@ -4,17 +4,20 @@ DOCROOT := /var/www
 DRYRUN ?= --dry-run
 PATH := /usr/local/casperscript/bin:$(PATH)
 TIMESTAMP := $(shell date +'%Y%m%d%H%M%S')
-all: banner.log
+PDFS := $(wildcard *.pdf)
+TXTS := $(PDFS:.pdf=.txt)
+TEXTFILE ?= $(word 1, $(TXTS))
+all: columns.log
 gallows.pgm: gallows.png
 	pngtopnm $< | pnmnoraw > $@
 %.log: %.pgm ../../casperscript .FORCE
 	[ -f $@ ] && mv -f $@ $*.$(TIMESTAMP).log
-	cs -- ../../casperscript/lib/viewpbm.ps $< | tee $@
+	cs -- ../../casperscript/lib/viewpbm.ps $+ | tee $@
 %.gv: %.cs noosefonts.ps
 	/usr/bin/gs -sFONTMAP=$(PWD)/noosefonts.ps -I $(PWD) <(tail -n +2 $<)
 %.log: %.cs noosefonts.ps .FORCE
-	[ -f $@ ] && mv -f $@ $*.$(TIMESTAMP).log
-	./$< | tee $@
+	([ -f $@ ] && mv -f $@ $*.$(TIMESTAMP).log) || true
+	./$< $(TEXTFILE) | tee $@
 ../../casperscript:
 	@echo Must git clone casperscript to the grandparent directory. >&2
 	false

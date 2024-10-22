@@ -1,0 +1,13 @@
+% font modified to use Latin-1 encoding
+% PLRM page 349
+/Helvetica findfont
+dup length dict begin {
+  1 index /FID ne  % skip font identifier
+  {def}  % otherwise copy key-value pair
+  {pop pop}  % drop FID
+  ifelse
+} forall
+/Encoding ISOLatin1Encoding def
+currentdict
+end
+/Helvetica-Latin1 exch definefont pop
