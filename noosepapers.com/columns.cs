@@ -2,11 +2,17 @@
 (lorem_ipsum.cs) run
 sys.argv dup length 1 gt
   {1 get (r) file}
-  {LoremIpsum}
+  {pop LoremIpsum}
   ifelse /datasource exch def
-/buffer 128 string def
+/wordfilter {
+  (stack at wordfilter: ) print =stack
+  {1 index (stack before read: ) print =stack read {dup 32 le if pop ( ) true} {false} ifelse}
+  <</EODCount 1 /EODString ( )>>
+  /SubFileDecode filter
+} bind def
 scriptname (columns) eq {
-  {datasource buffer readstring
+  /buffer 128 string def
+  {datasource wordfilter buffer readstring
     {print}
     {print exit}
     ifelse
