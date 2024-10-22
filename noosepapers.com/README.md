@@ -16,3 +16,6 @@ Considering using gothic fonts from <https://www.dafont.com/dieter-steffmann.d25
 for the first edition of the Noosepaper.
 
 The New York Times, a broadsheet, has 6 columns to a page.
+
+# Developer notes
+* [Breaking words](https://meiert.com/en/blog/word-division-on-word-break-soft-hyphens-and-zero-width-spaces/) (slanted towards CSS)
