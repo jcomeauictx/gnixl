@@ -29,13 +29,15 @@ scriptname (columns) eq {
   /buffer 128 string def
   {datasource wordparse filter
     buffer readstring
-    {print}
-    {(stack at end: ) print =stack dup length 0 gt {print} {pop exit} ifelse}
+    {print}  % this would only happen with 128-character "word"
+    {dup length 0 gt {print} {pop exit} ifelse}
     ifelse
   } loop
   datasource resetfile
   /Helvetica 12 selectfont
   0 pageheight 10 sub moveto
+  (now showing column on page) =
   datasource column
+  showpage
 } if
 % vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2
