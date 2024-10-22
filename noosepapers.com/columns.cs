@@ -20,9 +20,10 @@ sys.argv dup length 1 gt
     buffer readstring {
       buffer /rangecheck signalerror  % word too long
     }{
-      line exch stradd (stack after line exch stradd: ) print =stack
-      dup xwidth width (stack after dup xwidth width: ) print =stack ge
-        {gsave line (showing line ) print line print ( at ) print currentpoint exch =only (,) print = show /line exch def grestore 0 -10 rmoveto}
+      /word exch def
+      line word stradd (stack after line exch stradd: ) print =stack
+      dup xwidth width (stack after dup xwidth width: ) print =stack gt
+        {gsave (showing line at ) print currentpoint exch =only (,) print = show /line word def grestore 0 -10 rmoveto}
         {( ) (stack before append space: ) print =stack stradd /line exch def}
         ifelse
     } ifelse
