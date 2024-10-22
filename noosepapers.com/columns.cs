@@ -4,15 +4,14 @@ sys.argv dup length 1 gt
   {1 get (r) file}
   {pop LoremIpsum}
   ifelse /datasource exch def
-/wordfilter {
-  (stack at wordfilter: ) print =stack
-  {1 index (stack before read: ) print =stack read {dup 32 le if pop ( ) true} {false} ifelse}
+/wordparse {
   <</EODCount 1 /EODString ( )>>
-  /SubFileDecode filter
+  /SubFileDecode
 } bind def
 scriptname (columns) eq {
   /buffer 128 string def
-  {datasource wordfilter buffer readstring
+  datasource wordparse filter
+  {dup buffer readstring
     {print}
     {print exit}
     ifelse
