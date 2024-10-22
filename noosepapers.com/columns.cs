@@ -23,7 +23,7 @@ sys.argv dup length 1 gt
       /word exch def
       line word stradd (stack after line exch stradd: ) print =stack
       dup xwidth width (stack after dup xwidth width: ) print =stack gt
-        {gsave (showing line at ) print currentpoint exch =only (,) print = show /line word def grestore 0 -10 rmoveto}
+        {gsave (showing line at ) print currentpoint exch =only (,) print = show /line word ( ) stradd def grestore 0 -10 rmoveto currentpoint exch pop 0 lt {exit} if}
         {( ) (stack before append space: ) print =stack stradd /line exch def}
         ifelse
     } ifelse
