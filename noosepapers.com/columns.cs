@@ -14,14 +14,16 @@ sys.argv dup length 1 gt
   /height pageheight 2 div def
   /line () def
   {source wordparse filter
+    % readstring through wordparse filter will almost always return false
+    % (only true with 128-character word)
     buffer readstring {
+      /rangecheck signalerror  % word too long
+    }{
       line exch stradd
       dup stringwidth width gt
         {gsave line show /line () def grestore 0 -10 rmoveto}
         {( ) stradd /line exch def}
         ifelse
-    }{
-      (stack at end of `columns`: ) print =stack exit
     } ifelse
   } loop
 } bind def
@@ -33,11 +35,12 @@ scriptname (columns) eq {
     {dup length 0 gt {print} {pop exit} ifelse}
     ifelse
   } loop
-  datasource dup resetfile dup (bytes available: ) print bytesavailable =
+  % if the above loop ended, we must be using a regular file, not LoremIpsum
+  % `resetfile` doesn't necessarily, work, so just reopen the file 
   /Helvetica 12 selectfont
   0 pageheight 10 sub moveto
   (now showing column on page) =
-  datasource column
+  sys.argv 1 get (r) file column
   showpage
 } if
 % vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2
