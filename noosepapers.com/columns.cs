@@ -8,6 +8,7 @@ sys.argv dup length 1 gt
   <</EODCount 0 /EODString ( )>>
   /SubFileDecode
 } bind def
+/xwidth {stringwidth pop} bind def
 /column {  % source -
   /source exch def
   /width pagewidth 5 div def
@@ -19,10 +20,10 @@ sys.argv dup length 1 gt
     buffer readstring {
       /rangecheck signalerror  % word too long
     }{
-      line exch stradd
-      dup stringwidth width gt
+      line exch stradd (stack after line exch stradd: ) print =stack
+      dup xwidth width (stack after dup xwidth width: ) print =stack gt
         {gsave line show /line () def grestore 0 -10 rmoveto}
-        {( ) stradd /line exch def}
+        {( ) (stack before append space: ) print =stack stradd /line exch def}
         ifelse
     } ifelse
   } loop
