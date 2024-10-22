@@ -1,19 +1,14 @@
 #!/usr/local/casperscript/bin/cs --
 (lorem_ipsum.cs) run
 sys.argv dup length 1 gt
-  {1 get (r) file false}
-  {LoremIpsum true}
-  ifelse /infinite exch def /datasource exch def
+  {1 get (r) file}
+  {LoremIpsum}
+  ifelse /datasource exch def
 /buffer 128 string def
 scriptname (columns) eq {
   {datasource buffer readstring
     {print}
-    {
-      infinite
-        {print datasource resetfile}
-        {print exit}
-      ifelse
-    }
+    {print exit}
     ifelse
   } loop
 } if
