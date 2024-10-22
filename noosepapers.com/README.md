@@ -15,7 +15,7 @@ Will probably be using these folks for printing, if this ever comes to fruition:
 Considering using gothic fonts from <https://www.dafont.com/dieter-steffmann.d253>, labeled "100% Free" on the linked page. "Cloister Black" will likely be used
 for the first edition of the Noosepaper.
 
-The New York Times, a broadsheet, has 6 columns to a page.
+The New York Times, a broadsheet, has 6 columns to a page. The Post and Daily News, tabloids, have 5 columns.
 
 # Developer notes
 * [Breaking words](https://meiert.com/en/blog/word-division-on-word-break-soft-hyphens-and-zero-width-spaces/) (slanted towards CSS)
