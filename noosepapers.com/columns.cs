@@ -5,6 +5,9 @@ sys.argv dup length 1 gt
   {1 get (r) file}
   {pop LoremIpsum}
   ifelse /datasource exch def
+0 1 currentfont /Encoding get 3 1 roll
+  2 index length 1 sub dup /charmap exch dict def
+  {1 index 1 index get charmap 3 1 roll put} for pop
 /wordparse {
   <</EODCount 0 /EODString ( )>>
   /SubFileDecode
@@ -45,5 +48,6 @@ scriptname (columns) eq {
   (now showing column on page) =
   sys.argv 1 get (r) file column
   showpage
+  charmap ===
 } if
 % vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2
