@@ -24,11 +24,11 @@ sys.argv dup length 1 gt
   /SP 8#20 chr def
   {source read (after read: ) print =stack
     {dup LF eq
-      {pop /endlines inc (found LF: ) print =stack}
+      {pop SP /endlines inc (found LF: ) print =stack}
       {chr endlines 1 ge
         {endlines 2 ge
           {VT exch chr stradd (found paragraph: ) print =stack}
-          {SP exch chr stradd (ignoring LF: ) print =stack}
+          {(ignoring LF: ) print =stack}
           ifelse
         } if  % (endline(s))
       }
