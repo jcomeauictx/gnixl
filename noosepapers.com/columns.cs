@@ -7,7 +7,7 @@ sys.argv dup length 1 gt
   ifelse /datasource exch def
 0 1 currentfont /Encoding get 3 1 roll
   2 index length 1 sub dup /charmap exch dict def
-  {1 index 1 index get charmap 3 1 roll put} for pop
+  {1 index 1 index get charmap 3 1 roll exch put} for pop
 /wordparse {
   <</EODCount 0 /EODString ( )>>
   /SubFileDecode
