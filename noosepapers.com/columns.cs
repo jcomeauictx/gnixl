@@ -13,6 +13,23 @@ sys.argv dup length 1 gt
   /SubFileDecode
 } bind def
 /xwidth {stringwidth pop} bind def
+/paragraphs {  % source -
+  % 2 consecutive endlines (\n) we will interpret as paragraph
+  % mark them with the "backwards P" glyph for paragraph marker
+  /source exch def
+  /endlines 0 def
+  /P charmap /paragraph get def  % paragraph marker, stylized backwards P
+  {source dup read {
+    dup 10 eq
+      {pop ( ) /endlines endlines 1 add def}  % replace \n with space
+      {endlines 1 ge {endlines 2 ge {P exch} if} if}
+      ifelse
+    } ifelse
+  }
+  <</EODCount 0 /EODString 1 string 0 charmap /paragraph get put>>
+  /SubFileDecode
+  filter
+} bind def
 /column {  % source -
   /source exch def
   /width pagewidth 5 div def
