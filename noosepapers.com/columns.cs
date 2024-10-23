@@ -22,21 +22,22 @@ sys.argv dup length 1 gt
   /LF 8#12 def
   /VT 8#13 chr def
   /SP 8#20 chr def
-  {source read (after read: ) print =stack {
-    dup LF eq
+  {source read (after read: ) print =stack
+    {dup LF eq
       {pop /endlines inc (found LF: ) print =stack}
       {chr endlines 1 ge
         {endlines 2 ge
           {VT exch chr stradd (found paragraph: ) print =stack}
           {SP exch chr stradd (ignoring LF: ) print =stack}
           ifelse
-        }
-        /endlines zero
-      } if
-      ifelse
-    } ifelse
+        } if  % (endline(s))
+      }
+      ifelse % (LF)
     (stack at end of paragraph filter procedure: ) print =stack
-  }
+    }
+    {VT}  % mark end of data with end-of-paragraph marker
+    ifelse  % (read flag true or false)
+  }  % end of filter procedure
   <</EODCount 0 /EODString VT>>
   /SubFileDecode
 } bind def
