@@ -15,7 +15,7 @@ gallows.pgm: gallows.png
 	cs -- ../../casperscript/lib/viewpbm.ps $+ | tee $@
 %.gv: %.cs noosefonts.ps
 	/usr/bin/gs -sFONTMAP=$(PWD)/noosefonts.ps -I $(PWD) <(tail -n +2 $<)
-%.log: %.cs noosefonts.ps .FORCE
+%.log: %.cs noosefonts.ps $(TXTS) .FORCE
 	([ -f $@ ] && mv -f $@ $*.$(TIMESTAMP).log) || true
 	./$< $(TEXTFILE) | tee $@
 ../../casperscript:
@@ -26,7 +26,7 @@ upload:
 	 --exclude='Makefile' \
 	 --exclude='README.md' \
 	 . $(SERVER):$(DOCROOT)/$(SERVER)/
-%.txt: %.pdf
-	pdftotext $<
+%.txt: %.pdf Makefile
+	pdftotext -nopgbrk -eol unix -enc Latin1 $<
 .PRECIOUS: %.ps
 .FORCE:
