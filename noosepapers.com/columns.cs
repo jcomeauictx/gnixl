@@ -16,12 +16,12 @@ sys.argv dup length 1 gt
 /paragraphs {  % source -
   % 2 consecutive endlines (LF, \012) we will interpret as paragraph
   % mark them with vertical tab (VT, \013) for paragraph marker
-  % replace *single* endline with space (SP, \020)
+  % replace *single* endline with space (SP, \040)
   /source exch def
   /endlines zero
-  /LF 8#12 def
+  /LF (\n) ord def
   /VT 8#13 chr def
-  /SP 8#20 chr def
+  /SP ( ) def
   {source read (after read: ) print =stack
     {dup LF eq
       {pop SP /endlines inc (found LF: ) print =stack}
