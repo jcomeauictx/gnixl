@@ -14,22 +14,30 @@ sys.argv dup length 1 gt
 } bind def
 /xwidth {stringwidth pop} bind def
 /paragraphs {  % source -
-  % 2 consecutive endlines (\n) we will interpret as paragraph
-  % mark them with the "backwards P" glyph for paragraph marker
-  % replace *single* endline with space
+  % 2 consecutive endlines (LF, \012) we will interpret as paragraph
+  % mark them with vertical tab (VT, \013) for paragraph marker
+  % replace *single* endline with space (SP, \020)
   /source exch def
   /endlines zero
-  /P charmap /paragraph get def  % paragraph marker, stylized backwards P
+  /LF 8#12 def
+  /VT 8#13 def
+  /SP 8#20 def
   {source dup read {
-    dup 10 eq
+    dup LF eq
       {pop ( ) /endlines inc}
-      {endlines 1 ge {endlines 2 ge {P exch}{( ) exch} ifelse} if /endlines zero}
+      {endlines 1 ge
+        {endlines 2 ge
+          {VT exch}
+          {SP exch}
+          ifelse
+        }
+        /endlines zero
+      } if
       ifelse
     } ifelse
   }
-  <</EODCount 0 /EODString 1 string 0 charmap /paragraph get put>>
+  <</EODCount 0 /EODString VT>>
   /SubFileDecode
-  filter
 } bind def
 /column {  % source -
   /source exch def
@@ -53,7 +61,7 @@ sys.argv dup length 1 gt
 } bind def
 scriptname (columns) eq {
   /buffer 128 string def
-  {datasource wordparse filter
+  {datasource paragraphs filter wordparse filter (filter stack: ) print =stack
     buffer readstring
     {print}  % this would only happen with 128-character "word"
     {dup length 0 gt {print} {pop exit} ifelse}
