@@ -20,21 +20,22 @@ sys.argv dup length 1 gt
   /source exch def
   /endlines zero
   /LF 8#12 def
-  /VT 8#13 def
-  /SP 8#20 def
-  {source dup read {
+  /VT 8#13 chr def
+  /SP 8#20 chr def
+  {source read (after read: ) print =stack {
     dup LF eq
-      {pop ( ) /endlines inc}
-      {endlines 1 ge
+      {pop /endlines inc (found LF: ) print =stack}
+      {chr endlines 1 ge
         {endlines 2 ge
-          {VT exch}
-          {SP exch}
+          {VT exch chr stradd (found paragraph: ) print =stack}
+          {SP exch chr stradd (ignoring LF: ) print =stack}
           ifelse
         }
         /endlines zero
       } if
       ifelse
     } ifelse
+    (stack at end of paragraph filter procedure: ) print =stack
   }
   <</EODCount 0 /EODString VT>>
   /SubFileDecode
@@ -75,5 +76,8 @@ scriptname (columns) eq {
   sys.argv 1 get (r) file column
   showpage
   charmap ===
+  (testing paragraphs filter: ) =
+  (federalistpapers1961hami.txt) (r) file
+  paragraphs filter 256 string readstring =stack
 } if
 % vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2
