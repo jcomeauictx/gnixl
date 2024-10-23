@@ -61,7 +61,7 @@ sys.argv dup length 1 gt
 } bind def
 scriptname (columns) eq {
   /buffer 128 string def
-  {datasource paragraphs filter wordparse filter (filter stack: ) print =stack
+  {datasource wordparse filter
     buffer readstring
     {print}  % this would only happen with 128-character "word"
     {dup length 0 gt {print} {pop exit} ifelse}
