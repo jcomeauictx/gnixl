@@ -27,7 +27,7 @@ sys.argv dup length 1 gt
       {pop SP /endlines inc (found LF: ) print =stack}
       {chr endlines 1 ge
         {endlines 2 ge
-          {VT exch chr stradd (found paragraph: ) print =stack}
+          {VT exch stradd (found paragraph: ) print =stack}
           {(ignoring LF: ) print =stack}
           ifelse
         } if  % (endline(s))
