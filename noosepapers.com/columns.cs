@@ -16,13 +16,14 @@ sys.argv dup length 1 gt
 /paragraphs {  % source -
   % 2 consecutive endlines (\n) we will interpret as paragraph
   % mark them with the "backwards P" glyph for paragraph marker
+  % replace *single* endline with space
   /source exch def
-  /endlines 0 def
+  /endlines zero
   /P charmap /paragraph get def  % paragraph marker, stylized backwards P
   {source dup read {
     dup 10 eq
-      {pop ( ) /endlines endlines 1 add def}  % replace \n with space
-      {endlines 1 ge {endlines 2 ge {P exch} if} if}
+      {pop ( ) /endlines inc}
+      {endlines 1 ge {endlines 2 ge {P exch}{( ) exch} ifelse} if /endlines zero}
       ifelse
     } ifelse
   }
