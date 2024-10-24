@@ -79,10 +79,11 @@ scriptname (columns) eq {
   charmap ===
   (testing paragraphs filter: ) =
   (federalistpapers1961hami.txt) (r) file
+  (dumping federalist papers by paragraph) =
   paragraphs filter {
-    dup 1024 string readstring pop dup length cvbool
-    {print}
-    {pop exit}
+    dup 1024 string readstring pop dup length cvbool (paragraph: ) print =stack
+    {=}
+    {pop (exiting paragraphs loop) = exit}
     ifelse
   } loop
   (stack at end of columns test: ) print =stack
