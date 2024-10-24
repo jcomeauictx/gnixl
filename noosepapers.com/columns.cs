@@ -79,6 +79,11 @@ scriptname (columns) eq {
   charmap ===
   (testing paragraphs filter: ) =
   (federalistpapers1961hami.txt) (r) file
-  paragraphs filter 256 string readstring =stack
+  {paragraphs filter 1024 string readstring pop dup length cvbool
+    {print}
+    {pop exit}
+    ifelse
+  } loop
+  (stack at end of columns test: ) print =stack
 } if
 % vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2
