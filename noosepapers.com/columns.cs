@@ -79,7 +79,8 @@ scriptname (columns) eq {
   charmap ===
   (testing paragraphs filter: ) =
   (federalistpapers1961hami.txt) (r) file
-  {paragraphs filter 1024 string readstring pop dup length cvbool
+  paragraphs filter {
+    dup 1024 string readstring pop dup length cvbool
     {print}
     {pop exit}
     ifelse
