@@ -8,6 +8,7 @@ sys.argv dup length 1 gt
 0 1 currentfont /Encoding get 3 1 roll
   2 index length 1 sub dup /charmap exch dict def
   {1 index 1 index get charmap 3 1 roll exch put} for pop
+/wordbuffer 128 string def
 /wordparse {
   <</EODCount 0 /EODString ( )>>
   /SubFileDecode
@@ -39,6 +40,7 @@ sys.argv dup length 1 gt
     {VT}  % mark end of data with end-of-paragraph marker
     ifelse  % (read flag true or false)
   }  % end of filter procedure
+  loop
   <</EODCount 0 /EODString VT>>
   /SubFileDecode
 } bind def
@@ -50,8 +52,8 @@ sys.argv dup length 1 gt
   {source wordparse filter
     % readstring through wordparse filter will almost always return false
     % (only true with 128-character word)
-    buffer readstring
-      {buffer /rangecheck signalerror}  % word too long
+    wordbuffer readstring
+      {wordbuffer /rangecheck signalerror}  % word too long
       {
         /word exch def
         line word stradd (stack after line exch stradd: ) print =stack
@@ -67,14 +69,13 @@ sys.argv dup length 1 gt
           {( ) (stack before append space: ) print =stack stradd /line exch def}
           ifelse  % row width > column width
       }
-      ifelse  % readstring filled buffer
+      ifelse  % readstring filled wordbuffer
   }
   loop
 } bind def
 scriptname (columns) eq {
-  /buffer 128 string def
   {datasource wordparse filter
-    buffer readstring
+    wordbuffer readstring
     {print}  % this would only happen with 128-character "word"
     {dup length 0 gt {print} {pop exit} ifelse}
     ifelse

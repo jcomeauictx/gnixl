@@ -28,5 +28,7 @@ upload:
 	 . $(SERVER):$(DOCROOT)/$(SERVER)/
 %.txt: %.pdf Makefile
 	pdftotext -nopgbrk -eol unix -enc Latin1 $<
+edit:
+	vi columns.cs
 .PRECIOUS: %.ps
 .FORCE:
