@@ -21,6 +21,7 @@ sys.argv dup length 1 gt
   /endlines zero
   /LF (\n) ord def
   /VT 8#13 chr def
+  /P charmap /paragraph get chr def
   /SP ( ) def
   {source read (after read: ) print =stack
     {dup LF eq
@@ -49,17 +50,26 @@ sys.argv dup length 1 gt
   {source wordparse filter
     % readstring through wordparse filter will almost always return false
     % (only true with 128-character word)
-    buffer readstring {
-      buffer /rangecheck signalerror  % word too long
-    }{
-      /word exch def
-      line word stradd (stack after line exch stradd: ) print =stack
-      dup xwidth width (stack after dup xwidth width: ) print =stack gt
-        {gsave (showing line at ) print currentpoint exch =only (,) print = show /line word ( ) stradd def grestore 0 -10 rmoveto currentpoint exch pop 0 lt {exit} if}
-        {( ) (stack before append space: ) print =stack stradd /line exch def}
-        ifelse
-    } ifelse
-  } loop
+    buffer readstring
+      {buffer /rangecheck signalerror}  % word too long
+      {
+        /word exch def
+        line word stradd (stack after line exch stradd: ) print =stack
+        dup xwidth width (stack after dup xwidth width: ) print =stack gt
+          {
+            gsave
+            (showing line at ) print currentpoint exch =only (,) print = 
+            show /line word ( ) stradd def
+            grestore
+            0 -10 rmoveto
+            currentpoint exch pop 0 lt {exit} if
+          }
+          {( ) (stack before append space: ) print =stack stradd /line exch def}
+          ifelse  % row width > column width
+      }
+      ifelse  % readstring filled buffer
+  }
+  loop
 } bind def
 scriptname (columns) eq {
   /buffer 128 string def
