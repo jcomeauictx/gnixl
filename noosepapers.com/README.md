@@ -19,3 +19,4 @@ The New York Times, a broadsheet, has 6 columns to a page. The Post and Daily Ne
 
 # Developer notes
 * [Breaking words](https://meiert.com/en/blog/word-division-on-word-break-soft-hyphens-and-zero-width-spaces/) (slanted towards CSS)
+* [Postscript secrets from the Guru, Don Lancaster](https://www.tinaja.com/glib/strconv.pdf)
