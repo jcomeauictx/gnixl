@@ -30,5 +30,5 @@ upload:
 	pdftotext -nopgbrk -eol unix -enc Latin1 $<
 edit:
 	vi columns.cs
-.PRECIOUS: %.ps %.log
+.PRECIOUS: %.ps %.log %.txt
 .FORCE:
