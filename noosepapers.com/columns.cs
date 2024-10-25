@@ -48,6 +48,7 @@ sys.argv dup length 1 gt
   /source exch def
   /width pagewidth 5 div def
   /height pageheight 2 div def
+  /spacewidth ( ) xwidth def
   /line () def
   {source wordparse filter
     % readstring through wordparse filter will almost always return false
@@ -55,18 +56,16 @@ sys.argv dup length 1 gt
     wordbuffer readstring
       {wordbuffer /rangecheck signalerror}  % word too long
       {
-        /word exch def
-        line word stradd (stack after line exch stradd: ) print =stack
-        dup xwidth width (stack after dup xwidth width: ) print =stack gt
+        dup /word exch def xwidth line xwidth spacewidth add add width gt
           {
             gsave
             (showing line at ) print currentpoint exch =only (,) print = 
-            show /line word ( ) stradd def
+            line show /line word ( ) stradd def
             grestore
             0 -10 rmoveto
             currentpoint exch pop 0 lt {exit} if
           }
-          {( ) (stack before append space: ) print =stack stradd /line exch def}
+          {line ( ) stradd /line exch def}
           ifelse  % row width > column width
       }
       ifelse  % readstring filled wordbuffer
