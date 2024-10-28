@@ -86,7 +86,7 @@ scriptname (columns) eq {
   (now showing column on page) =
   sys.argv 1 get (r) file column
   showpage
-  charmap ===
+  % charmap ===
   (testing paragraphs filter: ) =
   (federalistpapers1961hami.txt) (r) file
   (dumping federalist papers by paragraph) =
