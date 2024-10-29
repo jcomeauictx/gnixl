@@ -13,27 +13,13 @@
   % rangecheck error if string filled before newline seen
   /source exch def
   /linebuffer 8192 string def
-  /paragraph 1024 dup mul string def  % megabyte string
-  /endlines zero
-  /LF (\n) ord def
+  /buffer 1024 dup mul string def  % megabyte string
+  /paragraph buffer strcopy def
   /VT 8#13 chr def
   /SP ( ) def
-  {source linebuffer readline (after read: ) print =stack
-    {dup length 0 gt
-      {paragraph strlen 0 gt
-      	{pop SP /endlines inc (found LF: ) print =stack}
-      	{chr endlines 1 ge
-        {endlines 2 ge
-          {VT exch stradd (found paragraph: ) print =stack}
-          {(ignoring LF: ) print =stack}
-          ifelse
-        } if  % (endline(s))
-      }
-      ifelse % (LF)
-    (stack at end of paragraph filter procedure: ) print =stack
-    }
-    {VT}  % mark end of data with end-of-paragraph marker
-    ifelse  % (read flag true or false)
+  {source linebuffer readline not /eof exch def  % false means end-of-file
+    /line exch def
+    paragraph strlen 0 gt
   }  % end of filter procedure
   loop
   <</EODCount 0 /EODString VT>>
@@ -45,10 +31,8 @@ scriptname (paragraphs) eq {
     {pop loremipsum}
     ifelse /datasource exch def
   (testing paragraphs filter: ) =
-  (federalistpapers1961hami.txt) (r) file
-  (dumping federalist papers by paragraph) =
   paragraphs filter {
-    dup 1024 string readstring pop dup length cvbool (paragraph: ) print =stack
+    dup 8192 string readstring pop dup length cvbool (paragraph: ) print =stack
     {=}
     {pop (exiting paragraphs loop) = exit}
     ifelse
