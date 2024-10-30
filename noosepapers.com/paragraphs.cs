@@ -1,26 +1,31 @@
-#!/usr/local/casperscript/bin/cs --
+#!/usr/local/casperscript/bin/ccs --
 (lorem_ipsum.cs) run
-(latin1font.ps) run
-0 1 currentfont /Encoding get 3 1 roll
-  2 index length 1 sub dup /charmap exch dict def
-  {1 index 1 index get charmap 3 1 roll exch put} for pop
 /paragraphs {  % source -
   % 2 consecutive endlines (LF, \012) we will interpret as paragraph
-  % mark them with vertical tab (VT, \013) for paragraph marker
+  % mark them with vertical tab (VT, \013) as paragraph marker
   % replace *single* endline with space (SP, \040)
   % `readline` returns substring true in normal case;
   % substring false at EOF;
   % rangecheck error if string filled before newline seen
   /source exch def
   /linebuffer 8192 string def
-  /buffer 1024 dup mul string def  % megabyte string
-  /paragraph buffer strcopy def
   /VT 8#13 chr def
   /SP ( ) def
-  {source linebuffer readline not /eof exch def  % false means end-of-file
-    /line exch def
-    paragraph strlen 0 gt
-  }  % end of filter procedure
+  {[
+    {source linebuffer readline not /eof exch def  % false means end-of-file
+      dup strlen 0 eq  % empty string found
+        {pop counttomark 0 eq  % only thing found so far?
+          {(ignoring empty line preceding actual content) =}
+          {VT exit}  % mark end of paragraph
+        }
+        {SP}  % append space
+        ifelse
+    }  % end of paragraph read
+    loop
+    ]  % create an array of the strings found
+    /paragraph 1024 1024 mul string def  % megabyte string to hold paragraph
+    {paragraph append} forall exit
+  }
   loop
   <</EODCount 0 /EODString VT>>
   /SubFileDecode
@@ -31,7 +36,7 @@ scriptname (paragraphs) eq {
     {pop loremipsum}
     ifelse /datasource exch def
   (testing paragraphs filter: ) =
-  paragraphs filter {
+  datasource paragraphs filter {
     dup 8192 string readstring pop dup length cvbool (paragraph: ) print =stack
     {=}
     {pop (exiting paragraphs loop) = exit}
