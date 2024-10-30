@@ -27,7 +27,7 @@
     loop
     ]  % create an array of the strings found
     /paragraph 1024 1024 mul string def  % megabyte string to hold paragraph
-    {paragraph append} forall exit
+    {paragraph exch (before append: ) print =stack append} forall exit
   }
   loop
   <</EODCount 0 /EODString VT>>
