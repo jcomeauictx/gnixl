@@ -12,7 +12,9 @@
   /VT 8#13 chr def
   /SP ( ) def
   {[
-    {source linebuffer readline not /eof exch def  % false means end-of-file
+    {source linebuffer (before readline: ) print =stack
+      readline (after readline: ) print =stack
+      not /eof exch def  % false means end-of-file
       dup strlen 0 eq  % empty string found
         {pop counttomark 0 eq  % only thing found so far?
           {(ignoring empty line preceding actual content) =}
