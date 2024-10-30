@@ -19,6 +19,7 @@
         {pop counttomark 0 eq  % only thing found so far?
           {(ignoring empty line preceding actual content) =}
           {VT exit}  % mark end of paragraph
+          ifelse
         }
         {SP}  % append space
         ifelse
@@ -38,12 +39,14 @@ scriptname (paragraphs) eq {
     {pop LoremIpsum}
     ifelse /datasource exch def
   (testing paragraphs filter: ) =
-  datasource paragraphs filter {
-    dup 8192 string readstring pop dup length cvbool (paragraph: ) print =stack
+  datasource paragraphs filter dup 8192 string readstring =stack
+  datasource paragraphs filter 0 {
+    1 index 8192 string readstring pop
+    dup length cvbool (paragraph: ) print =stack
     {=}
     {pop (exiting paragraphs loop) = exit}
     ifelse
-  } loop
+  } repeat
   (stack at end of paragraphs test: ) print =stack
 } if
 % vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2
