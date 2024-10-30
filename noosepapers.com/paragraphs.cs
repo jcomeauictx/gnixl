@@ -11,6 +11,7 @@
   /linebuffer 8192 string def
   /VT 8#13 chr def
   /SP ( ) def
+  /EOF (D) ord 64 not and chr def  % control-D marks end of file
   {[
     {source linebuffer (before readline: ) print =stack
       readline (after readline: ) print =stack
@@ -18,11 +19,12 @@
       dup strlen 0 eq  % empty string found
         {pop counttomark 0 eq  % only thing found so far?
           {(ignoring empty line preceding actual content) =}
-          {VT exit}  % mark end of paragraph
+          {VT (found end of paragraph) = exit}  % mark end of paragraph
           ifelse
         }
         {SP}  % append space
         ifelse
+      eof {EOF} if
     }  % end of paragraph read
     loop
     ]  % create an array of the strings found
