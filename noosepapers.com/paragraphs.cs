@@ -35,7 +35,7 @@
 scriptname (paragraphs) eq {
   sys.argv dup length 1 gt
     {1 get (r) file}
-    {pop loremipsum}
+    {pop LoremIpsum}
     ifelse /datasource exch def
   (testing paragraphs filter: ) =
   datasource paragraphs filter {
