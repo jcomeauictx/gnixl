@@ -46,6 +46,7 @@ scriptname (paragraphs) eq {
   (testing paragraphs filter: ) =
   datasource paragraphs filter dup 8192 string readstring
   (after first readstring: ) print =stack
+  (paragraph: ) print pop =
   datasource paragraphs filter 0 {
     1 index 8192 string readstring pop
     dup length cvbool (paragraph: ) print =stack
