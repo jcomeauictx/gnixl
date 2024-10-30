@@ -29,7 +29,8 @@
     loop
     ]  % create an array of the strings found
     /paragraph 1024 1024 mul string def  % megabyte string to hold paragraph
-    {paragraph exch (before append: ) print =stack append} forall
+    {paragraph exch (before append: ) print =stack append pop} forall
+    paragraph
     (after append complete: ) print =stack
     exit
   }
@@ -44,7 +45,7 @@ scriptname (paragraphs) eq {
     ifelse /datasource exch def
   (testing paragraphs filter: ) =
   datasource paragraphs filter dup 8192 string readstring
-  (after first readstring: ) =stack
+  (after first readstring: ) print =stack
   datasource paragraphs filter 0 {
     1 index 8192 string readstring pop
     dup length cvbool (paragraph: ) print =stack
