@@ -24,12 +24,14 @@
         }
         {SP}  % append space
         ifelse
-      eof {EOF} if
+      eof {(marking EOF) = EOF} if
     }  % end of paragraph read
     loop
     ]  % create an array of the strings found
     /paragraph 1024 1024 mul string def  % megabyte string to hold paragraph
-    {paragraph exch (before append: ) print =stack append} forall exit
+    {paragraph exch (before append: ) print =stack append} forall
+    (after append complete: ) print =stack
+    exit
   }
   loop
   <</EODCount 0 /EODString VT>>
@@ -41,7 +43,8 @@ scriptname (paragraphs) eq {
     {pop LoremIpsum}
     ifelse /datasource exch def
   (testing paragraphs filter: ) =
-  datasource paragraphs filter dup 8192 string readstring =stack
+  datasource paragraphs filter dup 8192 string readstring
+  (after first readstring: ) =stack
   datasource paragraphs filter 0 {
     1 index 8192 string readstring pop
     dup length cvbool (paragraph: ) print =stack
