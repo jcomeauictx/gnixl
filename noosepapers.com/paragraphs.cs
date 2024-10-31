@@ -8,12 +8,11 @@
   % substring false at EOF;
   % rangecheck error if string filled before newline seen
   /source exch def
-  /linebuffer 8192 string def
   /VT 8#13 chr def
   /SP ( ) def
   /EOF (D) ord 64 not and chr def  % control-D marks end of file
   {[
-    {source linebuffer (before readline: ) print =stack
+    {source 8192 string (before readline: ) print =stack
       readline (after readline: ) print =stack
       not /eof exch def  % false means end-of-file
       dup strlen 0 eq  % empty string found
