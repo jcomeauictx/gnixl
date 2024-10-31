@@ -30,7 +30,7 @@
     loop
     ]  % create an array of the strings found
     /paragraph 1024 1024 mul string def  % megabyte string to hold paragraph
-    {paragraph exch (before append: ) print =stack append pop} forall
+    {paragraph exch (before append: ) print =stack append} forall
     paragraph
     (after append complete: ) print =stack
     exit
@@ -49,13 +49,13 @@ scriptname (paragraphs) eq {
   (after first readstring: ) print =stack pop  % (discard flag from readstring)
   (paragraph: ) print =
   pop  % discard file object from top of stack
-  datasource paragraphs filter 0 {
+  datasource paragraphs filter {
     1 index 8192 string readstring pop
-    dup length cvbool (paragraph: ) print =stack
-    {=}
+    dup length cvbool (after length cvbool: ) print =stack
+    {(paragraph: ") print print (") =}
     {pop (exiting paragraphs loop) = exit}
     ifelse
-  } repeat
+  } loop
   (stack at end of paragraphs test: ) print =stack
 } if
 % vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2
