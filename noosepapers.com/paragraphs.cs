@@ -19,7 +19,9 @@
       dup strlen 0 eq  % empty string found
         {pop counttomark 0 eq  % only thing found so far?
           {(ignoring empty line preceding actual content) =}
-          {VT (found end of paragraph) = exit}  % mark end of paragraph
+          {pop  % remove space from end of previous line
+            VT (found end of paragraph) = exit  % mark end of paragraph
+          }
           ifelse
         }
         {SP}  % append space
@@ -45,8 +47,9 @@ scriptname (paragraphs) eq {
     ifelse /datasource exch def
   (testing paragraphs filter: ) =
   datasource paragraphs filter dup 8192 string readstring
-  (after first readstring: ) print =stack
-  (paragraph: ) print pop =
+  (after first readstring: ) print =stack pop  % (discard flag from readstring)
+  (paragraph: ) print =
+  pop  % discard file object from top of stack
   datasource paragraphs filter 0 {
     1 index 8192 string readstring pop
     dup length cvbool (paragraph: ) print =stack
