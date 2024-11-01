@@ -1,6 +1,7 @@
 #!/usr/local/casperscript/bin/cs --
 (lorem_ipsum.cs) run
 (latin1font.ps) run
+(paragraphs.cs) run
 sys.argv dup length 1 gt
   {1 get (r) file}
   {pop loremipsum}
@@ -14,36 +15,6 @@ sys.argv dup length 1 gt
   /SubFileDecode
 } bind def
 /xwidth {stringwidth pop} bind def
-/paragraphs {  % source -
-  % 2 consecutive endlines (LF, \012) we will interpret as paragraph
-  % mark them with vertical tab (VT, \013) for paragraph marker
-  % replace *single* endline with space (SP, \040)
-  /source exch def
-  /endlines zero
-  /LF (\n) ord def
-  /VT 8#13 chr def
-  /P charmap /paragraph get chr def
-  /SP ( ) def
-  {source read (after read: ) print =stack
-    {dup LF eq
-      {pop SP /endlines inc (found LF: ) print =stack}
-      {chr endlines 1 ge
-        {endlines 2 ge
-          {VT exch stradd (found paragraph: ) print =stack}
-          {(ignoring LF: ) print =stack}
-          ifelse
-        } if  % (endline(s))
-      }
-      ifelse % (LF)
-    (stack at end of paragraph filter procedure: ) print =stack
-    }
-    {VT}  % mark end of data with end-of-paragraph marker
-    ifelse  % (read flag true or false)
-  }  % end of filter procedure
-  loop
-  <</EODCount 0 /EODString VT>>
-  /SubFileDecode
-} bind def
 /column {  % source -
   /source exch def
   /width pagewidth 2 div def
@@ -98,10 +69,13 @@ scriptname (columns) eq {
   (federalistpapers1961hami.txt) (r) file
   (dumping federalist papers by paragraph) =
   paragraphs filter {
-    dup 1024 string readstring pop dup length cvbool (paragraph: ) print =stack
-    {=}
-    {pop (exiting paragraphs loop) = exit}
-    ifelse
+    dup 1024 dup mul string readstring
+    pop  % discard readstring flag
+    dup length cvbool
+      (paragraph: ) print =stack
+      {=}
+      {pop (exiting paragraphs loop) = exit}
+      ifelse
   } loop
   (stack at end of columns test: ) print =stack
 } if
