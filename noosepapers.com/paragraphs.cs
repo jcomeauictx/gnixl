@@ -47,10 +47,13 @@ scriptname (paragraphs) eq {
   (testing paragraphs filter: ) =
   datasource paragraphs filter dup 8192 string readstring
   (after first readstring: ) print =stack pop  % (discard flag from readstring)
-  (paragraph: ) print =
+  (first paragraph: ") print print (") =
   pop  % discard file object from top of stack
   datasource paragraphs filter {
-    1 index 8192 string readstring pop
+    (reading next paragraph from loop, stack: ) print =stack
+    dup 1024 1024 mul string readstring
+    (stack after readstring: ) print =stack
+    pop  % discard flag
     dup length cvbool (after length cvbool: ) print =stack
     {(paragraph: ") print print (") =}
     {pop (exiting paragraphs loop) = exit}
