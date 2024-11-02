@@ -12,8 +12,8 @@
   /SP ( ) def
   /EOF (D) ord 64 not and chr def  % control-D marks end of file
   {[
-    {source 8192 string (before readline: ) print =stack
-      readline (after readline: ) print =stack
+    {source 8192 string %(before readline: ) print =stack
+      readline %(after readline: ) print =stack
       not /eof exch def  % false means end-of-file
       dup strlen 0 eq  % empty string found
         {pop counttomark 0 eq  % only thing found so far?
@@ -26,7 +26,7 @@
         {
           % pdftotext replaces end-of-line hyphens with chr(0xac)
           % perhaps it meant chr(0xad), soft hyphen?
-          dup strlen 1 sub 2 copy get 16#ac eq (hyphenated? ) print =stack
+          dup strlen 1 sub 2 copy get 16#ac eq %(hyphenated? ) print =stack
             {0 exch getinterval}  % remove final character
             {pop SP}  % remove length, and append space
             ifelse
@@ -37,9 +37,9 @@
     loop
     ]  % create an array of the strings found
     /paragraph 1024 1024 mul string def  % megabyte string to hold paragraph
-    {paragraph exch (before append: ) print =stack append} forall
+    {paragraph exch append} forall
     paragraph
-    (after append complete: ) print =stack
+    %(after append complete: ) print =stack
     exit
   }
   loop
@@ -53,11 +53,11 @@ scriptname (paragraphs) eq {
     ifelse /datasource exch def
   (testing paragraphs filter: ) =
   datasource paragraphs filter {
-    (reading next paragraph from loop, stack: ) print =stack
+    %(reading next paragraph from loop, stack: ) print =stack
     dup 1024 1024 mul string readstring
-    (stack after readstring: ) print =stack
+    %(stack after readstring: ) print =stack
     pop  % discard flag
-    dup length cvbool (after length cvbool: ) print =stack
+    dup length cvbool %(after length cvbool: ) print =stack
     {(paragraph: ") print print (") =}
     {pop (exiting paragraphs loop) = exit}
     ifelse

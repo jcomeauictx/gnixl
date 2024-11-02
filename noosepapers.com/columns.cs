@@ -72,7 +72,7 @@ scriptname (columns) eq {
     1024 dup mul string readstring
     pop  % discard readstring flag
     dup length cvbool
-      (paragraph: ) print =stack
+      %(paragraph: ) print =stack
       {=}
       {pop (exiting paragraphs loop) = exit}
       ifelse
