@@ -66,10 +66,10 @@ scriptname (columns) eq {
   showpage
   % charmap ===
   (testing paragraphs filter: ) =
-  (federalistpapers1961hami.txt) (r) file
+  /source (federalistpapers1961hami.txt) (r) file def
   (dumping federalist papers by paragraph) =
-  paragraphs filter {
-    dup 1024 dup mul string readstring
+  {source paragraphs filter
+    1024 dup mul string readstring
     pop  % discard readstring flag
     dup length cvbool
       (paragraph: ) print =stack
@@ -78,7 +78,7 @@ scriptname (columns) eq {
       ifelse
   } loop
   (stack at end of columns test: ) print =stack
-  (bytes available: ) print bytesavailable =
+  (bytes available: ) print source bytesavailable =
   (final stack: ) print =stack
 } if
 % vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2
