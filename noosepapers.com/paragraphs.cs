@@ -35,16 +35,20 @@
       }  % end of paragraph read
       loop
       (joining fragments into paragraph) =
-      (\n) ]  % add newline, and create an array of the strings found
+      ]  % create an array of the strings found
       (stack before join: ) print =stack
       /paragraph 1024 1024 mul string def  % megabyte string to hold paragraph
       {paragraph exch append} forall paragraph truncate
       (after join complete: ) print =stack
+      dup strlen 0 gt
+        {(\n) stradd}
+        {pop EOF}
+        ifelse
       exit
     }
     loop
   }
-  <</EODCount 0 /EODString ()>>
+  <</EODCount 1 /EODString EOF>>
   /SubFileDecode
 } bind def
 scriptname (paragraphs) eq {
