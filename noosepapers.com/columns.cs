@@ -23,7 +23,7 @@ sys.argv dup length 1 gt
   /line () def
   (width: ) print width =
   (spacewidth: ) print spacewidth =
-  {source wordparse filter
+  {source paragraphs filter wordparse filter
     % readstring through wordparse filter will almost always return false
     % (only true with 128-character word)
     wordbuffer readstring
