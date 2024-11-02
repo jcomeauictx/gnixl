@@ -4,10 +4,10 @@ DOCROOT := /var/www
 DRYRUN ?= --dry-run
 PATH := /usr/local/casperscript/bin:$(PATH)
 TIMESTAMP := $(shell date +'%Y%m%d%H%M%S')
-PDFS := $(wildcard *.pdf)
+PDFS := $(shell ls -r *.pdf)
 TXTS := $(PDFS:.pdf=.txt)
 TEXTFILE ?= $(word 1, $(TXTS))
-all: paragraphs.log columns.log
+all: columns.log
 gallows.pgm: gallows.png
 	pngtopnm $< | pnmnoraw > $@
 %.log: %.pgm ../../casperscript .FORCE
