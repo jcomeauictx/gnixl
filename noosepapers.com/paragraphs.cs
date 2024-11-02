@@ -26,9 +26,9 @@
         {
           % pdftotext replaces end-of-line hyphens with chr(0xac)
           % perhaps it meant chr(0xad), soft hyphen?
-          dup dup strlen 1 sub 2 copy get 16#ac eq (hyphenated? ) print =stack
-            {0 exch getinterval}  % remove final character
-            {pop pop SP}  % remove string and length, and append space
+          dup strlen 1 sub 2 copy get 16#ac eq (hyphenated? ) print =stack
+            {0 exch getinterval exch pop}  % remove final character
+            {pop SP}  % remove length, and append space
             ifelse
         }
         ifelse
