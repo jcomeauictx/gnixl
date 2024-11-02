@@ -1,6 +1,7 @@
 #!/usr/local/casperscript/bin/ccs --
 (lorem_ipsum.cs) run
-/paragraphs {  % source -
+/EOF (D) ord 64 not and chr def  % control-D marks end of file
+/paragraphparser {  % source -
   % 2 consecutive endlines (LF, \012) we will interpret as paragraph
   % mark them with vertical tab (VT, \013) as paragraph marker
   % replace *single* endline with space (SP, \040)
@@ -10,7 +11,6 @@
   /source exch def
   /VT 8#13 chr def
   /SP ( ) def
-  /EOF (D) ord 64 not and chr def  % control-D marks end of file
   {[
     {source 8192 string %(before readline: ) print =stack
       readline %(after readline: ) print =stack
@@ -19,7 +19,8 @@
         {pop counttomark 0 eq  % only thing found so far?
           {(ignoring empty line preceding actual content) =}
           {pop  % remove space from end of previous line
-            VT (found end of paragraph) = exit  % mark end of paragraph
+            (stack at end of paragraph: ) print =stack
+            VT exit  % mark end of paragraph
           }
           ifelse
         }
@@ -38,12 +39,26 @@
     ]  % create an array of the strings found
     /paragraph 1024 1024 mul string def  % megabyte string to hold paragraph
     {paragraph exch append} forall
-    paragraph
-    %(after append complete: ) print =stack
+    paragraph truncate
+    (after append complete: ) print =stack
     exit
   }
   loop
   <</EODCount 0 /EODString VT>>
+  /SubFileDecode
+} bind def
+/paragraphs {  % source -
+  /source exch def
+  {source paragraphparser filter
+    1024 dup mul string readstring
+    pop  % discard readstring flag
+    dup length cvbool
+      %(paragraph: ) print =stack
+      {(\n) stradd}
+      {pop (exiting paragraphs loop) = exit}
+      ifelse
+  } loop
+  <</EODCount 1 /EODString EOF>>
   /SubFileDecode
 } bind def
 scriptname (paragraphs) eq {
@@ -53,13 +68,7 @@ scriptname (paragraphs) eq {
     ifelse /datasource exch def
   (testing paragraphs filter: ) =
   {datasource paragraphs filter
-    1024 dup mul string readstring
-    pop  % discard readstring flag
-    dup length cvbool
-      %(paragraph: ) print =stack
-      {=}
-      {pop (exiting paragraphs loop) = exit}
-      ifelse
+    1024 dup mul string readline exch = {exit} if
   } loop
   (stack at end of columns test: ) print =stack
   (bytes available: ) print datasource bytesavailable =
