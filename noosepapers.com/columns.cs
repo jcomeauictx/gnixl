@@ -51,7 +51,7 @@ sys.argv dup length 1 gt
   loop
 } bind def
 scriptname (columns) eq {
-  {datasource wordparse filter
+  {datasource paragraphs filter wordparse filter
     wordbuffer readstring
     {print}  % this would only happen with 128-character "word"
     {dup length 0 gt {print} {pop exit} ifelse}
@@ -65,20 +65,5 @@ scriptname (columns) eq {
   sys.argv 1 get (r) file column
   showpage
   % charmap ===
-  (testing paragraphs filter: ) =
-  /source (federalistpapers1961hami.txt) (r) file def
-  (dumping federalist papers by paragraph) =
-  {source paragraphs filter
-    1024 dup mul string readstring
-    pop  % discard readstring flag
-    dup length cvbool
-      %(paragraph: ) print =stack
-      {=}
-      {pop (exiting paragraphs loop) = exit}
-      ifelse
-  } loop
-  (stack at end of columns test: ) print =stack
-  (bytes available: ) print source bytesavailable =
-  (final stack: ) print =stack
 } if
 % vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2
