@@ -78,5 +78,7 @@ scriptname (columns) eq {
       ifelse
   } loop
   (stack at end of columns test: ) print =stack
+  (bytes available: ) print bytesavailable =
+  (final stack: ) print =stack
 } if
 % vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2
