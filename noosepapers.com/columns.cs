@@ -19,6 +19,7 @@ sys.argv dup length 1 gt
   /source exch def
   /width pagewidth 2 div def
   /height pageheight 2 div def
+  (column width: ) print width =only (, column height: ) print height =
   /spacewidth ( ) xwidth def
   /line () def
   (width: ) print width =
@@ -31,13 +32,14 @@ sys.argv dup length 1 gt
       {
         dup /word exch def
 	xwidth line xwidth spacewidth add add dup
-	(length after adding ) print word print (: ) print =
+	(length after adding ") print word print (": ) print =
 	(compare to width: ) print width =
 	(stack: ) print =stack
         width gt
           {
             gsave
-            (showing line at ) print currentpoint exch =only (,) print = 
+            (showing ") line + (" at ) + print
+              currentpoint exch =only (,) print =
             line show /line word ( ) stradd def
             grestore
             0 -10 rmoveto
