@@ -34,7 +34,7 @@
         eof {(exiting inner loop) = exit} if
       }  % end of paragraph read
       loop
-      (joining fragments into paragraph) =
+      (joining fragments into paragraph, stack: ) print =stack
       ]  % create an array of the strings found
       %(stack before join: ) print =stack
       /paragraph 1024 1024 mul string def  % megabyte string to hold paragraph
