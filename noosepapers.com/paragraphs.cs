@@ -10,8 +10,8 @@
   /source exch def
   {
     {[
-      {source 8192 string (before readline: ) print =stack
-        readline (after readline: ) print =stack
+      {source 8192 string %(before readline: ) print =stack
+        readline %(after readline: ) print =stack
         not /eof exch def  % false means end-of-file
         dup strlen 0 eq  % empty string found
           {pop counttomark 0 eq  % only thing found so far?
@@ -36,10 +36,10 @@
       loop
       (joining fragments into paragraph) =
       ]  % create an array of the strings found
-      (stack before join: ) print =stack
+      %(stack before join: ) print =stack
       /paragraph 1024 1024 mul string def  % megabyte string to hold paragraph
       {paragraph exch append} forall paragraph truncate
-      (after join complete: ) print =stack
+      %(after join complete: ) print =stack
       dup strlen 0 gt
         {(\n) stradd}
         {pop EOF}
@@ -59,7 +59,7 @@ scriptname (paragraphs) eq {
   (testing paragraphs filter: ) =
   {datasource paragraphs filter
     1024 dup mul string
-    (getting next paragraph, stack: ) print =stack
+    %(getting next paragraph, stack: ) print =stack
     readline not exch = {(datasource EOF reached) = exit} if
   } loop
   (stack at end of columns test: ) print =stack
