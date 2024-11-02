@@ -7,7 +7,7 @@ TIMESTAMP := $(shell date +'%Y%m%d%H%M%S')
 PDFS := $(wildcard *.pdf)
 TXTS := $(PDFS:.pdf=.txt)
 TEXTFILE ?= $(word 1, $(TXTS))
-all: columns.log paragraphs.log
+all: paragraphs.log columns.log
 gallows.pgm: gallows.png
 	pngtopnm $< | pnmnoraw > $@
 %.log: %.pgm ../../casperscript .FORCE

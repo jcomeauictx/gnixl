@@ -52,19 +52,18 @@ scriptname (paragraphs) eq {
     {pop LoremIpsum}
     ifelse /datasource exch def
   (testing paragraphs filter: ) =
-  datasource paragraphs filter {
-    %(reading next paragraph from loop, stack: ) print =stack
-    dup 1024 1024 mul string readstring
-    %(stack after readstring: ) print =stack
-    pop  % discard flag
-    dup length cvbool %(after length cvbool: ) print =stack
-    {(paragraph: ") print print (") =}
-    {pop (exiting paragraphs loop) = exit}
-    ifelse
+  {datasource paragraphs filter
+    1024 dup mul string readstring
+    pop  % discard readstring flag
+    dup length cvbool
+      %(paragraph: ) print =stack
+      {=}
+      {pop (exiting paragraphs loop) = exit}
+      ifelse
   } loop
-  (stack at end of paragraphs test: ) print =stack
-  pop  % remove filtered file object from stack
-  (bytes remaining in file: ) print datasource bytesavailable =
+  (stack at end of columns test: ) print =stack
+  (bytes available: ) print datasource bytesavailable =
+  (final stack: ) print =stack
 } if
 (stack remaining at end of test: ) print =stack
 % vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2
