@@ -11,7 +11,7 @@
   {
     {[
       {source 8192 string (before readline: ) print =stack
-        readline %(after readline: ) print =stack
+        readline (after readline: ) print =stack
         not /eof exch def  % false means end-of-file
         dup strlen 0 eq  % empty string found
           {pop counttomark 0 eq  % only thing found so far?
@@ -31,13 +31,15 @@
               ifelse
           }
           ifelse
-        eof {exit} if
+        eof {(exiting inner loop) = exit} if
       }  % end of paragraph read
       loop
+      (joining fragments into paragraph) =
       (\n) ]  % add newline, and create an array of the strings found
+      (stack before join: ) print =stack
       /paragraph 1024 1024 mul string def  % megabyte string to hold paragraph
-      {paragraph exch append} forall
-      %(after append complete: ) print =stack
+      {paragraph exch append} forall paragraph truncate
+      (after join complete: ) print =stack
       exit
     }
     loop
@@ -52,8 +54,9 @@ scriptname (paragraphs) eq {
     ifelse /datasource exch def
   (testing paragraphs filter: ) =
   datasource paragraphs filter {
-    (getting next paragraph) =
-    1024 dup mul string readline exch = {exit} if
+    1024 dup mul string
+    (getting next paragraph, stack: ) print =stack
+    readline exch = {exit} if
   } loop
   (stack at end of columns test: ) print =stack
   (bytes available: ) print datasource bytesavailable =
