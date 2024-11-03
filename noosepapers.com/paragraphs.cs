@@ -17,7 +17,7 @@
           {pop counttomark 0 eq  % only thing found so far?
             {(ignoring empty line preceding actual content) =}
             {pop  % remove space from end of previous line
-              (stack at end of paragraph: ) print =stack
+              (stack at inner loop exit (end of paragraph): ) print =stack
               exit  % end of paragraph
             }
             ifelse
@@ -31,7 +31,7 @@
               ifelse
           }
           ifelse
-        eof {(exiting inner loop) = exit} if
+        eof {(exiting inner loop on EOF) = exit} if
       }  % end of paragraph read
       loop
       (joining fragments into paragraph, stack: ) print =stack
@@ -44,7 +44,7 @@
         {(\n) stradd}
         {pop EOF}
         ifelse
-      exit
+      (exiting outer loop) = exit
     }
     loop
   }
