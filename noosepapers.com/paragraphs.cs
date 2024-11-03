@@ -17,7 +17,7 @@
           {pop counttomark 0 eq  % only thing found so far?
             {(ignoring empty line preceding actual content) =}
             {pop  % remove space from end of previous line
-              %(stack at end of paragraph: ) print =stack
+              (stack at end of paragraph: ) print =stack
               exit  % end of paragraph
             }
             ifelse
@@ -59,7 +59,7 @@ scriptname (paragraphs) eq {
   (testing paragraphs filter: ) =
   {datasource paragraphs filter
     1024 dup mul string
-    %(getting next paragraph, stack: ) print =stack
+    (getting next paragraph, stack: ) print =stack
     readline not exch = {(datasource EOF reached) = exit} if
   } loop
   (stack at end of columns test: ) print =stack
