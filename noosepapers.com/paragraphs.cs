@@ -52,6 +52,7 @@
   /SubFileDecode
 } bind def
 scriptname (paragraphs) eq {
+  /count zero
   sys.argv dup length 1 gt
     {1 get (r) file}
     {pop LoremIpsum}
@@ -61,6 +62,7 @@ scriptname (paragraphs) eq {
     1024 dup mul string
     (getting next paragraph, stack: ) print =stack
     readline not exch = {(datasource EOF reached) = exit} if
+    /count inc count 100 eq {exit} if  % quit test after 100 paragraphs
   } loop
   (stack at end of columns test: ) print =stack
   (bytes available: ) print datasource bytesavailable =
