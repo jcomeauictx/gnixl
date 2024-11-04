@@ -41,13 +41,13 @@
       {paragraph exch append} forall paragraph truncate
       %(after join complete: ) print =stack
       dup strlen 0 gt
-        {(\n) stradd}
-        {pop EOF}
+        {(adding line separator to concatenated string) = (\n) stradd}
+        {(found empty string, marking EOF) = pop EOF}
         ifelse
-      (exiting outer loop) = exit
+      exit
     }
     loop
-    (outer loop ends) =
+    (exiting outer loop with string ") print dup print (") =
   }
   <</EODCount 1 /EODString EOF>>
   /SubFileDecode
