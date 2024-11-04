@@ -47,6 +47,7 @@
       (exiting outer loop) = exit
     }
     loop
+    (outer loop ends) =
   }
   <</EODCount 1 /EODString EOF>>
   /SubFileDecode
@@ -61,7 +62,10 @@ scriptname (paragraphs) eq {
   {datasource paragraphs filter
     1024 dup mul string
     (getting next paragraph, stack: ) print =stack
-    readline not exch = {(datasource EOF reached) = exit} if
+    readline not exch =
+      {(datasource EOF reached) = exit}
+      {(continuing text dump) =}
+      ifelse
     /count inc count 10000 eq {exit} if  % quit test after 10000 paragraphs
   } loop
   (stack at end of columns test: ) print =stack
