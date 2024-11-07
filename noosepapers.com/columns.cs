@@ -34,7 +34,7 @@ sys.argv dup length 1 gt
 	xwidth line xwidth spacewidth add add dup
 	(length after adding ") print word print (": ) print =
 	(compare to width: ) print width =
-	(stack: ) print =stack
+	(stack: ) #only ###stack
         width gt
           {
             gsave
