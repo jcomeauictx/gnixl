@@ -17,7 +17,7 @@ gallows.pgm: gallows.png
 	/usr/bin/gs -sFONTMAP=$(PWD)/noosefonts.ps -I $(PWD) <(tail -n +2 $<)
 %.log: %.cs noosefonts.ps $(TXTS) .FORCE
 	([ -f $@ ] && mv -f $@ $*.$(TIMESTAMP).log) || true
-	./$< $(TEXTFILE) | tee $@
+	./$< $(TEXTFILE) 2>$(@:.log=.err) | tee $@
 ../../casperscript:
 	@echo Must git clone casperscript to the grandparent directory. >&2
 	false
