@@ -41,7 +41,7 @@
       {paragraph exch append} forall paragraph truncate
       %(after join complete: ) #only ##stack
       dup strlen 0 gt
-        {(adding line separator to concatenated string) # (\n) stradd}
+        {(adding line separator to concatenated string) # (\n\n) stradd}
         {(found empty string, marking EOF) # pop EOF}
         ifelse
       exit
@@ -73,4 +73,4 @@ scriptname (paragraphs) eq {
   (final stack: ) #only ##stack
 } if
 (stack remaining at end of test: ) #only ##stack
-% vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2
+% vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2 syntax=postscr
