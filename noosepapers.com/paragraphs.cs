@@ -62,7 +62,7 @@ scriptname (paragraphs) eq {
   {datasource paragraphs filter
     1024 dup mul string
     (getting next paragraph, stack: ) #only ##stack
-    1 index flushfile readline not exch =
+    readline not exch =
       {(datasource EOF reached) # exit}
       {(continuing text dump) #}
       ifelse
