@@ -68,4 +68,4 @@ scriptname (columns) eq {
   showpage
   % charmap ===
 } if
-% vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2
+% vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2 syntax=postscr
