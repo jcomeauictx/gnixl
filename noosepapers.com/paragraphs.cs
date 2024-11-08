@@ -38,7 +38,7 @@
       ]  % create an array of the strings found
       %(stack before join: ) #only ##stack
       /paragraph 1024 1024 mul string def  % megabyte string to hold paragraph
-      {paragraph exch append} forall paragraph truncate
+      {paragraph exch string.append} forall paragraph truncate
       %(after join complete: ) #only ##stack
       dup strlen 0 gt
         {(adding line separator to concatenated string) # (\n\n) stradd}
@@ -53,6 +53,7 @@
   /SubFileDecode
 } bind def
 scriptname (paragraphs) eq {
+  (starting paragraphs test program) #
   /count zero
   sys.argv dup length 1 gt
     {1 get (r) file}
