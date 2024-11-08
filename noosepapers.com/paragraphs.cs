@@ -1,6 +1,6 @@
 #!/usr/local/casperscript/bin/ccs --
 (lorem_ipsum.cs) run
-/EOF (D) ord 64 not and chr def  % control-D marks end of file
+/EOF (D) ctrl def  % control-D marks end of file
 /paragraphs {  % source -
   % 2 consecutive endlines (LF, \012) we will interpret as paragraph
   % replace *single* endline with space (( ), \040)
