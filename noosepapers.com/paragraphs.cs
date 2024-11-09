@@ -62,10 +62,9 @@
   (testing column creation) #
   {datasource paragraphs filter
     1024 dup mul string
-    (getting next paragraph, stack: ) #only ##stack
-    readline not /eof exch def (eof: ) #only eof # dup =
-    4096 array () 3 -1 roll exch string.split ##  % FIXME: need larger array
-    eof {exit} if  % quit after all data processed
+    readline not /eof exch def
+    4096 array () 3 -1 roll exch string.split array.truncate ==
+    eof {(exiting on EOF) # exit} if  % quit after all data processed
     /count inc count 10000 eq {exit} if  % quit test after 10000 paragraphs
   } loop
   (stack at end of columns test: ) #only ##stack
