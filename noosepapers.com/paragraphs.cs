@@ -37,7 +37,7 @@
       (joining fragments into paragraph, stack: ) #only ##stack
       ]  % create an array of the strings found
       %(stack before join: ) #only ##stack
-      /paragraph 1024 1024 mul string def  % megabyte string to hold paragraph
+      /paragraph 1024 dup mul string def  % megabyte string to hold paragraph
       {paragraph exch string.append} forall paragraph truncate
       %(after join complete: ) #only ##stack
       dup strlen 0 gt
@@ -52,26 +52,26 @@
   <</EODCount 1 /EODString EOF>>
   /SubFileDecode
 } bind def
-scriptname (paragraphs) eq {
+/column {
   (starting paragraphs test program) #
   /count zero
   sys.argv dup length 1 gt
     {1 get (r) file}
     {pop LoremIpsum}
     ifelse /datasource exch def
-  (testing paragraphs filter) #
+  (testing column creation) #
   {datasource paragraphs filter
     1024 dup mul string
     (getting next paragraph, stack: ) #only ##stack
-    readline not exch =
-      {(datasource EOF reached) # exit}
-      {(continuing text dump) #}
-      ifelse
+    readline not /eof exch def (eof: ) #only eof # dup =
+    4096 array () 3 -1 roll exch string.split ##  % FIXME: need larger array
+    eof {exit} if  % quit after all data processed
     /count inc count 10000 eq {exit} if  % quit test after 10000 paragraphs
   } loop
   (stack at end of columns test: ) #only ##stack
   (bytes available: ) # datasource bytesavailable #
   (final stack: ) #only ##stack
-} if
+} bind def
+scriptname (paragraphs) eq {column} if
 (stack remaining at end of test: ) #only ##stack
 % vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2 syntax=postscr
