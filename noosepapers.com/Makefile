@@ -16,6 +16,10 @@ gallows.pgm: gallows.png
 %.gv: %.cs noosefonts.ps
 	/usr/bin/gs -sFONTMAP=$(PWD)/noosefonts.ps -I $(PWD) <(tail -n +2 $<)
 %.log: %.cs noosefonts.ps $(TXTS) .FORCE
+	# https://stackoverflow.com/a/9113604/493161 fixes stderr pipe
+	# https://stackoverflow.com/a/6872163/493161 and
+	# https://gist.github.com/mohanpedala/1e2ff5661761d3abd0385e8223e16425
+	# fix post-tee exit status
 	([ -f $@ ] && mv -f $@ $*.$(TIMESTAMP).log) || true
 	([ -f $*.err ] && mv -f $*.err $*.$(TIMESTAMP).err) || true
 	if [ "$*" = "latin1font" ]; then \
@@ -23,8 +27,9 @@ gallows.pgm: gallows.png
 	else \
 	 arg=$(TEXTFILE); \
 	fi; \
+	set -euxo pipefail; \
 	{ ./$< $$arg 2>&1 1>&3 3>&- | tee $*.err; } \
-	 3>&1 1>&2 | tee $@  # https://stackoverflow.com/a/9113604/493161
+	 3>&1 1>&2 | tee $@
 ../../casperscript:
 	@echo Must git clone casperscript to the grandparent directory. >&2
 	false
