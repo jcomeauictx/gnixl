@@ -16,8 +16,16 @@
   (starting columnline with stack: ) #only #stack
   /wordindex exch def
   /line 1024 string def
-  wordindex get /wordindex inc line exch string.append
-  line strcopy truncate xwidth (stack after xwidth: ) #only #stack
+  dup wordindex get dup xwidth spacewidth add line strcopy
+  string.truncate xwidth add
+  dup (line width after addition would be ) #only #
+  columnwidth ge (stack after ge: ) #only #stack
+    {(exiting with stack: ) #only line string.truncate #stack}
+    {line exch string.append /wordindex inc
+      (after append: ) #only  #stack}
+    ifelse
+  wordindex
+  (stack at end of columnline: ) #only #stack
   1 .quit
 } bind def
 (
