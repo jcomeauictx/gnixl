@@ -1,4 +1,5 @@
 #!/usr/local/casperscript/bin/cs --
+(starting columns.cs) #
 (lorem_ipsum.cs) run
 (latin1font.cs) run
 (paragraphs.cs) run
@@ -44,7 +45,7 @@ scriptname (columns) eq {
   (testing columnline) #
   32 array
   (This is a test of the ability of columnline to determine column fit.)
-  () string.split 0 columnline
+  () string.split 0 (before columnline: ) # #stack columnline
   (starting columns test program) #
   sys.argv dup length 1 gt
     {1 get (r) file}
