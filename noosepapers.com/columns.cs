@@ -5,22 +5,24 @@
 /Times-Roman latin1font
 /Times-Roman-Latin1 12 selectfont
 /xwidth {stringwidth pop} bind def
+/spacewidth ( ) xwidth def
+(spacewidth: ) #only spacewidth #
 % broadsheet typically has 5 columns, tabloid 4, zine maybe 2 or 3
 /columnwidth pagewidth 2 div def
 /columnheight pageheight 2 div def
+(column width: ) #only columnwidth #only (, height: ) #only columnheight #
 /columnline {  % words index - words newindex
   /index exch def
-  (column width: ) print width =only (, column height: ) print height =
-  /spacewidth ( ) xwidth def
-  /line () def
-  (width: ) print width =
-  (spacewidth: ) print spacewidth =
-  {source paragraphs filter
+  /line 1024 string def
+  dup index get #stack
+} bind def
+(
+/columns  
       {
         dup /word exch def
 	xwidth line xwidth spacewidth add add dup
-	(length after adding ") print word print (": ) print =
-	(compare to width: ) print width =
+	(length after adding ") #only word #only (": ) print #
+	(compare to width: ) #only width #
 	(stack: ) #only ###stack
         width gt
           {
@@ -36,10 +38,13 @@
           ifelse  % row width > column width
       }
       ifelse  % readstring filled wordbuffer
-  }
-  loop
 } bind def
+) pop
 scriptname (columns) eq {
+  (testing columnline) #
+  32 array
+  (This is a test of the ability of columnline to determine column fit.)
+  () string.split 0 columnline
   (starting columns test program) #
   sys.argv dup length 1 gt
     {1 get (r) file}
@@ -64,7 +69,7 @@ scriptname (columns) eq {
   (stack at end of columns test: ) #only ##stack
   (bytes available: ) # datasource bytesavailable #
   10 pageheight 10 sub moveto
-  (now showing column on page) =
+  (now showing column on page) #
   showpage
   (final stack: ) #only ##stack
 } if
