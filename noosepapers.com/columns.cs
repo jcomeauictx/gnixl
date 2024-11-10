@@ -1,7 +1,9 @@
 #!/usr/local/casperscript/bin/cs --
 (lorem_ipsum.cs) run
-(latin1font.ps) run
+(latin1font.cs) run
 (paragraphs.cs) run
+/Times-Roman latin1font
+/Times-Roman-Latin1 12 selectfont
 /xwidth {stringwidth pop} bind def
 % broadsheet typically has 5 columns, tabloid 4, zine maybe 2 or 3
 /columnwidth pagewidth 2 div def
@@ -38,7 +40,6 @@
   loop
 } bind def
 scriptname (columns) eq {
-  /Helvetica-Latin1 12 selectfont
   (starting columns test program) #
   sys.argv dup length 1 gt
     {1 get (r) file}

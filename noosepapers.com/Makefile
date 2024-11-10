@@ -18,7 +18,12 @@ gallows.pgm: gallows.png
 %.log: %.cs noosefonts.ps $(TXTS) .FORCE
 	([ -f $@ ] && mv -f $@ $*.$(TIMESTAMP).log) || true
 	([ -f $*.err ] && mv -f $*.err $*.$(TIMESTAMP).err) || true
-	./$< $(TEXTFILE) 2>$*.err | tee $@
+	if [ "$*" = "latin1font" ]; then \
+	 arg=Times-Roman; \
+	else \
+	 arg=$(TEXTFILE); \
+	fi; \
+	./$< $$arg 2>$*.err | tee $@
 ../../casperscript:
 	@echo Must git clone casperscript to the grandparent directory. >&2
 	false
