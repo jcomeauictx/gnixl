@@ -14,9 +14,10 @@
 (column width: ) #only columnwidth #only (, height: ) #only columnheight #
 /columnline {  % words index - words newindex
   (starting columnline with stack: ) #only #stack
-  /index exch def
+  /wordindex exch def
   /line 1024 string def
-  dup index get #stack
+  (stack before index: ) #only #stack
+  wordindex get #stack
 } bind def
 (
 /columns  
@@ -47,6 +48,7 @@ scriptname (columns) eq {
   32 array
   (This is a test of the ability of columnline to determine column fit.)
   () string.split 0 (before columnline: ) # #stack columnline
+  (
   (starting columns test program) #
   sys.argv dup length 1 gt
     {1 get (r) file}
@@ -74,5 +76,6 @@ scriptname (columns) eq {
   (now showing column on page) #
   showpage
   (final stack: ) #only ##stack
+  ) pop
 } if
 % vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2 syntax=postscr
