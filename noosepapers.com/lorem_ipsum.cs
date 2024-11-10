@@ -11,3 +11,4 @@
 scriptname (lorem_ipsum) eq {
   LoremIpsum {dup 256 string readstring {print} if} loop
 } if
+% vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2 syntax=postscr

@@ -146,4 +146,4 @@ scriptname (pnmimage) eq {
   sys.argv 1 get pnmtopage
   showpage
 } if
-% vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2
+% vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2 syntax=postscr

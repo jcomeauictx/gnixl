@@ -11,3 +11,4 @@ dup length dict begin {
 currentdict
 end
 /Helvetica-Latin1 exch definefont pop
+% vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2 syntax=postscr
