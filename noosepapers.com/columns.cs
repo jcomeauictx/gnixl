@@ -9,21 +9,24 @@
 /spacewidth ( ) xwidth def
 (spacewidth: ) #only spacewidth #
 % broadsheet typically has 5 columns, tabloid 4, zine maybe 2 or 3
-/columnwidth pagewidth 2 div def
+/columnwidth pagewidth 3 div def
 /columnheight pageheight 2 div def
 (column width: ) #only columnwidth #only (, height: ) #only columnheight #
 /columnline {  % words index - words newindex
   (starting columnline with stack: ) #only #stack
   /wordindex exch def
   /line 1024 string def
-  dup wordindex get dup xwidth spacewidth add line strcopy
-  string.truncate xwidth add
-  dup (line width after addition would be ) #only #
-  columnwidth ge (stack after ge: ) #only #stack
-    {(exiting with stack: ) #only line string.truncate #stack}
-    {line exch string.append /wordindex inc
-      (after append: ) #only  #stack}
-    ifelse
+  {
+    dup wordindex get dup xwidth spacewidth add line strcopy
+    (stack after strcopy: ) #only #stack
+    string.truncate xwidth add
+    dup (line width after addition would be ) #only #
+    columnwidth ge (stack after ge: ) #only #stack
+      {(exiting with stack: ) #only line string.truncate #stack}
+      {line dup ( ) string.append exch string.append /wordindex inc
+        (stack after append: ) #only  #stack}
+      ifelse
+  } loop
   wordindex
   (stack at end of columnline: ) #only #stack
   1 .quit
@@ -54,7 +57,7 @@
 ) pop
 scriptname (columns) eq {
   (testing columnline) #
-  32 array
+  16 array
   (This is a test of the ability of columnline to determine column fit.)
   () string.split 0 (before columnline: ) # #stack columnline
   (
