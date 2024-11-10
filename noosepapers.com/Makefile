@@ -23,7 +23,8 @@ gallows.pgm: gallows.png
 	else \
 	 arg=$(TEXTFILE); \
 	fi; \
-	./$< $$arg 2>$*.err | tee $@
+	{ ./$< $$arg 2>&1 1>&3 3>&- | tee $*.err; } \
+	 3>&1 1>&2 | tee $@  # https://stackoverflow.com/a/9113604/493161
 ../../casperscript:
 	@echo Must git clone casperscript to the grandparent directory. >&2
 	false
@@ -32,7 +33,7 @@ upload:
 	 --exclude='Makefile' \
 	 --exclude='README.md' \
 	 . $(SERVER):$(DOCROOT)/$(SERVER)/
-%.txt: %.pdf Makefile
+%.txt: %.pdf
 	pdftotext -nopgbrk -eol unix -enc Latin1 $<
 edit:
 	vi columns.cs paragraphs.cs
