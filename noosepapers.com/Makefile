@@ -30,6 +30,6 @@ upload:
 %.txt: %.pdf Makefile
 	pdftotext -nopgbrk -eol unix -enc Latin1 $<
 edit:
-	vi columns.cs
+	vi columns.cs paragraphs.cs
 .PRECIOUS: %.ps %.log %.txt
 .FORCE:
