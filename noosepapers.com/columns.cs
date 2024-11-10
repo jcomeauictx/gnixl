@@ -13,6 +13,7 @@
 /columnheight pageheight 2 div def
 (column width: ) #only columnwidth #only (, height: ) #only columnheight #
 /columnline {  % words index - words newindex
+  (starting columnline with stack: ) #only #stack
   /index exch def
   /line 1024 string def
   dup index get #stack
