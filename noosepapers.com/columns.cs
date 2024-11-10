@@ -16,8 +16,9 @@
   (starting columnline with stack: ) #only #stack
   /wordindex exch def
   /line 1024 string def
-  (stack before index: ) #only #stack
-  wordindex get #stack
+  wordindex get /wordindex inc line exch string.append
+  line strcopy truncate xwidth (stack after xwidth: ) #only #stack
+  1 .quit
 } bind def
 (
 /columns  
