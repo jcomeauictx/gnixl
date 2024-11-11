@@ -6,8 +6,8 @@
 (paragraphs.cs) run
 /fontsize 12 def
 /Times-Roman latin1font
-/Times-Roman-Latin1 12 selectfont
-/lineheight fontsize 1.5 mul floor def
+/Times-Roman-Latin1 fontsize selectfont
+/lineheight fontsize 1.5 mul floor def (lineheight: ) #only lineheight #
 /xwidth {stringwidth pop} bind def
 /spacewidth ( ) xwidth def
 (spacewidth: ) #only spacewidth #
@@ -45,9 +45,9 @@
   /wordindex 0 def % index to beginning of paragraph
   {wordlist wordindex columnline (after columnline: ) #only #stack
     {(end of paragraph) # x y moveto (pre-show: ) #only #stack show exit}
-    {x y moveto show /wordindex exch def y lineheight add /y def}
+    {x y moveto show /wordindex exch def y lineheight sub /y exch def}
     ifelse
-    y ymin lt {exit} if
+    y ymin lt {(column height exceeded) # exit} if
   }
   loop
   showpage
