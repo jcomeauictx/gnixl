@@ -33,13 +33,22 @@
       }
       ifelse
   } loop
-  length wordindex eq wordindex line string.truncate 3 -1 roll
+  length 1 sub wordindex eq wordindex line string.truncate 3 -1 roll
   (stack at end of columnline: ) #only #stack
 } bind def
 
 /showparagraph {  % x0 y0 y1 words - index
   (starting showparagraph with stack: ) #only #stack
-  dup 0 columnline pop 5 index 5 index moveto #stack show showpage
+  % use local variables to simplify coding
+  /wordlist exch def  /ymax exch def  /y exch def  /x exch def
+  /wordindex 0 def % index to beginning of paragraph
+  {wordlist wordindex columnline (after columnline: ) #only #stack
+    {(end of paragraph) # pop x y moveto show exit}
+    {x y moveto show /wordindex exch def y lineheight add /y def}
+    ifelse
+  }
+  loop
+  showpage
   (stack at end of showparagraph: ) #only #stack
 } bind def
 (
