@@ -61,6 +61,21 @@
   loop
   (stack at end of showparagraph: ) #only #stack
 } bind def
+
+/column {  % x0 y0 y1 source - pcount index
+  (testing column creation with stack: ) #only #stack
+  /datasource exch def
+  /pcount zero
+  {datasource paragraphs filter
+    1024 dup mul string
+    readline not /eof exch def
+    x0 y0 y1 4096 array () 3 -1 roll exch string.split showparagraph
+    eof {(exiting on EOF) # exit} if  % quit after all data processed
+    /count inc count 10000 eq {exit} if  % quit test after 10000 paragraphs
+  } loop
+  (stack at end of columns test: ) #only ##stack
+} bind def
+
 scriptname (columns) eq {
   (testing columnline) #
   16 array
@@ -88,17 +103,8 @@ scriptname (columns) eq {
     {1 get (r) file}
     {pop LoremIpsum}
     ifelse /datasource exch def
-  (testing column creation) #
-  {datasource paragraphs filter
-    1024 dup mul string
-    readline not /eof exch def
-    4096 array () 3 -1 roll exch string.split ==
-    eof {(exiting on EOF) # exit} if  % quit after all data processed
-    /count inc count 10000 eq {exit} if  % quit test after 10000 paragraphs
-  } loop
-  (stack at end of columns test: ) #only ##stack
   (bytes available: ) # datasource bytesavailable #
-  10 pageheight 10 sub moveto
+  10 columnwidth add pageheight 10 sub lineheight sub 10 datasource column
   (now showing column on page) #
   showpage
   (final stack: ) #only ##stack
