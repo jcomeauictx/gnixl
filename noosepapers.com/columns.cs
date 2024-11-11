@@ -62,30 +62,6 @@
   showpage
   (stack at end of showparagraph: ) #only #stack
 } bind def
-(
-/columns  
-      {
-        dup /word exch def
-	xwidth line xwidth spacewidth add add dup
-	(length after adding ") #only word #only (": ) print #
-	(compare to width: ) #only width #
-	(stack: ) #only ###stack
-        width gt
-          {
-            gsave
-            (showing ") line + (" at ) + print
-              currentpoint exch =only (,) print =
-            line show /line word ( ) stradd def
-            grestore
-            0 -10 rmoveto
-            currentpoint exch pop 0 lt {exit} if
-          }
-          {line ( ) stradd /line exch def}
-          ifelse  % row width > column width
-      }
-      ifelse  % readstring filled wordbuffer
-} bind def
-) pop
 scriptname (columns) eq {
   (testing columnline) #
   16 array
@@ -99,8 +75,7 @@ scriptname (columns) eq {
   dup lineheight 10 mul sub  % y1 (10 lines desired)
   128 array loremipsum () string.split  % words
   showparagraph
-  /defaultdevice cvx 1 .quit
-  (
+  % /defaultdevice cvx 1 .quit
   (starting columns test program) #
   sys.argv dup length 1 gt
     {1 get (r) file}
@@ -118,7 +93,7 @@ scriptname (columns) eq {
   {datasource paragraphs filter
     1024 dup mul string
     readline not /eof exch def
-    4096 array () 3 -1 roll exch string.split array.truncate ==
+    4096 array () 3 -1 roll exch string.split ==
     eof {(exiting on EOF) # exit} if  % quit after all data processed
     /count inc count 10000 eq {exit} if  % quit test after 10000 paragraphs
   } loop
@@ -128,6 +103,5 @@ scriptname (columns) eq {
   (now showing column on page) #
   showpage
   (final stack: ) #only ##stack
-  ) pop
 } if
 % vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2 syntax=postscr
