@@ -53,27 +53,30 @@
   /wordindex 0 def % index to beginning of paragraph
   {wordlist wordindex columnline (after columnline: ) #only #stack
     exch x y moveto lineshow (after lineshow: ) #only #stack
-    {(end of paragraph: ) #only #stack}
+    {(end of paragraph: ) #only #stack exit}
     {/wordindex exch def y lineheight sub /y exch def}
     ifelse
-    y ymin lt {(column height exceeded: ) #only #stack exit} if
+    y ymin lt {(column height exceeded: ) #only #stack wordindex exit} if
   }
   loop
   (stack at end of showparagraph: ) #only #stack
 } bind def
 
-/column {  % x0 y0 y1 source - pcount index
+/column {  % x0 y0 y1 source - pcount pindex
   (testing column creation with stack: ) #only #stack
-  /datasource exch def
+  /datasource exch def  /y1 exch def  /y exch def  /x exch def
   /pcount zero
   {datasource paragraphs filter
+    (column loop in progress) #
     1024 dup mul string
     readline not /eof exch def
-    x0 y0 y1 4096 array () 3 -1 roll exch string.split showparagraph
+    x y y1 4096 array () 6 -1 roll exch #stack string.split showparagraph
+    /pindex exch def
     eof {(exiting on EOF) # exit} if  % quit after all data processed
-    /count inc count 10000 eq {exit} if  % quit test after 10000 paragraphs
+    /pcount inc pcount 100 eq {exit} if  % quit test after 100 paragraphs
   } loop
   (stack at end of columns test: ) #only ##stack
+  pcount pindex
 } bind def
 
 scriptname (columns) eq {
