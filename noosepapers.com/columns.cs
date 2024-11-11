@@ -18,6 +18,7 @@
 /columnline {  % words index - newindex string endofparagraph
   (starting columnline with stack: ) #only #stack
   /wordindex exch def
+  /maxindex 1 index length 1 sub def
   /line 1024 string def
   {
     (stack at start of loop: ) #only #stack
@@ -25,7 +26,7 @@
     (stack after strcopy: ) #only #stack
     string.truncate xwidth add
     dup (line width after addition would be ) #only #
-    columnwidth ge (stack after ge: ) #only #stack
+    columnwidth ge wordindex maxindex eq or (stack after ge: ) #only #stack
       {pop (exiting with stack: ) #only #stack exit}
       {line strlen 0 gt {line ( ) string.append} if
         line exch string.append /wordindex inc
@@ -43,7 +44,7 @@
   /wordlist exch def  /ymin exch def  /y exch def  /x exch def
   /wordindex 0 def % index to beginning of paragraph
   {wordlist wordindex columnline (after columnline: ) #only #stack
-    {(end of paragraph) # pop x y moveto show exit}
+    {(end of paragraph) # x y moveto (pre-show: ) #only #stack show exit}
     {x y moveto show /wordindex exch def y lineheight add /y def}
     ifelse
     y ymin lt {exit} if
