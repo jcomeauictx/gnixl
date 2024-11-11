@@ -1,10 +1,13 @@
 #!/usr/local/casperscript/bin/cs --
+% typographicwebdesign.com/setting-text/font-size-line-height-measure-alignment/
 (starting columns.cs) #
 (lorem_ipsum.cs) run
 (latin1font.cs) run
 (paragraphs.cs) run
+/fontsize 12 def
 /Times-Roman latin1font
 /Times-Roman-Latin1 12 selectfont
+/lineheight fontsize 1.5 mul floor def
 /xwidth {stringwidth pop} bind def
 /spacewidth ( ) xwidth def
 (spacewidth: ) #only spacewidth #
@@ -32,7 +35,10 @@
   } loop
   length wordindex eq wordindex line string.truncate 3 -1 roll
   (stack at end of columnline: ) #only #stack
-  1 .quit
+} bind def
+
+/showparagraph {  % x0 y0 y1 words - index
+  (starting showparagraph with stack: ) #only #stack
 } bind def
 (
 /columns  
@@ -63,6 +69,16 @@ scriptname (columns) eq {
   16 array
   (This is a test of the ability of columnline to determine column fit.)
   () string.split 0 (before columnline: ) # #stack columnline
+  (end of paragraph: ) #only #only (, line of text: ") #only #only
+  (", new index: ) #only #
+  (testing showparagraph) #
+  10  % x0
+  pageheight 10 sub lineheight sub  % y0
+  dup lineheight 10 mul sub  % y1 (10 lines desired)
+  128 array loremipsum () string.split  % words
+  0  % index
+  showparagraph
+  1 .quit
   (
   (starting columns test program) #
   sys.argv dup length 1 gt
