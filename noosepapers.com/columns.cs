@@ -39,6 +39,8 @@
 
 /showparagraph {  % x0 y0 y1 words - index
   (starting showparagraph with stack: ) #only #stack
+  dup 0 columnline pop 5 index 5 index moveto #stack show showpage
+  (stack at end of showparagraph: ) #only #stack
 } bind def
 (
 /columns  
@@ -76,7 +78,6 @@ scriptname (columns) eq {
   pageheight 10 sub lineheight sub  % y0
   dup lineheight 10 mul sub  % y1 (10 lines desired)
   128 array loremipsum () string.split  % words
-  0  % index
   showparagraph
   1 .quit
   (
