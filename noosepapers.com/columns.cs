@@ -17,14 +17,17 @@
   /wordindex exch def
   /line 1024 string def
   {
+    (stack at start of loop: ) #only #stack
     dup wordindex get dup xwidth spacewidth add line strcopy
     (stack after strcopy: ) #only #stack
     string.truncate xwidth add
     dup (line width after addition would be ) #only #
     columnwidth ge (stack after ge: ) #only #stack
-      {(exiting with stack: ) #only line string.truncate #stack}
-      {line dup ( ) string.append exch string.append /wordindex inc
-        (stack after append: ) #only  #stack}
+      {pop (exiting with stack: ) #only #stack exit}
+      {line strlen 0 gt {line ( ) string.append} if
+        line exch string.append /wordindex inc
+        (stack after append: ) #only  #stack
+      }
       ifelse
   } loop
   wordindex
