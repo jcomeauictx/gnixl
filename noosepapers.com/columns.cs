@@ -59,7 +59,6 @@
     y ymin lt {(column height exceeded: ) #only #stack exit} if
   }
   loop
-  showpage
   (stack at end of showparagraph: ) #only #stack
 } bind def
 scriptname (columns) eq {
