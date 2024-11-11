@@ -42,5 +42,8 @@ upload:
 	pdftotext -nopgbrk -eol unix -enc Latin1 $<
 edit:
 	vi columns.cs paragraphs.cs
+push:
+	git push  # to default repository
+	git push githost  # to personal repo, must be added to /etc/hosts
 .PRECIOUS: %.ps %.log %.txt
 .FORCE:
