@@ -12,7 +12,7 @@
 /columnwidth pagewidth 3 div def
 /columnheight pageheight 2 div def
 (column width: ) #only columnwidth #only (, height: ) #only columnheight #
-/columnline {  % words index - words newindex
+/columnline {  % words index - newindex string endofparagraph
   (starting columnline with stack: ) #only #stack
   /wordindex exch def
   /line 1024 string def
@@ -30,7 +30,7 @@
       }
       ifelse
   } loop
-  wordindex
+  length wordindex eq wordindex line string.truncate 3 -1 roll
   (stack at end of columnline: ) #only #stack
   1 .quit
 } bind def
