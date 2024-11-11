@@ -40,12 +40,13 @@
 /showparagraph {  % x0 y0 y1 words - index
   (starting showparagraph with stack: ) #only #stack
   % use local variables to simplify coding
-  /wordlist exch def  /ymax exch def  /y exch def  /x exch def
+  /wordlist exch def  /ymin exch def  /y exch def  /x exch def
   /wordindex 0 def % index to beginning of paragraph
   {wordlist wordindex columnline (after columnline: ) #only #stack
     {(end of paragraph) # pop x y moveto show exit}
     {x y moveto show /wordindex exch def y lineheight add /y def}
     ifelse
+    y ymin lt {exit} if
   }
   loop
   showpage
