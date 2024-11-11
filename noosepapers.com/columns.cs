@@ -8,6 +8,10 @@
 /Times-Roman latin1font
 /Times-Roman-Latin1 fontsize selectfont
 /lineheight fontsize 1.5 mul floor def (lineheight: ) #only lineheight #
+% NOTE on x and y width (from PLRM section 5.4):
+% Most Indo-European alphabets, including the Latin alphabet,
+% have a positive x width and a zero y width. Semitic alphabets have a
+% negative x width, and some Asian writing systems have a nonzero y width.
 /xwidth {stringwidth pop} bind def
 /spacewidth ( ) xwidth def
 (spacewidth: ) #only spacewidth #
@@ -38,16 +42,21 @@
   (stack at end of columnline: ) #only #stack
 } bind def
 
+/lineshow {
+  (before show: ) #only #stack show
+} bind def
+
 /showparagraph {  % x0 y0 y1 words - index
   (starting showparagraph with stack: ) #only #stack
   % use local variables to simplify coding
   /wordlist exch def  /ymin exch def  /y exch def  /x exch def
   /wordindex 0 def % index to beginning of paragraph
   {wordlist wordindex columnline (after columnline: ) #only #stack
-    {(end of paragraph) # x y moveto (pre-show: ) #only #stack show exit}
-    {x y moveto show /wordindex exch def y lineheight sub /y exch def}
+    exch x y moveto lineshow (after lineshow: ) #only #stack
+    {(end of paragraph: ) #only #stack}
+    {/wordindex exch def y lineheight sub /y exch def}
     ifelse
-    y ymin lt {(column height exceeded) # exit} if
+    y ymin lt {(column height exceeded: ) #only #stack exit} if
   }
   loop
   showpage
@@ -90,7 +99,7 @@ scriptname (columns) eq {
   dup lineheight 10 mul sub  % y1 (10 lines desired)
   128 array loremipsum () string.split  % words
   showparagraph
-  1 .quit
+  /defaultdevice cvx 1 .quit
   (
   (starting columns test program) #
   sys.argv dup length 1 gt
