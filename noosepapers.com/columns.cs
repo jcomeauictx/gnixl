@@ -56,7 +56,7 @@
     x y moveto lineshow (after lineshow: ) #only #stack
     /wordindex exch def y lineheight sub /y exch def
     % done if end of paragraph OR column height exceeded
-    y ymin lt 1 index or {wordindex y exit} if
+    y ymin lt or {wordindex y exit} if
   }
   loop
   (stack at end of showparagraph: ) #only #stack
