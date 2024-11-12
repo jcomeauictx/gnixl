@@ -8,6 +8,7 @@
 /Times-Roman latin1font
 /Times-Roman-Latin1 fontsize selectfont
 /lineheight fontsize 1.5 mul floor def (lineheight: ) #only lineheight #
+/MAXPARAGRAPHS 100 def  % NOTE: this is for testing with Lorem ipsum generator
 % NOTE on x and y width (from PLRM section 5.4):
 % Most Indo-European alphabets, including the Latin alphabet,
 % have a positive x width and a zero y width. Semitic alphabets have a
@@ -19,7 +20,7 @@
 /columnwidth pagewidth 3 div def
 /columnheight pageheight 2 div def
 (column width: ) #only columnwidth #only (, height: ) #only columnheight #
-/columnline {  % words index - newindex string endofparagraph
+/columnline {  % words index - endofparagraph newindex string
   (starting columnline with stack: ) #only #stack
   /wordindex exch def
   /maxindex 1 index length 1 sub def
@@ -38,25 +39,24 @@
       }
       ifelse
   } loop
-  length 1 sub wordindex eq wordindex line string.truncate 3 -1 roll
+  length 1 sub wordindex eq wordindex line string.truncate
   (stack at end of columnline: ) #only #stack
 } bind def
 
-/lineshow {
+/lineshow {  % string -
   (before show: ) #only #stack show
 } bind def
 
-/showparagraph {  % x0 y0 y1 words - index
+/showparagraph {  % x0 y0 y1 words - index y
   (starting showparagraph with stack: ) #only #stack
   % use local variables to simplify coding
   /wordlist exch def  /ymin exch def  /y exch def  /x exch def
   /wordindex 0 def % index to beginning of paragraph
   {wordlist wordindex columnline (after columnline: ) #only #stack
-    exch x y moveto lineshow (after lineshow: ) #only #stack
-    {(end of paragraph: ) #only #stack exit}
-    {/wordindex exch def y lineheight sub /y exch def}
-    ifelse
-    y ymin lt {(column height exceeded: ) #only #stack wordindex exit} if
+    x y moveto lineshow (after lineshow: ) #only #stack
+    /wordindex exch def y lineheight sub /y exch def
+    % done if end of paragraph OR column height exceeded
+    y ymin lt 1 index or {wordindex y exit} if
   }
   loop
   (stack at end of showparagraph: ) #only #stack
@@ -71,9 +71,12 @@
     1024 dup mul string
     readline not /eof exch def
     x y y1 4096 array () 6 -1 roll exch #stack string.split showparagraph
-    /pindex exch def
-    eof {(exiting on EOF) # exit} if  % quit after all data processed
-    /pcount inc pcount 100 eq {exit} if  % quit test after 100 paragraphs
+    exch /pindex exch def
+    /pcount inc
+    % quit if column complete, or all data processed, or max paragraphs read
+    eof {(exiting on EOF) # pop exit} if
+    y1 lt {(exiting on paragraph complete) # exit} if
+    pcount MAXPARAGRAPHS eq {(exiting on max paragraphs) # exit} if
   } loop
   (stack at end of columns test: ) #only ##stack
   pcount pindex
