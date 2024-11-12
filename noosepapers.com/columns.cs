@@ -72,11 +72,11 @@
 
 /column {  % x0 y0 y1 source - pcount pindex
   (testing column creation with stack: ) #only #stack
-  /datasource exch def  /y1 exch def  /y exch def  /x exch def
-  (datasource: ) #only datasource ##only (, y1: ) #only y1 #only
+  /source exch def  /y1 exch def  /y exch def  /x exch def
+  (source: ) #only source ##only (, y1: ) #only y1 #only
   (, y: ) #only y #only (, x: ) #only x #
   /pcount zero
-  {datasource paragraphs filter
+  {source paragraphs filter
     (column loop in progress) #
     1024 dup mul string
     readline not /eof exch def
@@ -121,11 +121,11 @@ scriptname (columns) eq {
     {1 get (r) file}
     {pop LoremIpsum}
     ifelse /datasource exch def
-  (bytes available: ) # datasource bytesavailable #
+  (bytes available: ) #only datasource bytesavailable #
   margin columnwidth add  % x0
   pageheight margin sub lineheight sub % y0
   margin  % y1
-  datasource column
+  datasource column datasource closefile
   (now showing column on page) #
   showpage
   (final stack: ) #only ##stack
