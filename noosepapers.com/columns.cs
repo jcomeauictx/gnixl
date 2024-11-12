@@ -4,6 +4,7 @@
 (lorem_ipsum.cs) run
 (latin1font.cs) run
 (paragraphs.cs) run
+/margin 10 def  % top and bottom, left and right, between columns
 /fontsize 12 def
 /Times-Roman latin1font
 /Times-Roman-Latin1 fontsize selectfont
@@ -80,9 +81,12 @@
     x y y1 4096 array () 6 -1 roll exch #stack string.split showparagraph
     exch /pindex exch def
     /pcount inc
+    (column: paragraph count so far: ) #only pcount #
     % quit if column complete, or all data processed, or max paragraphs read
     eof {(exiting on EOF) # pop exit} if
-    y1 lt {(exiting on paragraph complete) # exit} if
+    (stack before checking whether new y is less than y1) #only #stack
+    % FIXME: numbers on stack here are WRONG
+    y1 exch lt {(exiting on column allocation complete) # exit} if
     pcount MAXPARAGRAPHS eq {(exiting on max paragraphs) # exit} if
   } loop
   (stack at end of columns test: ) #only ##stack
@@ -97,9 +101,9 @@ scriptname (columns) eq {
   (end of paragraph: ) #only #only (, line of text: ") #only #only
   (", new index: ) #only #
   (testing showparagraph) #
-  10  % x0
-  pageheight 10 sub lineheight sub  % y0
-  dup lineheight 10 mul sub  % y1 (10 lines desired)
+  margin  % x0
+  pageheight margin sub lineheight sub  % y0
+  dup lineheight 9 mul sub  % y1 (10 lines desired)
   128 array loremipsum () string.split  % words
   showparagraph
   % /defaultdevice cvx 1 .quit
@@ -117,7 +121,10 @@ scriptname (columns) eq {
     {pop LoremIpsum}
     ifelse /datasource exch def
   (bytes available: ) # datasource bytesavailable #
-  10 columnwidth add pageheight 10 sub lineheight sub 10 datasource column
+  margin columnwidth add  % x0
+  pageheight margin sub lineheight sub % y0
+  margin  % y1
+  datasource column
   (now showing column on page) #
   showpage
   (final stack: ) #only ##stack
