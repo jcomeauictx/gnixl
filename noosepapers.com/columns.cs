@@ -43,11 +43,14 @@
   (stack at end of columnline: ) #only #stack
 } bind def
 
-/lineshow {  % string -
+/lineshow {  % string final -
   (before show: ) #only #stack
-  dup ( ) string.count  % count the spaces
-  1 index xwidth columnwidth exch sub exch div  % pixels each space must occupy
-  0 ( ) ord 4 -1 roll (stack before widthshow: ) #only #stack widthshow
+  {show}
+  {dup ( ) string.count  % count the spaces
+    1 index xwidth columnwidth exch sub exch div  % pixels space must occupy
+    0 ( ) ord 4 -1 roll (stack before widthshow: ) #only #stack widthshow
+  }
+  ifelse
 } bind def
 
 /showparagraph {  % x0 y0 y1 words - index y
@@ -56,7 +59,7 @@
   /wordlist exch def  /ymin exch def  /y exch def  /x exch def
   /wordindex 0 def % index to beginning of paragraph
   {wordlist wordindex columnline (after columnline: ) #only #stack
-    x y moveto lineshow (after lineshow: ) #only #stack
+    x y moveto false lineshow (after lineshow: ) #only #stack
     /wordindex exch def y lineheight sub /y exch def
     dup {y lineheight sub /y exch def} if  % subtract another line at end
     % done if end of paragraph OR column height exceeded
