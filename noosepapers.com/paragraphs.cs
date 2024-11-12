@@ -17,7 +17,7 @@
           {pop counttomark 0 eq  % only thing found so far?
             {(ignoring empty line preceding actual content) #}
             {pop  % remove space from end of previous line
-              (stack at inner loop exit (end of paragraph): ) #only ##stack
+              %(stack at inner loop exit (end of paragraph): ) #only ##stack
               exit  % end of paragraph
             }
             ifelse
@@ -34,25 +34,27 @@
         eof {(exiting inner loop on EOF) # exit} if
       }  % end of paragraph read
       loop
-      (joining fragments into paragraph, stack: ) #only ##stack
+      %(joining fragments into paragraph, stack: ) #only ##stack
       ]  % create an array of the strings found
       %(stack before join: ) #only ##stack
       /paragraph 1024 dup mul string def  % megabyte string to hold paragraph
       {paragraph exch string.append} forall paragraph truncate
       %(after join complete: ) #only ##stack
       dup strlen 0 gt
-        {(adding line separator to concatenated string) # (\n\n) stradd}
+        {%(adding line separator to concatenated string) #
+          (\n\n) stradd
+        }
         {(found empty string, marking EOF) # pop EOF}
         ifelse
       exit
     }
     loop
-    (exiting outer loop with string ") #only dup #only (") #
+    %(exiting outer loop with string ") #only dup #only (") #
   }
   <</EODCount 1 /EODString EOF>>
   /SubFileDecode
 } bind def
-/column {
+scriptname (paragraphs) eq {
   (starting paragraphs test program) #
   /count zero
   sys.argv dup length 1 gt
@@ -70,7 +72,6 @@
   (stack at end of columns test: ) #only ##stack
   (bytes available: ) # datasource bytesavailable #
   (final stack: ) #only ##stack
-} bind def
-scriptname (paragraphs) eq {column} if
+} if
 (stack remaining at end of test: ) #only ##stack
 % vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2 syntax=postscr
