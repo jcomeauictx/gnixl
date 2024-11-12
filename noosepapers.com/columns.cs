@@ -73,6 +73,8 @@
 /column {  % x0 y0 y1 source - pcount pindex
   (testing column creation with stack: ) #only #stack
   /datasource exch def  /y1 exch def  /y exch def  /x exch def
+  (datasource: ) #only datasource ##only (, y1: ) #only y1 #only
+  (, y: ) #only y #only (, x: ) #only x #
   /pcount zero
   {datasource paragraphs filter
     (column loop in progress) #
@@ -84,12 +86,11 @@
     (column: paragraph count so far: ) #only pcount #
     % quit if column complete, or all data processed, or max paragraphs read
     eof {(exiting on EOF) # pop exit} if
-    (stack before checking whether new y is less than y1) #only #stack
-    % FIXME: numbers on stack here are WRONG
-    y1 exch lt {(exiting on column allocation complete) # exit} if
+    y1 lt {(exiting on column allocation complete) # exit} if
     pcount MAXPARAGRAPHS eq {(exiting on max paragraphs) # exit} if
+    (not exiting, continuing column loop) #
   } loop
-  (stack at end of columns test: ) #only ##stack
+  (stack at end of column: ) #only ##stack
   pcount pindex
 } bind def
 
