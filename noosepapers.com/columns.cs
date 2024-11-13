@@ -21,7 +21,7 @@
 /columnsperpage 3 def
 /columnwidth pagewidth margin dup add sub columnsperpage div def
 /linewidth columnwidth margin sub def
-/columnheight pageheight margin dup add def
+/columnheight pageheight margin dup add sub def
 (column width: ) #only columnwidth #only (, height: ) #only columnheight #
 /columnline {  % words index - endofparagraph newindex string
   (starting columnline with stack: ) #only #stack
@@ -107,47 +107,30 @@
   pcount pindex
 } bind def
 
-/columns {  % source columns startcolumn (startcolumn is one-based)
+/columns {  % source columns startcolumn - pcount pindex
+  % (startcolumn is one-based)
+  (starting columns with stack: ) #only #stack
   2 dict begin
   1 sub columnwidth mul margin add /x exch def
   dup ceiling /width def  % e.g., 1.5 columns means 2 column width
+  {
+    x  % starting x of column
+    pageheight margin sub  % starting y of column
+    margin  % y1 of column
+    4 index column
+  } exec
   end
 } bind def
 
 scriptname (columns) eq {
-  (testing columnline) #
-  16 array
-  (This is a test of the ability of columnline to determine column fit.)
-  () string.split 0 (before columnline: ) # #stack columnline
-  (end of paragraph: ) #only #only (, line of text: ") #only #only
-  (", new index: ) #only #
-  (testing showparagraph) #
-  margin  % x0
-  pageheight margin sub lineheight sub  % y0
-  dup lineheight 9 mul sub  % y1 (10 lines desired)
-  128 array loremipsum () string.split  % words
-  showparagraph
-  (after show paragraph, y: ) #only #only (, index: ) #only #
-  % /defaultdevice cvx 1 .quit
   (starting columns test program with stack: ) #only #stack
-  sys.argv dup length 1 gt
-    {1 get (r) file}
-    {pop loremipsum}
-    ifelse /datasource exch def
-  0 1 currentfont /Encoding get 3 1 roll
-    2 index length 1 sub dup /charmap exch dict def
-    {1 index 1 index get charmap 3 1 roll exch put} for pop
-  /count zero
   sys.argv dup length 1 gt
     {1 get (r) file}
     {pop LoremIpsum}
     ifelse /datasource exch def
   (bytes available: ) #only datasource bytesavailable #
-  margin columnwidth add  % x0
-  pageheight margin sub lineheight sub % y0
-  margin  % y1
-  datasource column datasource closefile
-  (now showing column on page) #
+  datasource 2.5 1 columns
+  (now showing columns on page) #
   showpage
   exch (final paragraph shown: ) #only #only (, word index: ) #only #
   (final stack: ) #only ##stack
