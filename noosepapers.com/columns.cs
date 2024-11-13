@@ -47,9 +47,12 @@
 /lineshow {  % string final -
   (before show: ) #only #stack
   {show}
-  {dup ( ) string.count  % count the spaces
-    1 index xwidth columnwidth exch sub exch div  % pixels space must occupy
-    0 ( ) ord 4 -1 roll (stack before widthshow: ) #only #stack widthshow
+  {dup ( ) string.count dup cvbool  % count the spaces and set flag
+    {1 index xwidth columnwidth exch sub exch div  % pixels space must occupy
+      0 ( ) ord 4 -1 roll (stack before widthshow: ) #only #stack widthshow
+    }
+    {pop show}
+    ifelse
   }
   ifelse
 } bind def
