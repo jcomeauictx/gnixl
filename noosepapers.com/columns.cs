@@ -107,8 +107,9 @@ scriptname (columns) eq {
   dup lineheight 9 mul sub  % y1 (10 lines desired)
   128 array loremipsum () string.split  % words
   showparagraph
+  (after show paragraph, y: ) #only #only (, index: ) #only #
   % /defaultdevice cvx 1 .quit
-  (starting columns test program) #
+  (starting columns test program with stack: ) #only #stack
   sys.argv dup length 1 gt
     {1 get (r) file}
     {pop loremipsum}
@@ -128,6 +129,7 @@ scriptname (columns) eq {
   datasource column datasource closefile
   (now showing column on page) #
   showpage
+  exch (final paragraph shown: ) #only #only (, word index: ) #only #
   (final stack: ) #only ##stack
 } if
 % vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2 syntax=postscr
