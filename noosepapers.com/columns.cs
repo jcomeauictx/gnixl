@@ -18,8 +18,8 @@
 /spacewidth ( ) xwidth def
 (spacewidth: ) #only spacewidth #
 % broadsheet typically has 5 columns, tabloid 4, zine maybe 2 or 3
-/columnwidth pagewidth 3 div def
-/columnheight pageheight 2 div def
+/columnwidth pagewidth margin dup add sub 3 div def
+/columnheight pageheight margin dup add 2 div def
 (column width: ) #only columnwidth #only (, height: ) #only columnheight #
 /columnline {  % words index - endofparagraph newindex string
   (starting columnline with stack: ) #only #stack
