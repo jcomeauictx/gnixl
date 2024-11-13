@@ -40,7 +40,10 @@
       }
       ifelse
   } loop
-  length 1 sub wordindex eq wordindex line string.truncate
+  pop  % discard words array
+  maxindex wordindex eq  % set endofparagraph flag
+  wordindex  % newindex
+  line string.truncate  % trim trailing nulls off string
   (stack at end of columnline: ) #only #stack
 } bind def
 
