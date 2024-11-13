@@ -107,6 +107,13 @@
   pcount pindex
 } bind def
 
+/columns {  % source columns startcolumn (startcolumn is one-based)
+  2 dict begin
+  1 sub columnwidth mul margin add /x exch def
+  dup ceiling /width def  % e.g., 1.5 columns means 2 column width
+  end
+} bind def
+
 scriptname (columns) eq {
   (testing columnline) #
   16 array
