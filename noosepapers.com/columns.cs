@@ -118,6 +118,8 @@
     pageheight margin sub  % starting y of column
     margin  % y1 of column
     4 index column (after column: ) #only #stack
+    pop pop  % FIXME: clean off pcount and pindex for now
+    /x x columnwidth add def
   } repeat
   end
 } bind def
