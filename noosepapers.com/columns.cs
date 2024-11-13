@@ -19,6 +19,7 @@
 (spacewidth: ) #only spacewidth #
 % broadsheet typically has 5 columns, tabloid 4, zine maybe 2 or 3
 /columnwidth pagewidth margin dup add sub 3 div def
+/linewidth columnwidth margin sub def
 /columnheight pageheight margin dup add 2 div def
 (column width: ) #only columnwidth #only (, height: ) #only columnheight #
 /columnline {  % words index - endofparagraph newindex string
@@ -35,7 +36,7 @@
         (stack after strcopy: ) #only #stack
         string.truncate xwidth add
         dup (line width after addition would be ) #only #
-        columnwidth ge wordindex maxindex gt or (stack after ge: ) #only #stack
+        linewidth ge wordindex maxindex gt or (stack after ge: ) #only #stack
           {pop (columnline complete, exiting with stack: ) #only #stack exit}
           {line strlen 0 gt {line ( ) string.append} if
             line exch string.append /wordindex inc
@@ -56,7 +57,7 @@
   (before show: ) #only #stack
   {show}
   {dup ( ) string.count dup cvbool  % count the spaces and set flag
-    {1 index xwidth columnwidth exch sub exch div  % pixels space must occupy
+    {1 index xwidth linewidth exch sub exch div  % pixels space must occupy
       0 ( ) ord 4 -1 roll (stack before widthshow: ) #only #stack widthshow
     }
     {pop show}
