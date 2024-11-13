@@ -112,13 +112,13 @@
   (starting columns with stack: ) #only #stack
   2 dict begin
   1 sub columnwidth mul margin add /x exch def
-  dup ceiling /width def  % e.g., 1.5 columns means 2 column width
+  dup ceiling cvi % e.g., 1.5 columns means 2 column width
   {
     x  % starting x of column
     pageheight margin sub  % starting y of column
     margin  % y1 of column
-    4 index column
-  } exec
+    4 index column (after column: ) #only #stack
+  } repeat
   end
 } bind def
 
