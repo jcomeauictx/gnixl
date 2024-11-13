@@ -27,21 +27,26 @@
   /maxindex 1 index length 1 sub def
   /line 1024 string def
   {
-    (stack at start of loop: ) #only #stack
-    dup wordindex get dup xwidth spacewidth add line strcopy
-    (stack after strcopy: ) #only #stack
-    string.truncate xwidth add
-    dup (line width after addition would be ) #only #
-    columnwidth ge wordindex maxindex eq or (stack after ge: ) #only #stack
-      {pop (exiting with stack: ) #only #stack exit}
-      {line strlen 0 gt {line ( ) string.append} if
-        line exch string.append /wordindex inc
-        (stack after append: ) #only  #stack
+    wordindex maxindex gt
+      {(wordindex exceeds maxindex, exiting with stack: ) #only #stack exit}
+      {
+        (stack at start of loop: ) #only #stack
+        dup wordindex get dup xwidth spacewidth add line strcopy
+        (stack after strcopy: ) #only #stack
+        string.truncate xwidth add
+        dup (line width after addition would be ) #only #
+        columnwidth ge wordindex maxindex gt or (stack after ge: ) #only #stack
+          {pop (columnline complete, exiting with stack: ) #only #stack exit}
+          {line strlen 0 gt {line ( ) string.append} if
+            line exch string.append /wordindex inc
+            (stack after append: ) #only  #stack
+          }
+          ifelse
       }
       ifelse
   } loop
   pop  % discard words array
-  maxindex wordindex eq  % set endofparagraph flag
+  wordindex maxindex gt  % set endofparagraph flag
   wordindex  % newindex
   line string.truncate  % trim trailing nulls off string
   (stack at end of columnline: ) #only #stack
