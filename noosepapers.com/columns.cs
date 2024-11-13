@@ -71,7 +71,7 @@
   /wordlist exch def  /ymin exch def  /y exch def  /x exch def
   /wordindex 0 def % index to beginning of paragraph
   {wordlist wordindex columnline (after columnline: ) #only #stack
-    x y moveto false lineshow (after lineshow: ) #only #stack
+    x y moveto 2 index lineshow (after lineshow: ) #only #stack
     /wordindex exch def y lineheight sub /y exch def
     dup {y lineheight sub /y exch def} if  % subtract another line at end
     % done if end of paragraph OR column height exceeded
