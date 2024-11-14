@@ -30,12 +30,15 @@
   /line 1024 string def
   {
     wordindex maxindex gt
-      {(wordindex exceeds maxindex, exiting with stack: ) #only #stack exit}
+      {
+        (wordindex exceeds maxindex, stack: ) #only #stack
+        exit
+      }
       {
         %(stack at start of loop: ) #only #stack
-        dup wordindex get dup xwidth spacewidth add line strcopy
-        %(stack after strcopy: ) #only #stack
-        string.truncate xwidth add
+        dup wordindex get dup xwidth spacewidth add
+        line strcopy string.truncate  % string with new word appended
+        xwidth add  % add to running pixel length total
         %dup (line width after addition would be ) #only #
         linewidth ge wordindex maxindex gt or %(stack after ge: ) #only #stack
           {pop exit}
