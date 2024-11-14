@@ -8,8 +8,10 @@
   % substring false at EOF;
   % rangecheck error if string filled before newline seen
   {(stack at start of filter procedure: ) #only #stack
+    3 dict begin
+    2 index /source exch def
     {[
-      {3 index 8192 string (before readline: ) #only ##stack
+      {source 8192 string (before readline: ) #only ##stack
         readline %(after readline: ) #only ##stack
         not /eof exch def  % false means end-of-file
         dup strlen 0 eq  % empty string found
@@ -49,6 +51,7 @@
     }
     loop
     %(exiting outer loop with string ") #only dup #only (") #
+    end
   }
   <</EODCount 1 /EODString EOF>>
   /SubFileDecode
