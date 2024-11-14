@@ -9,11 +9,10 @@
   % rangecheck error if string filled before newline seen
   (stack at start of `paragraphs`: ) #only #stack
   (currentdict dictwords before 3 dict begin: ) =only currentdict dictwords
-  3 dict begin  % for local variables
-  /filtered exch def (filtered: ) #only filtered ##
-  (stack after `filtered` defined: ) #only #stack
-  (currentdict dictwords after 3 dict begin: ) =only currentdict dictwords
   {(currentdict dictwords inner: ) =only currentdict dictwords
+    3 dict begin  % for local variables
+    /filtered exch def (filtered: ) #only filtered ##
+    (stack after `filtered` defined: ) #only #stack
     {[(currentdict dictwords inner inner: ) =only currentdict dictwords
       {(currentdict dictwords inner inner inner: ) =only currentdict dictwords
         filtered 8192 string %(before readline: ) #only ##stack
@@ -37,6 +36,7 @@
               ifelse
           }
           ifelse
+        (currentdict dictwords inner inner inner end: ) =only currentdict dictwords
         eof {(exiting inner loop on EOF) # exit} if
       }  % end of paragraph read
       loop
@@ -52,12 +52,15 @@
         }
         {(found empty string, marking EOF) # pop EOF}
         ifelse
+      (currentdict dictwords inner inner end: ) =only currentdict dictwords
       exit
     }
     loop
+    (currentdict dictwords inner end: ) =only currentdict dictwords
     %(exiting outer loop with string ") #only dup #only (") #
+    end
   }
-  end
+  (currentdict dictwords outer: ) =only currentdict dictwords
   <</EODCount 1 /EODString EOF>>
   /SubFileDecode
 } bind def
