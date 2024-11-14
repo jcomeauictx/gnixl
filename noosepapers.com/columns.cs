@@ -128,14 +128,17 @@
   (starting columns with stack: ) #only #stack
   5 dict begin
   (source: ) #only dup ##
-  paragraphs filter /source exch def
-  source 1024 16 mul string readline #stack
-  /defaultdevice cvx 0 .quit
+  (stack before setting up filter: ) #only #stack
+  paragraphs filter (stack after setting up filter: ) #only #stack
+  /source exch def  % should remove --file-- from stack
+  %/defaultdevice cvx 0 .quit
   % (startcolumn is one-based)
+  exch (before zero-basing columnwidth: ) #only #stack
   1 sub columnwidth mul margin add /x exch def
   /words [] def  % empty so `column` knows to read source
   /pcount 0 def  /pindex 0 def
-  dup ceiling cvi % e.g., 1.5 columns means 2 column width
+  1 index ceiling cvi % e.g., 1.5 columns means 2 column width
+  (stack after 1 index ceiling cvi: ) #only #stack
   {
     x  % starting x of column
     pageheight margin dup add sub  % starting y of column
