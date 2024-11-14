@@ -88,26 +88,29 @@
 
 /column {  % x0 y0 y1 source words pcount pindex - words pcount pindex
   (creating column with stack: ) #only #stack
-  7 dict begin  % for local variables
+  8 dict begin  % for local variables
   /pindex exch def /pcount exch def /words exch def
   /source exch def  /y1 exch def  /y exch def  /x exch def
   (source: ) #only source ##only (, y1: ) #only y1 #only
   (, y: ) #only y #only (, x: ) #only x #
   /eof false def
-  {source paragraphs filter
-    pcount {dup 1024 16 mul string readline} repeat  % skip to next paragraph
-    (column loop in progress) #
+  {
+    (column loop in progress, words: ) #only words ##
     words cvbool not
       {
         (refilling words, stack: ) #only #stack
-        dup  % make copy of --file-- object
-        1024 16 mul string readline not /eof exch def
+        source 1024 16 mul string readline not /eof exch def
         4096 array exch () string.split
-        /words exch def  /pindex 0 def
+        /words exch def  /pindex 0 def  /pcount pcount 1 add def
       } if
     x y y1 words showparagraph
     exch /pindex exch def
-    /pcount inc
+    pindex words length eq  % did we use all the words?
+      {
+        /pcount inc  % next paragraph
+        /words [] def  % erase words
+      }
+      if
     (column: paragraph count so far: ) #only pcount #
     % quit if column complete, or all data processed, or max paragraphs read
     eof {(exiting on EOF) # pop exit} if
@@ -124,7 +127,9 @@
 /columns {  % columns startcolumn source - pcount pindex
   (starting columns with stack: ) #only #stack
   5 dict begin
-  /source exch def
+  (source: ) #only dup ##
+  paragraphs filter 1024 16 mul string readline #stack
+  /defaultdevice cvx 0 .quit
   % (startcolumn is one-based)
   1 sub columnwidth mul margin add /x exch def
   /words [] def  % empty so `column` knows to read source
@@ -134,7 +139,7 @@
     x  % starting x of column
     pageheight margin dup add sub  % starting y of column
     0  % y1 of column (FIXME: may be larger if `columns` is fractional)
-    source words pcount pindex
+    source words pcount pindex  % load stack for `column`
     column (after column: ) #only #stack
     /x x columnwidth add def
     /pindex exch def  /pcount exch def  /words exch def
