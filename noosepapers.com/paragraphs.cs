@@ -10,8 +10,10 @@
   (stack at start of `paragraphs`: ) #only #stack
   (currentdict dictwords before 3 dict begin: ) =only currentdict dictwords
   {(currentdict dictwords inner: ) =only currentdict dictwords
+    (stack at start of filter block: ) #only #stack
+    % stack here should be: originalfile filterfile stringbuffer
     3 dict begin  % for local variables
-    /filtered exch def (filtered: ) #only filtered ##
+    exch /filtered exch def (filtered: ) #only filtered ##
     (stack after `filtered` defined: ) #only #stack
     {[(currentdict dictwords inner inner: ) =only currentdict dictwords
       {(currentdict dictwords inner inner inner: ) =only currentdict dictwords
@@ -72,7 +74,7 @@ scriptname (paragraphs) eq {
     {1 get (r) file}
     {pop LoremIpsum}
     ifelse /datasource exch def
-  (testing paragraphs filter) #
+  (testing paragraphs filter, stack: ) #only #stack
   {datasource paragraphs filter
     1024 dup mul string
     readline not /eof exch def
