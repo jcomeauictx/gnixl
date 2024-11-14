@@ -7,10 +7,16 @@
   % `readline` returns substring true in normal case;
   % substring false at EOF;
   % rangecheck error if string filled before newline seen
-  /source exch def
-  {
-    {[
-      {source 8192 string %(before readline: ) #only ##stack
+  (stack at start of `paragraphs`: ) #only #stack
+  (currentdict dictwords before 3 dict begin: ) =only currentdict dictwords
+  3 dict begin  % for local variables
+  /filtered exch def (filtered: ) #only filtered ##
+  (stack after `filtered` defined: ) #only #stack
+  (currentdict dictwords after 3 dict begin: ) =only currentdict dictwords
+  {(currentdict dictwords inner: ) =only currentdict dictwords
+    {[(currentdict dictwords inner inner: ) =only currentdict dictwords
+      {(currentdict dictwords inner inner inner: ) =only currentdict dictwords
+        filtered 8192 string %(before readline: ) #only ##stack
         readline %(after readline: ) #only ##stack
         not /eof exch def  % false means end-of-file
         dup strlen 0 eq  % empty string found
@@ -51,17 +57,19 @@
     loop
     %(exiting outer loop with string ") #only dup #only (") #
   }
+  end
   <</EODCount 1 /EODString EOF>>
   /SubFileDecode
 } bind def
 scriptname (paragraphs) eq {
   (starting paragraphs test program) #
+  3 dict begin  % for local variables
   /count zero
   sys.argv dup length 1 gt
     {1 get (r) file}
     {pop LoremIpsum}
     ifelse /datasource exch def
-  (testing column creation) #
+  (testing paragraphs filter) #
   {datasource paragraphs filter
     1024 dup mul string
     readline not /eof exch def
@@ -72,6 +80,7 @@ scriptname (paragraphs) eq {
   (stack at end of columns test: ) #only ##stack
   (bytes available: ) # datasource bytesavailable #
   (final stack: ) #only ##stack
+  end
 } if
 (stack remaining at end of test: ) #only ##stack
 % vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2 syntax=postscr
