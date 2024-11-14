@@ -83,17 +83,25 @@
   (stack at end of showparagraph: ) #only #stack
 } bind def
 
-/column {  % x0 y0 y1 source - pcount pindex
-  (testing column creation with stack: ) #only #stack
+/column {  % x0 y0 y1 source words pcount pindex - words pcount pindex
+  (creating column with stack: ) #only #stack
+  7 dict begin  % for local variables
+  /pindex exch def /pcount exch def /words exch def
   /source exch def  /y1 exch def  /y exch def  /x exch def
   (source: ) #only source ##only (, y1: ) #only y1 #only
   (, y: ) #only y #only (, x: ) #only x #
-  /pcount zero
+  /eof false def
   {source paragraphs filter
     (column loop in progress) #
-    1024 dup mul string
-    readline not /eof exch def
-    x y y1 4096 array () 6 -1 roll exch #stack string.split showparagraph
+    words cvbool not
+      {
+        (refilling words, stack: ) #only #stack
+        dup  % make copy of --file-- object
+        1024 16 mul string readline not /eof exch def
+        4096 array exch () string.split
+        /words exch def  /pindex 0 def
+      } if
+    x y y1 words showparagraph
     exch /pindex exch def
     /pcount inc
     (column: paragraph count so far: ) #only pcount #
@@ -105,36 +113,43 @@
   } loop
   (stack at end of column: ) #only ##stack
   pcount pindex
+  end  % end local variables dict
 } bind def
 
-/columns {  % source columns startcolumn - pcount pindex
-  % (startcolumn is one-based)
+/columns {  % columns startcolumn source - pcount pindex
   (starting columns with stack: ) #only #stack
-  2 dict begin
+  5 dict begin
+  /source exch def
+  % (startcolumn is one-based)
   1 sub columnwidth mul margin add /x exch def
+  /words [] def  % empty so `column` knows to read source
+  /pcount 0 def  /pindex 0 def
   dup ceiling cvi % e.g., 1.5 columns means 2 column width
   {
     x  % starting x of column
-    pageheight margin sub  % starting y of column
-    margin  % y1 of column
-    4 index column (after column: ) #only #stack
-    pop pop  % FIXME: clean off pcount and pindex for now
+    pageheight margin dup add sub  % starting y of column
+    0  % y1 of column (FIXME: may be larger if `columns` is fractional)
+    source words pcount pindex
+    column (after column: ) #only #stack
     /x x columnwidth add def
+    /pindex exch def  /pcount exch def  /words exch def
   } repeat
   end
 } bind def
 
 scriptname (columns) eq {
   (starting columns test program with stack: ) #only #stack
+  1 dict begin
   sys.argv dup length 1 gt
     {1 get (r) file}
     {pop LoremIpsum}
     ifelse /datasource exch def
   (bytes available: ) #only datasource bytesavailable #
-  datasource 2.5 1 columns
+  2.5 1 datasource columns
   (now showing columns on page) #
   showpage
   exch (final paragraph shown: ) #only #only (, word index: ) #only #
   (final stack: ) #only ##stack
+  end
 } if
 % vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2 syntax=postscr
