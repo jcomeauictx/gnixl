@@ -9,7 +9,7 @@
   % rangecheck error if string filled before newline seen
   {(stack at start of filter procedure: ) #only #stack
     3 dict begin
-    2 index /source exch def
+    3 -1 roll /source exch def
     {[
       {source 8192 string (before readline: ) #only ##stack
         readline %(after readline: ) #only ##stack
