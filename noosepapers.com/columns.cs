@@ -24,7 +24,7 @@
 /columnheight pageheight margin dup add sub def
 (column width: ) #only columnwidth #only (, height: ) #only columnheight #
 /columnline {  % words index - endofparagraph newindex string
-  (starting columnline with stack: ) #only #stack
+  %(starting columnline with stack: ) #only #stack
   /wordindex exch def
   /maxindex 1 index length 1 sub def
   /line 1024 string def
@@ -32,16 +32,16 @@
     wordindex maxindex gt
       {(wordindex exceeds maxindex, exiting with stack: ) #only #stack exit}
       {
-        (stack at start of loop: ) #only #stack
+        %(stack at start of loop: ) #only #stack
         dup wordindex get dup xwidth spacewidth add line strcopy
-        (stack after strcopy: ) #only #stack
+        %(stack after strcopy: ) #only #stack
         string.truncate xwidth add
-        dup (line width after addition would be ) #only #
-        linewidth ge wordindex maxindex gt or (stack after ge: ) #only #stack
-          {pop (columnline complete, exiting with stack: ) #only #stack exit}
+        %dup (line width after addition would be ) #only #
+        linewidth ge wordindex maxindex gt or %(stack after ge: ) #only #stack
+          {pop exit}
           {line strlen 0 gt {line ( ) string.append} if
             line exch string.append /wordindex inc
-            (stack after append: ) #only  #stack
+            %(stack after append: ) #only  #stack
           }
           ifelse
       }
@@ -68,7 +68,7 @@
 } bind def
 
 /showparagraph {  % x0 y0 y1 words - index y
-  (starting showparagraph with stack: ) #only #stack
+  %(starting showparagraph with stack: ) #only #stack
   % use local variables to simplify coding
   /wordlist exch def  /ymin exch def  /y exch def  /x exch def
   /wordindex 0 def % index to beginning of paragraph
@@ -92,6 +92,7 @@
   (, y: ) #only y #only (, x: ) #only x #
   /eof false def
   {source paragraphs filter
+    pcount {dup 1024 16 mul string readline} repeat  % skip to next paragraph
     (column loop in progress) #
     words cvbool not
       {
@@ -109,7 +110,8 @@
     eof {(exiting on EOF) # pop exit} if
     y1 lt {(exiting on column allocation complete) # exit} if
     pcount MAXPARAGRAPHS eq {(exiting on max paragraphs) # exit} if
-    (not exiting, continuing column loop) #
+    pop  % discard file object, we'll reopen it at top of loop
+    (not exiting, continuing column loop, stack:) #only #stack
   } loop
   (stack at end of column: ) #only ##stack
   pcount pindex
