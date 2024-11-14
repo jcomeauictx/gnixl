@@ -128,7 +128,8 @@
   (starting columns with stack: ) #only #stack
   5 dict begin
   (source: ) #only dup ##
-  paragraphs filter 1024 16 mul string readline #stack
+  paragraphs filter /source exch def
+  source 1024 16 mul string readline #stack
   /defaultdevice cvx 0 .quit
   % (startcolumn is one-based)
   1 sub columnwidth mul margin add /x exch def

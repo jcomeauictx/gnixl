@@ -7,10 +7,9 @@
   % `readline` returns substring true in normal case;
   % substring false at EOF;
   % rangecheck error if string filled before newline seen
-  /source exch def
-  {
+  {(stack at start of filter procedure: ) #only #stack
     {[
-      {source 8192 string %(before readline: ) #only ##stack
+      {3 index 8192 string (before readline: ) #only ##stack
         readline %(after readline: ) #only ##stack
         not /eof exch def  % false means end-of-file
         dup strlen 0 eq  % empty string found
