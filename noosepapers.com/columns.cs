@@ -103,7 +103,9 @@
         % stack is good to here first time through
         source  % filtered file object
         1024 16 mul string  % string large enough to hold longest line
+        (stack before column loop readline: ) #only #stack
         readline (stack after column loop readline: ) #only #stack
+        % stack already missing -file- object here
         not /eof exch def  % define local variable eof
         (currentdict: ) #only currentdict ###
         (after readline not /eof exch def, stack: ) #only #stack

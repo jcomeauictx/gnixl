@@ -11,14 +11,14 @@
     3 dict begin
     {3 -1 roll} stopped {(failed here!) #only #stack} if /source exch def
     {[
-      {source 8192 string (before readline: ) #only ##stack
-        readline (after readline: ) #only ##stack
+      {source 8192 string (before readline: ) #only #stack
+        readline (after readline: ) #only #stack
         not /eof exch def  % false means end-of-file
         dup strlen 0 eq  % empty string found
           {pop counttomark 0 eq  % only thing found so far?
             {(ignoring empty line preceding actual content) #}
             {pop  % remove space from end of previous line
-              (stack at inner loop exit (end of paragraph): ) #only ##stack
+              (stack at inner loop exit (end of paragraph): ) #only #stack
               exit  % end of paragraph
             }
             ifelse
@@ -26,26 +26,26 @@
           {
             % pdftotext replaces end-of-line hyphens with chr(0xac)
             % perhaps it meant chr(0xad), soft hyphen?
-            dup strlen 1 sub 2 copy get 16#ac eq %(hyphenated? ) #only ##stack
+            dup strlen 1 sub 2 copy get 16#ac eq %(hyphenated? ) #only #stack
               {0 exch getinterval}  % remove final character
               {pop ( )}  % remove length, and append space
               ifelse
           }
           ifelse
-        eof {(exiting inner loop on EOF) # exit} if
+        eof {(exiting inner loop on EOF, stack: ) #only #stack exit} if
       }  % end of paragraph read
       loop
-      (joining fragments into paragraph, stack: ) #only ##stack
+      (joining fragments into paragraph, stack: ) #only #stack
       ]  % create an array of the strings found
-      (stack before join: ) #only ##stack
+      (stack before join: ) #only #stack
       /paragraph 1024 dup mul string def  % megabyte string to hold paragraph
       {paragraph exch string.append} forall paragraph truncate
-      %(after join complete: ) #only ##stack
+      (after join complete: ) #only #stack
       dup strlen 0 gt
         {%(adding line separator to concatenated string) #
           (\n\n) stradd
         }
-        {(found empty string, marking EOF) # pop EOF}
+        {(found empty string, marking EOF, stack: ) #only #stack pop EOF}
         ifelse
       exit
     }
@@ -72,9 +72,9 @@ scriptname (paragraphs) eq {
     eof {(exiting on EOF) # exit} if  % quit after all data processed
     /count inc count 10000 eq {exit} if  % quit test after 10000 paragraphs
   } loop
-  (stack at end of columns test: ) #only ##stack
+  (stack at end of columns test: ) #only #stack
   (bytes available: ) # datasource bytesavailable #
-  (final stack: ) #only ##stack
+  (final stack: ) #only #stack
 } if
-(stack remaining at end of test: ) #only ##stack
+(stack remaining at end of test: ) #only #stack
 % vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2 syntax=postscr
