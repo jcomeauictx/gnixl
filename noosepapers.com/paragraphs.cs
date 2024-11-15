@@ -9,9 +9,9 @@
   % rangecheck error if string filled before newline seen
   {(stack at start of filter procedure: ) #only #stack
     3 dict begin
-    {3 -1 roll} stopped {(failed here!) #only #stack} if /source exch def
+    3 -1 roll /unfiltered exch def  % this removes unfiltered source from stack!
     {[
-      {source 8192 string (before readline: ) #only #stack
+      {unfiltered 8192 string (before readline: ) #only #stack
         readline (after readline: ) #only #stack
         not /eof exch def  % false means end-of-file
         dup strlen 0 eq  % empty string found
