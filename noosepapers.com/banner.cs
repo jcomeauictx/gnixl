@@ -34,7 +34,7 @@
   (stack: ) print =stack
 } def
 
-/banner {
+/noosepapersbanner {
   /CloisterBlack 47 selectfont
   save
   % first, a dry run to get the banner size
@@ -69,13 +69,7 @@ scriptname (banner) eq {
   /CloisterBlack 47 selectfont
   (page height: ) print pageheight =
   (page width: ) print pagewidth =
-  1 inch 1 inch moveto (The Noose Papers) false false centershow
-  gsave .5 setgray  % 2 vertical centershows will overlap
-  1 inch 2 inch moveto (The Noose Papers 2) true false centershow
-  grestore
-  1 inch 3 inch moveto (The Noose Papers 3) false true centershow
-  1 inch 4 inch moveto (The Noose Papers 4) true true centershow
-  banner
+  noosepapersbanner
   showpage
 } if
 % vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2 syntax=postscr
