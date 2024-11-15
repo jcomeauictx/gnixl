@@ -90,8 +90,8 @@
   (creating column with stack: ) #only #stack
   8 dict begin  % for local variables
   /pindex exch def /pcount exch def /words exch def
-  /source exch def  /y1 exch def  /y exch def  /x exch def
-  (source: ) #only source ##only (, y1: ) #only y1 #only
+  /filtered exch def  /y1 exch def  /y exch def  /x exch def
+  (source: ) #only filtered ##only (, y1: ) #only y1 #only
   (, y: ) #only y #only (, x: ) #only x #
   /eof false def
   {
@@ -101,7 +101,7 @@
       {
         (refilling words, stack: ) #only #stack
         % stack is good to here first time through
-        source  % filtered file object
+        filtered  % file object
         1024 16 mul string  % string large enough to hold longest line
         (stack before column loop readline: ) #only #stack
         readline (stack after column loop readline: ) #only #stack
@@ -142,7 +142,7 @@
   (source: ) #only dup ##
   (stack before setting up filter: ) #only #stack
   paragraphs filter (stack after setting up filter: ) #only #stack
-  /source exch def  % should remove -file- from stack
+  /filtered exch def  % should remove -file- from stack
   %/defaultdevice cvx 0 .quit
   % (startcolumn is one-based)
   exch (before zero-basing columnwidth: ) #only #stack
@@ -155,7 +155,7 @@
     x  % starting x of column
     pageheight margin dup add sub  % starting y of column
     0  % y1 of column (FIXME: may be larger if `columns` is fractional)
-    source words pcount pindex  % load stack for `column`
+    filtered words pcount pindex  % load stack for `column`
     column (after column: ) #only #stack
     /x x columnwidth add def
     /pindex exch def  /pcount exch def  /words exch def
