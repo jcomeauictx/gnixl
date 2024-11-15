@@ -100,17 +100,13 @@
     wordlist cvbool not
       {
         (refilling wordlist, stack: ) #only #stack
-        % stack is good to here first time through
         filtered  % file object
         1024 16 mul string  % string large enough to hold longest line
         (stack before column loop readline: ) #only #stack
         readline (stack after column loop readline: ) #only #stack
-        % stack already missing -file- object here
         not /eof exch def  % define local variable eof
         (currentdict: ) #only currentdict ###
         (after readline not /eof exch def, stack: ) #only #stack
-        % stack is just [2.5 (Message to Mankind...)] at this point
-        % -file- already missing
         4096 array exch () string.split
         /wordlist exch def  /pindex 0 def
       } if
