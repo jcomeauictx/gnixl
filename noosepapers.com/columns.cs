@@ -116,7 +116,7 @@
       } if
     x y y1 wordlist pindex showparagraph
     (after showparagraph, stack: ) #only #stack
-    exch /pindex exch def
+    /y exch def  /pindex exch def
     pindex wordlist length (all words used? ) #only #stack eq
       {
         /pcount inc  % next paragraph
@@ -128,7 +128,7 @@
     (, stack: ) #only #stack
     % quit if column complete, or all data processed, or max paragraphs read
     eof {(exiting on EOF, stack: ) #only #stack pop exit} if
-    y1 lt {(exiting on column allocation complete) # exit} if
+    y y1 lt {(exiting on column allocation complete) # exit} if
     pcount MAXPARAGRAPHS eq {(exiting on max paragraphs) # exit} if
     (not exiting, continuing column loop, stack:) #only #stack
   } loop
