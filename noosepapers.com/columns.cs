@@ -117,18 +117,18 @@
     x y y1 words showparagraph
     (after showparagraph, stack: ) #only #stack
     exch /pindex exch def
-    pindex words length eq  % did we use all the words?
+    pindex words length (all words used? ) #only #stack eq
       {
         /pcount inc  % next paragraph
         /words [] def  % erase words
       }
       if
-    (column: paragraph count so far: ) #only pcount #
+    (column: paragraph count so far: ) #only pcount #only
+    (, stack: ) #only #stack
     % quit if column complete, or all data processed, or max paragraphs read
-    eof {(exiting on EOF) # pop exit} if
+    eof {(exiting on EOF, stack: ) #only #stack pop exit} if
     y1 lt {(exiting on column allocation complete) # exit} if
     pcount MAXPARAGRAPHS eq {(exiting on max paragraphs) # exit} if
-    pop  % discard file object, we'll reopen it at top of loop
     (not exiting, continuing column loop, stack:) #only #stack
   } loop
   (stack at end of column: ) #only ##stack
