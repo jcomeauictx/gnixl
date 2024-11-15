@@ -92,7 +92,7 @@
 
 /column {  % x0 y0 y1 source wordlist pcount pindex - wordlist pcount pindex
   (creating column with stack: ) #only #stack
-  8 dict begin  % for local variables
+  10 dict begin  % for local variables
   /pindex exch def /pcount exch def /wordlist exch def
   /filtered exch def  /y1 exch def  /y exch def  /x exch def
   (source: ) #only filtered ##only (, y1: ) #only y1 #only
@@ -132,14 +132,14 @@
     pcount MAXPARAGRAPHS eq {(exiting on max paragraphs) # exit} if
     (not exiting, continuing column loop, stack:) #only #stack
   } loop
-  (stack at end of column: ) #only ##stack
   wordlist pcount pindex
+  (stack at end of column: ) #only ##stack
   end  % end local variables dict
 } bind def
 
 /columns {  % columns startcolumn source - pcount pindex
   (starting columns with stack: ) #only #stack
-  5 dict begin
+  10 dict begin
   (source: ) #only dup ##
   (stack before setting up filter: ) #only #stack
   paragraphs filter (stack after setting up filter: ) #only #stack
@@ -166,7 +166,7 @@
 
 scriptname (columns) eq {
   (starting columns test program with stack: ) #only #stack
-  1 dict begin
+  10 dict begin
   sys.argv dup length 1 gt
     {1 get (r) file}
     {pop LoremIpsum}
