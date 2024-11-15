@@ -9,16 +9,16 @@
   % rangecheck error if string filled before newline seen
   {(stack at start of filter procedure: ) #only #stack
     3 dict begin
-    3 -1 roll /source exch def
+    {3 -1 roll} stopped {(failed here!) #only #stack} if /source exch def
     {[
       {source 8192 string (before readline: ) #only ##stack
-        readline %(after readline: ) #only ##stack
+        readline (after readline: ) #only ##stack
         not /eof exch def  % false means end-of-file
         dup strlen 0 eq  % empty string found
           {pop counttomark 0 eq  % only thing found so far?
             {(ignoring empty line preceding actual content) #}
             {pop  % remove space from end of previous line
-              %(stack at inner loop exit (end of paragraph): ) #only ##stack
+              (stack at inner loop exit (end of paragraph): ) #only ##stack
               exit  % end of paragraph
             }
             ifelse
@@ -35,9 +35,9 @@
         eof {(exiting inner loop on EOF) # exit} if
       }  % end of paragraph read
       loop
-      %(joining fragments into paragraph, stack: ) #only ##stack
+      (joining fragments into paragraph, stack: ) #only ##stack
       ]  % create an array of the strings found
-      %(stack before join: ) #only ##stack
+      (stack before join: ) #only ##stack
       /paragraph 1024 dup mul string def  % megabyte string to hold paragraph
       {paragraph exch string.append} forall paragraph truncate
       %(after join complete: ) #only ##stack
@@ -50,7 +50,8 @@
       exit
     }
     loop
-    %(exiting outer loop with string ") #only dup #only (") #
+    (exiting outer loop with string ") #only dup #only (") #only
+    (, stack: ) #only #stack
     end
   }
   <</EODCount 1 /EODString EOF>>

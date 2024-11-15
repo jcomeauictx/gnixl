@@ -24,7 +24,7 @@
 /columnheight pageheight margin dup add sub def
 (column width: ) #only columnwidth #only (, height: ) #only columnheight #
 /columnline {  % words index - endofparagraph newindex string
-  %(starting columnline with stack: ) #only #stack
+  (starting columnline with stack: ) #only #stack
   /wordindex exch def
   /maxindex 1 index length 1 sub def
   /line 1024 string def
@@ -71,7 +71,7 @@
 } bind def
 
 /showparagraph {  % x0 y0 y1 words - index y
-  %(starting showparagraph with stack: ) #only #stack
+  (starting showparagraph with stack: ) #only #stack
   % use local variables to simplify coding
   /wordlist exch def  /ymin exch def  /y exch def  /x exch def
   /wordindex 0 def % index to beginning of paragraph
@@ -95,15 +95,25 @@
   (, y: ) #only y #only (, x: ) #only x #
   /eof false def
   {
-    (column loop in progress, words: ) #only words ##
+    (column loop in progress, words: ) #only words ##only
+    (, stack: ) #only #stack  % stack is good to here
     words cvbool not
       {
         (refilling words, stack: ) #only #stack
-        source 1024 16 mul string readline not /eof exch def
+        % stack is good to here first time through
+        source  % filtered file object
+        1024 16 mul string  % string large enough to hold longest line
+        readline (stack after column loop readline: ) #only #stack
+        not /eof exch def  % define local variable eof
+        (currentdict: ) #only currentdict ###
+        (after readline not /eof exch def, stack: ) #only #stack
+        % stack is just [2.5 (Message to Mankind...)] at this point
+        % -file- already missing
         4096 array exch () string.split
         /words exch def  /pindex 0 def
       } if
     x y y1 words showparagraph
+    (after showparagraph, stack: ) #only #stack
     exch /pindex exch def
     pindex words length eq  % did we use all the words?
       {
@@ -130,7 +140,7 @@
   (source: ) #only dup ##
   (stack before setting up filter: ) #only #stack
   paragraphs filter (stack after setting up filter: ) #only #stack
-  /source exch def  % should remove --file-- from stack
+  /source exch def  % should remove -file- from stack
   %/defaultdevice cvx 0 .quit
   % (startcolumn is one-based)
   exch (before zero-basing columnwidth: ) #only #stack
