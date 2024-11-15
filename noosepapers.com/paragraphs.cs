@@ -9,9 +9,8 @@
   % rangecheck error if string filled before newline seen
   {(stack at start of filter procedure: ) #only #stack
     3 dict begin
-    3 -1 roll /unfiltered exch def  % this removes unfiltered source from stack!
     {[
-      {unfiltered 8192 string (before readline: ) #only #stack
+      {counttomark 3 add index 8192 string (before readline: ) #only #stack
         readline (after readline: ) #only #stack
         not /eof exch def  % false means end-of-file
         dup strlen 0 eq  % empty string found
@@ -63,9 +62,9 @@ scriptname (paragraphs) eq {
   sys.argv dup length 1 gt
     {1 get (r) file}
     {pop LoremIpsum}
-    ifelse /datasource exch def
+    ifelse
   (testing paragraph reader) #
-  {datasource paragraphs filter
+  {paragraphs filter
     1024 dup mul string
     readline not /eof exch def
     =  % string to stdout
@@ -73,7 +72,7 @@ scriptname (paragraphs) eq {
     /count inc count 10000 eq {exit} if  % quit test after 10000 paragraphs
   } loop
   (stack at end of paragraphs test: ) #only #stack
-  (bytes available: ) # datasource bytesavailable #
+  (bytes available: ) # bytesavailable #
   (final stack: ) #only #stack
 } if
 (stack remaining at end of test: ) #only #stack
