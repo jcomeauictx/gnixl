@@ -25,6 +25,7 @@
 (column width: ) #only columnwidth #only (, height: ) #only columnheight #
 /columnline {  % wordlist index - endofparagraph newindex string
   (starting columnline with stack: ) #only #stack
+  10 dict begin  % languagelevel 3 here, so dict can grow as needed
   /wordindex exch def
   /maxindex 1 index length 1 sub def
   /line 1024 string def
@@ -55,6 +56,7 @@
   wordindex  % newindex
   line string.truncate  % trim trailing nulls off string
   (stack at end of columnline: ) #only #stack
+  end  % local variables dictionary
 } bind def
 
 /lineshow {  % string final -
@@ -70,11 +72,12 @@
   ifelse
 } bind def
 
-/showparagraph {  % x0 y0 y1 wordlist - index y
+/showparagraph {  % x0 y0 y1 wordlist wordindex - wordindex y
   (starting showparagraph with stack: ) #only #stack
   % use local variables to simplify coding
-  /wordlist exch def  /ymin exch def  /y exch def  /x exch def
-  /wordindex 0 def % index to beginning of paragraph
+  10 dict begin
+  /wordindex exch def /wordlist exch def  /ymin exch def
+  /y exch def  /x exch def
   {wordlist wordindex columnline (after columnline: ) #only #stack
     x y moveto 2 index lineshow (after lineshow: ) #only #stack
     /wordindex exch def y lineheight sub /y exch def
@@ -84,6 +87,7 @@
   }
   loop
   (stack at end of showparagraph: ) #only #stack
+  end  % local variables dictionary
 } bind def
 
 /column {  % x0 y0 y1 source wordlist pcount pindex - wordlist pcount pindex
@@ -110,13 +114,14 @@
         4096 array exch () string.split
         /wordlist exch def  /pindex 0 def
       } if
-    x y y1 wordlist showparagraph
+    x y y1 wordlist pindex showparagraph
     (after showparagraph, stack: ) #only #stack
     exch /pindex exch def
     pindex wordlist length (all words used? ) #only #stack eq
       {
         /pcount inc  % next paragraph
         /wordlist [] def  % erase wordlist
+        /pindex 0 def
       }
       if
     (column: paragraph count so far: ) #only pcount #only
