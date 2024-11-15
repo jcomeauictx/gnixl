@@ -23,7 +23,7 @@
 /linewidth columnwidth margin sub def
 /columnheight pageheight margin dup add sub def
 (column width: ) #only columnwidth #only (, height: ) #only columnheight #
-/columnline {  % words index - endofparagraph newindex string
+/columnline {  % wordlist index - endofparagraph newindex string
   (starting columnline with stack: ) #only #stack
   /wordindex exch def
   /maxindex 1 index length 1 sub def
@@ -50,7 +50,7 @@
       }
       ifelse
   } loop
-  pop  % discard words array
+  pop  % discard wordlist array
   wordindex maxindex gt  % set endofparagraph flag
   wordindex  % newindex
   line string.truncate  % trim trailing nulls off string
@@ -70,7 +70,7 @@
   ifelse
 } bind def
 
-/showparagraph {  % x0 y0 y1 words - index y
+/showparagraph {  % x0 y0 y1 wordlist - index y
   (starting showparagraph with stack: ) #only #stack
   % use local variables to simplify coding
   /wordlist exch def  /ymin exch def  /y exch def  /x exch def
@@ -86,20 +86,20 @@
   (stack at end of showparagraph: ) #only #stack
 } bind def
 
-/column {  % x0 y0 y1 source words pcount pindex - words pcount pindex
+/column {  % x0 y0 y1 source wordlist pcount pindex - wordlist pcount pindex
   (creating column with stack: ) #only #stack
   8 dict begin  % for local variables
-  /pindex exch def /pcount exch def /words exch def
+  /pindex exch def /pcount exch def /wordlist exch def
   /filtered exch def  /y1 exch def  /y exch def  /x exch def
   (source: ) #only filtered ##only (, y1: ) #only y1 #only
   (, y: ) #only y #only (, x: ) #only x #
   /eof false def
   {
-    (column loop in progress, words: ) #only words ##only
+    (column loop in progress, wordlist: ) #only wordlist ##only
     (, stack: ) #only #stack  % stack is good to here
-    words cvbool not
+    wordlist cvbool not
       {
-        (refilling words, stack: ) #only #stack
+        (refilling wordlist, stack: ) #only #stack
         % stack is good to here first time through
         filtered  % file object
         1024 16 mul string  % string large enough to hold longest line
@@ -112,15 +112,15 @@
         % stack is just [2.5 (Message to Mankind...)] at this point
         % -file- already missing
         4096 array exch () string.split
-        /words exch def  /pindex 0 def
+        /wordlist exch def  /pindex 0 def
       } if
-    x y y1 words showparagraph
+    x y y1 wordlist showparagraph
     (after showparagraph, stack: ) #only #stack
     exch /pindex exch def
-    pindex words length (all words used? ) #only #stack eq
+    pindex wordlist length (all words used? ) #only #stack eq
       {
         /pcount inc  % next paragraph
-        /words [] def  % erase words
+        /wordlist [] def  % erase wordlist
       }
       if
     (column: paragraph count so far: ) #only pcount #only
@@ -132,7 +132,7 @@
     (not exiting, continuing column loop, stack:) #only #stack
   } loop
   (stack at end of column: ) #only ##stack
-  pcount pindex
+  wordlist pcount pindex
   end  % end local variables dict
 } bind def
 
@@ -142,12 +142,12 @@
   (source: ) #only dup ##
   (stack before setting up filter: ) #only #stack
   paragraphs filter (stack after setting up filter: ) #only #stack
-  /filtered exch def  % should remove -file- from stack
+  /filtered exch def  % removes -file- from stack
   %/defaultdevice cvx 0 .quit
   % (startcolumn is one-based)
   exch (before zero-basing columnwidth: ) #only #stack
   1 sub columnwidth mul margin add /x exch def
-  /words [] def  % empty so `column` knows to read source
+  /wordlist [] def  % empty so `column` knows to read source
   /pcount 0 def  /pindex 0 def
   1 index ceiling cvi % e.g., 1.5 columns means 2 column width
   (stack after 1 index ceiling cvi: ) #only #stack
@@ -155,10 +155,10 @@
     x  % starting x of column
     pageheight margin dup add sub  % starting y of column
     0  % y1 of column (FIXME: may be larger if `columns` is fractional)
-    filtered words pcount pindex  % load stack for `column`
+    filtered wordlist pcount pindex  % load stack for `column`
     column (after column: ) #only #stack
     /x x columnwidth add def
-    /pindex exch def  /pcount exch def  /words exch def
+    /pindex exch def  /pcount exch def  /wordlist exch def
   } repeat
   end
 } bind def
