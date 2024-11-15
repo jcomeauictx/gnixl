@@ -101,7 +101,7 @@
         (refilling words, stack: ) #only #stack
         source 1024 16 mul string readline not /eof exch def
         4096 array exch () string.split
-        /words exch def  /pindex 0 def  /pcount pcount 1 add def
+        /words exch def  /pindex 0 def
       } if
     x y y1 words showparagraph
     exch /pindex exch def
