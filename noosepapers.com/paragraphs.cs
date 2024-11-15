@@ -64,15 +64,15 @@ scriptname (paragraphs) eq {
     {1 get (r) file}
     {pop LoremIpsum}
     ifelse /datasource exch def
-  (testing column creation) #
+  (testing paragraph reader) #
   {datasource paragraphs filter
     1024 dup mul string
     readline not /eof exch def
-    4096 array () 3 -1 roll exch string.split array.truncate ==
+    =  % string to stdout
     eof {(exiting on EOF) # exit} if  % quit after all data processed
     /count inc count 10000 eq {exit} if  % quit test after 10000 paragraphs
   } loop
-  (stack at end of columns test: ) #only #stack
+  (stack at end of paragraphs test: ) #only #stack
   (bytes available: ) # datasource bytesavailable #
   (final stack: ) #only #stack
 } if
