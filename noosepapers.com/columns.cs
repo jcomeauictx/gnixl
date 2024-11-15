@@ -81,8 +81,9 @@
   {wordlist wordindex columnline (after columnline: ) #only #stack
     x y moveto 2 index lineshow (after lineshow: ) #only #stack
     /wordindex exch def y lineheight sub /y exch def
-    dup {y lineheight sub /y exch def} if  % subtract another line at end
-    % done if end of paragraph OR column height exceeded
+    % no need to subtract another line at end, each paragraph is already
+    % followed by a 2nd linefeed which will do the job.
+    % we're done if it's the end of a paragraph OR column height is exceeded
     y ymin lt or {wordindex y exit} if
   }
   loop
