@@ -7,7 +7,7 @@ TIMESTAMP := $(shell date +'%Y%m%d%H%M%S')
 PDFS := $(shell ls -r *.pdf)
 TXTS := $(PDFS:.pdf=.txt)
 TEXTFILE ?= $(word 1, $(TXTS))
-all: columns.log
+all: banner.log
 gallows.pgm: gallows.png
 	pngtopnm $< | pnmnoraw > $@
 banner.log: banner.cs

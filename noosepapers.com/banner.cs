@@ -66,7 +66,10 @@
 
 /banner {  % string -
   % generic banner function
-  dup ( ) string.count 1 add array exch () string.split #stack
+  10 dict begin  % for local variables
+  dup ( ) string.count 1 add array exch () string.split /bannerwords exch def
+  /bannercode (\() def
+  currentdict ###
 } bind def
 
 % test run using `cs -- banner`
