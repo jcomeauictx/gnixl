@@ -66,10 +66,24 @@
 
 /banner {  % string -
   % generic banner function
-  10 dict begin  % for local variables
+  10 dict begin  % for local variables, languagelevel 3 will grow as needed
   dup ( ) string.count 1 add array exch () string.split /bannerwords exch def
-  /bannercode (\() def
+  /images bannerwords length array def
+  /justwords bannerwords length array def
+  bannerwords {
+    dup (.) string.count 1 eq mark 2 index
+      status  % check presence of file
+        {cleartomark true}
+        {pop false}
+        ifelse and
+      {images}
+      {justwords}
+      ifelse
+    exch array.append
+  }
+  forall
   currentdict ###
+  end
 } bind def
 
 % test run using `cs -- banner`
