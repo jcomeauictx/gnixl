@@ -2,7 +2,7 @@
 % NY POST banner font is about 1/12 page height
 (pnmimage.cs) run
 /inch {72 mul} def
-/topmargin 0.25 inch def  % leave a little room at top of page
+/margin 10 inch def  % leave a little room at top of page
 /centershow { % bool bool -
   % show centered on page, vertically and/or horizontally
   /centerhorizontally exch def /centervertically exch def
@@ -55,7 +55,7 @@
   (final: ) print [pathbbox] ==
   pathbbox exch 4 -1 roll sub 3 1 roll exch sub
   (banner width, height for determining banner position: ) print  =stack
-  pageheight exch sub topmargin sub exch  % y start of banner, x width
+  pageheight exch sub margin sub exch  % y start of banner, x width
   pagewidth 2 div exch 2 div sub  % x start of banner
   exch  % put x and y in order for moveto
   3 -1 roll  % put --save-- to TOS
@@ -64,12 +64,17 @@
   (stack: ) print =stack
 } def
 
+/banner {  % string -
+  % generic banner function
+  dup ( ) string.count 1 add array exch () string.split #stack
+} bind def
+
 % test run using `cs -- banner`
 scriptname (banner) eq {
   /CloisterBlack 47 selectfont
   (page height: ) print pageheight =
   (page width: ) print pagewidth =
-  noosepapersbanner
+  sys.argv 1 get banner
   showpage
 } if
 % vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2 syntax=postscr
