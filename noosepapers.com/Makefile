@@ -10,6 +10,8 @@ TEXTFILE ?= $(word 1, $(TXTS))
 all: columns.log
 gallows.pgm: gallows.png
 	pngtopnm $< | pnmnoraw > $@
+banner.log: banner.cs
+	./$< 'The Noose gallows.pgm Papers'
 %.log: %.pgm ../../casperscript .FORCE
 	[ -f $@ ] && mv -f $@ $*.$(TIMESTAMP).log
 	cs -- ../../casperscript/lib/viewpbm.ps $+ | tee $@
