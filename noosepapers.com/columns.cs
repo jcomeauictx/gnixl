@@ -162,6 +162,10 @@
     /x x columnwidth add def
     /pindex exch def  /pcount exch def  /wordlist exch def
   } repeat
+  (discarding file object: ) #only #
+  (discarding number of columns: ) #only #
+  pcount pindex  % leave paragraph count and word index on stack
+  % these will be saved for continuation on later pages or in later editions.
   end
 } bind def
 
