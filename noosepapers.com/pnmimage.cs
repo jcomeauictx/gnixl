@@ -3,7 +3,7 @@
 % code stolen from casperscript/vdiff.cs
 
 /inch {72 mul} bind def
-/zero (0) 0 get def  % value of ASCII zero (0x30)
+/asciizero (0) 0 get def  % value of ASCII zero (0x30)
 
 /bits <<  % translate maxvalue into bits per sample
   1 1
@@ -20,8 +20,8 @@
   /P1 {
     % read until (0), (1), or EOF
     {infile read
-      {dup 1 not and zero eq
-        {zero - 1 string dup 0 4 -1 roll put exit}
+      {dup 1 not and asciizero eq
+        {asciizero - 1 string dup 0 4 -1 roll put exit}
         {pop}
         ifelse}
       {() exit}
