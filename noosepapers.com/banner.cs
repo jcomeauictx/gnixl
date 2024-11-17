@@ -68,7 +68,7 @@
   % generic banner function
   10 dict begin  % for local variables, languagelevel 3 will grow as needed
   dup ( ) string.count 1 add array exch () string.split /bannerwords exch def
-  /images bannerwords length array def
+  /images bannerwords length dict def
   /justwords bannerwords length array def
   bannerwords {
     dup (.) string.count 1 eq mark 2 index
@@ -76,10 +76,9 @@
         {cleartomark true}
         {pop false}
         ifelse and
-      {images}
-      {justwords}
+      {images exch true put}
+      {justwords exch array.append}
       ifelse
-    exch array.append
   }
   forall
   currentdict ###
