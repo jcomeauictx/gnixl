@@ -71,7 +71,7 @@
   /images bannerwords length dict def
   /justwords bannerwords length array def
   bannerwords {
-    dup (.) string.count 1 eq 1 index os.path.exists and
+    dup (.) string.count 0 gt 1 index os.path.exists and
       {images exch true put}
       {justwords exch array.append}
       ifelse
