@@ -78,6 +78,33 @@
   }
   forall
   currentdict ###
+  save
+  % first, a dry run to get the banner size
+  % redefine `image` and `show` for that purpose
+  /image {
+    dup /Decode get /decoder exch def
+    % translate all values to 1 (white)
+    0 1 decoder length 1 sub {decoder exch 1 put} for
+    (/Decoder: ) print dup /Decode get ===
+    image
+  } bind def
+  /show {true charpath} def  % just append to path rather than show on page
+  0 pageheight moveto  % mostly off the page; doesn't matter anyway
+  bannerwords 0 1 2 index length
+    { % separate words and images with spaces
+      (before get: ) #only #stack 1 index 1 index get (got: ) #only #stack
+      exch (show space if not first word: ) #only #stack 0 gt {( ) show} if
+      dup images exch known  % is this an image to be drawn?
+        {
+          (found image) #
+          justwords () string.join #stack exch pnminline
+          ( ) show
+        }
+        {show}
+        ifelse
+    }
+    for
+  restore
   end
 } bind def
 
