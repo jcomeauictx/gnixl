@@ -77,6 +77,7 @@
       ifelse
   }
   forall
+  /justwords justwords array.truncate def  % eliminate any trailing nulls
   currentdict ###
   save
   % first, a dry run to get the banner size
@@ -97,8 +98,10 @@
       dup images exch known  % is this an image to be drawn?
         {
           (found image) #
-          justwords () string.join #stack exch pnminline
-          ( ) show
+          justwords () (before string.join: ) #only #stack
+          string.join (after string.join: ) #only #stack
+          exch pnminline
+          ( ) show  % follow with a space
         }
         {show}
         ifelse
