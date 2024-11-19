@@ -77,10 +77,12 @@
       (/Decoder: ) print dup /Decode get ===
       image
     } bind def
-    /show {true charpath} def  % just append to path rather than show on page
+    /show {
+      true charpath
+    } bind def  % just append to path rather than show on page
   }
   if
-  0 1 2 index length 1 sub
+  0 1 2 index length 1 sub  % setup `for` loop
     { % separate words and images with spaces
       (before get: ) #only #stack 1 index 1 index get (got: ) #only #stack
       exch (show space if not first word: ) #only #stack 0 gt {( ) show} if
@@ -99,7 +101,7 @@
     for
   [pathbbox]
   exch
-} bind def
+} def
 
 /banner {  % string -
   % generic banner function
@@ -119,7 +121,7 @@
   % first dry-run the banner at the top of the page. it won't make any
   % marks anyway, but if there's anything on the lower part of the page
   % we don't want to white it out with `image`
-  0 pageheight moveto
+  0 pageheight 40 sub moveto
   (before bannerwords true bannerdraw: ) #only #stack
   bannerwords true bannerdraw pathbbox
   (stack after pathbbox: ) #only #stack
