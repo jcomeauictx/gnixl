@@ -102,8 +102,8 @@
         ifelse
     }
     for
-  [pathbbox]
-  exch
+  exch  % bring dryrun flag back to TOS
+  {/saved.image /image alias  /saved.show /show alias} if
   (bannerdraw end stack: ) #only #stack
 } def
 
