@@ -78,10 +78,11 @@
   (bannerdraw end stack: ) #only #stack
 } def
 
-/banner {  % string - textbottom
+/banner {  % font fontsize string - textbottom
   % generic banner function; returns bottom of banner
   % (for use in layout of remainder of page)
   10 dict begin  % for local variables, languagelevel 3 will grow as needed
+  3 1 roll selectfont
   dup ( ) string.count 1 add array exch () string.split /bannerwords exch def
   /images bannerwords length dict def
   /justwords bannerwords length array def
@@ -135,7 +136,7 @@ scriptname (banner) eq {
       (Dolorem Ipsum)
     }
     if
-  banner
+  /CloisterBlack 47 banner
   showpage
 } if
 % vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2 syntax=postscr
