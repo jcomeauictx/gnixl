@@ -121,7 +121,13 @@ scriptname (banner) eq {
   /CloisterBlack 47 selectfont
   (page height: ) #only pageheight #
   (page width: ) #only pagewidth #
-  sys.argv 1 get banner
+  {sys.argv 1 get} stopped
+    {
+      (no banner text supplied, using (Dolorem Ipsum)) #
+      (Dolorem Ipsum)
+    }
+    if
+  banner
   showpage
 } if
 % vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2 syntax=postscr
