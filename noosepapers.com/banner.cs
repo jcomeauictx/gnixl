@@ -64,9 +64,9 @@
   (stack: ) print =stack
 } def
 
-/bannerdraw {  % array dryrun - [pathbbox]
+/bannerdraw {  % dryrun array - [pathbbox]
   % dryrun setup
-  exch 1 index (bannerdraw stack: ) #only #stack
+  save 2 index (bannerdraw stack: ) #only #stack
   {
     % first, a dry run to get the banner size
     % redefine `image` and `show` for that purpose
@@ -85,7 +85,7 @@
     } bind def  % just append to path rather than show on page
   }
   if
-  0 1 2 index length 1 sub  % setup `for` loop
+  1 index 0 1 2 index length 1 sub  % setup `for` loop
     { % separate words and images with spaces
       (before get: ) #only #stack 1 index 1 index get (got: ) #only #stack
       exch (show space if not first word: ) #only #stack 0 gt {( ) show} if
@@ -102,8 +102,9 @@
         ifelse
     }
     for
-  exch  % bring dryrun flag back to TOS
-  {/saved.image /image alias  /saved.show /show alias} if
+  pop  % toss copy of word array
+  2 index {/saved.image /image alias  /saved.show /show alias} #stack if
+  restore
   (bannerdraw end stack: ) #only #stack
 } def
 
@@ -126,8 +127,8 @@
   % marks anyway, but if there's anything on the lower part of the page
   % we don't want to white it out with `image`
   0 pageheight 40 sub moveto
-  (before bannerwords true bannerdraw: ) #only #stack
-  bannerwords true bannerdraw pathbbox
+  (before true bannerwords bannerdraw: ) #only #stack
+  true bannerwords bannerdraw pathbbox
   (stack after pathbbox: ) #only #stack
   end
 } bind def
