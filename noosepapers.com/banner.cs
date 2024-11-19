@@ -91,7 +91,7 @@
   } bind def
   /show {true charpath} def  % just append to path rather than show on page
   0 pageheight moveto  % mostly off the page; doesn't matter anyway
-  bannerwords 0 1 2 index length
+  bannerwords 0 1 2 index length 1 sub
     { % separate words and images with spaces
       (before get: ) #only #stack 1 index 1 index get (got: ) #only #stack
       exch (show space if not first word: ) #only #stack 0 gt {( ) show} if
@@ -100,8 +100,9 @@
           (found image) #
           justwords () (before string.join: ) #only #stack
           string.join (after string.join: ) #only #stack
-          exch pnminline
+          (before pnminline: ) #only #stack pnminline
           ( ) show  % follow with a space
+          (stack after showing space after pnmimage: ) #only #stack
         }
         {show}
         ifelse
