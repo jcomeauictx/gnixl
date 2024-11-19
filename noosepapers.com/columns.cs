@@ -2,9 +2,9 @@
 % typographicwebdesign.com/setting-text/font-size-line-height-measure-alignment/
 % NOTE: if debugging messages are removed, replace each `#` with `pop`
 (starting columns.cs) #
-(loremipsum.cs) run
-(latin1font.cs) run
-(paragraphs.cs) run
+/loremipsum where {pop} {(loremipsum.cs) run} ifelse
+/latin1font where {pop} {(latin1font.cs) run} ifelse
+/paragraphs where {pop} {(paragraphs.cs) run} ifelse
 /margin 10 def  % top and bottom, left and right, between columns
 /fontsize 12 def
 /Times-Roman latin1font

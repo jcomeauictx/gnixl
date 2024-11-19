@@ -73,7 +73,6 @@ scriptname (paragraphs) eq {
   } loop
   (stack at end of paragraphs test: ) #only #stack
   (bytes available: ) # bytesavailable #
-  (final stack: ) #only #stack
+  (final stack at end of test: ) #only #stack
 } if
-(stack remaining at end of test: ) #only #stack
 % vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2 syntax=postscr
