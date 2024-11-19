@@ -8,7 +8,7 @@ PDFS := $(shell ls -r *.pdf)
 TXTS := $(PDFS:.pdf=.txt)
 TEXTFILE ?= $(word 1, $(TXTS))
 BANNER ?= The Noose gallows.pgm Papers
-all: banner.log
+all: noosepaper.log
 gallows.pgm: gallows.png
 	pngtopnm $< | pnmnoraw > $@
 banner.log: banner.cs

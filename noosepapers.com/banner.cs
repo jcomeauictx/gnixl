@@ -1,4 +1,4 @@
-#!/usr/local/casperscript/bin/gs -S -I. -sFONTMAP#noosefonts.ps -sFONTPATH#. -C --
+#!/usr/local/casperscript/bin/cs -S -I. -sFONTMAP=noosefonts.ps -sFONTPATH=. --
 % NY POST banner font is about 1/12 page height
 (pnmimage.cs) run
 /inch {72 mul} def
@@ -78,11 +78,11 @@
   (bannerdraw end stack: ) #only #stack
 } def
 
-/banner {  % font fontsize string - textbottom
+/banner {  % string fontname fontsize - textbottom
   % generic banner function; returns bottom of banner
   % (for use in layout of remainder of page)
   10 dict begin  % for local variables, languagelevel 3 will grow as needed
-  3 1 roll selectfont
+  (banner: stack before selectfont: ) #only #stack selectfont
   dup ( ) string.count 1 add array exch () string.split /bannerwords exch def
   /images bannerwords length dict def
   /justwords bannerwords length array def
@@ -127,7 +127,6 @@
 
 % test run using `cs -- banner`
 scriptname (banner) eq {
-  /CloisterBlack 47 selectfont
   (page height: ) #only pageheight #
   (page width: ) #only pagewidth #
   {sys.argv 1 get} stopped
