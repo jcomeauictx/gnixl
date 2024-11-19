@@ -1,6 +1,6 @@
 #!/usr/local/casperscript/bin/cs -S -I. -sFONTMAP=noosefonts.ps -sFONTPATH=. --
 % NY POST banner font is about 1/12 page height
-(pnmimage.cs) run
+/pnmimage where {pop} {(pnmimage.cs) run} ifelse
 /inch {72 mul} def
 /margin 10 def  % leave a little room at top of page
 /centershow { % bool bool -
