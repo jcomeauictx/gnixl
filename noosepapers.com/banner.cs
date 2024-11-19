@@ -96,7 +96,7 @@
   % first dry-run the banner at the top of the page. it won't make any
   % marks anyway, but if there's anything on the lower part of the page
   % we don't want to white it out with `image`
-  0 pageheight 40 sub moveto
+  0 pageheight moveto
   (before true bannerwords bannerdraw: ) #only #stack
   true bannerwords bannerdraw
   (stack after pathbbox: ) #only #stack
