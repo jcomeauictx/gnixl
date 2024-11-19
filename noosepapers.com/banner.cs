@@ -64,7 +64,7 @@
   (stack: ) print =stack
 } def
 
-/bannerdraw {  % dryrun array - [pathbbox]
+/bannerdraw {  % dryrun array -
   % dryrun setup
   save 2 index (bannerdraw stack: ) #only #stack
   {
@@ -101,8 +101,11 @@
     }
     for
   pop  % toss copy of word array
+  (pathbbox before restore: ) #only [pathbbox] ##
   restore
+  (pathbbox after restore: ) #only [pathbbox] ##
   (bannerdraw end stack: ) #only #stack
+  pop pop
 } def
 
 /banner {  % string -
