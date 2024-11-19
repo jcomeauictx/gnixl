@@ -64,34 +64,24 @@
   (stack: ) print =stack
 } def
 
-/banner {  % string -
-  % generic banner function
-  10 dict begin  % for local variables, languagelevel 3 will grow as needed
-  dup ( ) string.count 1 add array exch () string.split /bannerwords exch def
-  /images bannerwords length dict def
-  /justwords bannerwords length array def
-  bannerwords {
-    dup (.) string.count 0 gt 1 index os.path.exists and
-      {images exch true put}
-      {justwords exch array.append}
-      ifelse
+/bannerdraw {  % array dryrun - [pathbbox]
+  save 3 1 roll
+  % dryrun setup
+  {
+    % first, a dry run to get the banner size
+    % redefine `image` and `show` for that purpose
+    % (must be done in userdict to work! not local definitions)
+    /image {
+      dup /Decode get /decoder exch def
+      % translate all values to 1 (white)
+      0 1 decoder length 1 sub {decoder exch 1 put} for
+      (/Decoder: ) print dup /Decode get ===
+      image
+    } bind def
+    /show {true charpath} def  % just append to path rather than show on page
   }
-  forall
-  /justwords justwords array.truncate def  % eliminate any trailing nulls
-  currentdict ###
-  save
-  % first, a dry run to get the banner size
-  % redefine `image` and `show` for that purpose
-  /image {
-    dup /Decode get /decoder exch def
-    % translate all values to 1 (white)
-    0 1 decoder length 1 sub {decoder exch 1 put} for
-    (/Decoder: ) print dup /Decode get ===
-    image
-  } bind def
-  /show {true charpath} def  % just append to path rather than show on page
-  0 pageheight moveto  % mostly off the page; doesn't matter anyway
-  bannerwords 0 1 2 index length 1 sub
+  if
+  0 1 2 index length 1 sub
     { % separate words and images with spaces
       (before get: ) #only #stack 1 index 1 index get (got: ) #only #stack
       exch (show space if not first word: ) #only #stack 0 gt {( ) show} if
@@ -108,9 +98,35 @@
         ifelse
     }
     for
-  (discarding bannerwords: ) #only dup ## pop
-  (stack before restore: ) #only #stack
+  [pathbbox]
+  exch
+  (before restore: ) #only #stack
+  3 -1 roll  % put -save- object back at TOS
   restore
+} bind def
+
+/banner {  % string -
+  % generic banner function
+  10 dict begin  % for local variables, languagelevel 3 will grow as needed
+  dup ( ) string.count 1 add array exch () string.split /bannerwords exch def
+  /images bannerwords length dict def
+  /justwords bannerwords length array def
+  bannerwords {
+    dup (.) string.count 0 gt 1 index os.path.exists and
+      {images exch true put}
+      {justwords exch array.append}
+      ifelse
+  }
+  forall
+  /justwords justwords array.truncate def  % eliminate any trailing nulls
+  currentdict ###
+  % first dry-run the banner at the top of the page. it won't make any
+  % marks anyway, but if there's anything on the lower part of the page
+  % we don't want to white it out with `image`
+  0 pageheight moveto
+  (before bannerwords true bannerdraw: ) #only #stack
+  bannerwords true bannerdraw pathbbox
+  (stack after pathbbox: ) #only #stack
   end
 } bind def
 
