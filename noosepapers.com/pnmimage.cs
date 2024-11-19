@@ -66,20 +66,20 @@
   /colorspace colorspaces pnmtype get def
   % read and discard the expected comment.
   % if not a comment, parse the width and height
-  (stack before processing 2nd line of PNM file: ) print =stack
+  (stack before processing 2nd line of PNM file: ) #only #stack
   infile buffer readline pop dup 0 get comment ne
-    { (not a comment, parsing width and height from string) =
+    { (not a comment, parsing width and height from string) #
       token pop instance /Width 3 -1 roll cvi dup /width exch def put
       token pop instance /Height 3 -1 roll cvi dup /height exch def put
       pop  % now-empty string
     }
-    { (comment found, toss it and parse width and height from infile) =
+    { (comment found, toss it and parse width and height from infile) #
       pop  % discard comment
       instance /Width infile token pop cvi dup /width exch def put
       instance /Height infile token pop cvi dup /height exch def put
     }
   ifelse
-  (stack remaining after processing 2nd line: ) print =stack
+  (stack remaining after processing 2nd line: ) #only #stack
   instance /ImageMatrix get dup dup  % we're going to overwrite the /w etc.
     0 width put
     3 height neg put
@@ -88,7 +88,7 @@
     instance /BitsPerComponent bits infile token pop cvi get put
   } if
   instance /DataSource binarize pnmtype get /ReusableStreamDecode filter put
-  instance dup (instance: ) print === colorspace
+  instance dup (instance: ) #only ### colorspace
 } bind def
 
 /pnmimage {  % filename -
@@ -118,27 +118,28 @@
 /pnminline {  % filename string -
   % draw image in correct aspect ratio using string as height limits
   % don't put descenders in string if you want image on baseline of font
-  (pathbbox at start of pnminline: ) print [pathbbox] ==
-  (stack at start of pnminline: ) print =stack
-  fontheight dup (fontheight: ) print =
-  (stack after fontheight: ) print =stack
+  (pathbbox at start of pnminline: ) #only [pathbbox] ##
+  (stack at start of pnminline: ) #only #stack
+  fontheight dup (fontheight: ) #only #
+  (stack after fontheight: ) #only #stack
   gsave 0 exch rmoveto  % adjust y to that of string given
-  (stack after 0 y removeto: ) print =stack
+  (stack after 0 y removeto: ) #only #stack
   exch readpnm setcolorspace dup dup /Width get exch /Height get
-  (desiredheight imagedict imagewidth imageheight: ) print =stack
+  (desiredheight imagedict imagewidth imageheight: ) #only #stack
   3 index exch div mul  % multiply image width by height ratio
-  (X adjustment for scaled image in pixels: ) print dup =
+  (X adjustment for scaled image in pixels: ) #only dup #
   dup 4 1 roll  % save width to adjust x after image
-  (stack before `3 -1 roll`: ) print =stack
-  3 -1 roll (stack before `currentpoint translate scale image`: ) print =stack
+  (stack before `3 -1 roll`: ) #only #stack
+  3 -1 roll (stack before `currentpoint translate scale image`: ) #only #stack
   currentpoint translate scale image
-  (stack before grestore dup: ) print =stack
+  (stack before grestore dup: ) #only #stack
   grestore
   dup 128 string (moving %.2f pixels to the right)
-    3 -1 roll (stack before 1 array astore: ) print =stack 1 array astore sprintf pop =
-  (stack before 0 rmoveto: ) print =stack 0 rmoveto
-  (pathbbox at end of pnminline: ) print [pathbbox] ==
-  (stack at end of pnminline: ) print =stack
+    3 -1 roll (stack before 1 array astore: ) #only #stack
+    1 array astore sprintf pop #
+  (stack before 0 rmoveto: ) #only #stack 0 rmoveto
+  (pathbbox at end of pnminline: ) #only [pathbbox] ##
+  (stack at end of pnminline: ) #only #stack
 } def
   
 % test run using `cs -- pnmimage.cs gallows.pgm`
