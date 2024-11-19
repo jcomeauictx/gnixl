@@ -1,4 +1,4 @@
-#!/usr/local/casperscript/bin/gs -S -I. -sFONTMAP=noosefonts.ps -sFONTPATH=. -C --
+#!/usr/local/casperscript/bin/gs -S -I. -sFONTMAP#noosefonts.ps -sFONTPATH#. -C --
 % NY POST banner font is about 1/12 page height
 (pnmimage.cs) run
 /inch {72 mul} def
@@ -8,30 +8,30 @@
   /centerhorizontally exch def /centervertically exch def
   gsave
   dup true charpath
-  (pathbbox: ) print [pathbbox] ==
+  (pathbbox: ) #only [pathbbox] ##
   pathbbox /ury exch def /urx exch def /lly exch def /llx exch def
   grestore
   pagewidth 2 div /widthcenter exch def
   pageheight 2 div /heightcenter exch def
   /pathwidth urx llx sub def
-  (pathwidth: ) print pathwidth =
+  (pathwidth: ) #only pathwidth #
   /pathheight ury lly sub def
-  (pathheight: ) print pathheight =
+  (pathheight: ) #only pathheight #
   gsave
   centerhorizontally {
-    (centering horizontally; ) print
+    (centering horizontally; ) #only
     widthcenter pathwidth 2 div sub
   }{currentpoint pop} ifelse
   centervertically {
-    (centering vertically; ) print
+    (centering vertically; ) #only
     heightcenter pathheight 2 div sub
   }{currentpoint exch pop} ifelse
-  (moving to: ) print 2 copy 2 array astore ==
-  (stack: ) print =stack
+  (moving to: ) #only 2 copy 2 array astore ##
+  (stack: ) #only #stack
   moveto
   show
   grestore
-  (stack: ) print =stack
+  (stack: ) #only #stack
 } def
 
 /bannerdraw {  % dryrun array - pathbbox
@@ -45,7 +45,7 @@
       dup /Decode get /decoder exch def
       % translate all values to 1 (white)
       0 1 decoder length 1 sub {decoder exch 1 put} for
-      (/Decoder: ) print dup /Decode get ===
+      (/Decoder: ) #only dup /Decode get ###
       image
     } bind def
     /show {
@@ -119,8 +119,8 @@
 % test run using `cs -- banner`
 scriptname (banner) eq {
   /CloisterBlack 47 selectfont
-  (page height: ) print pageheight =
-  (page width: ) print pagewidth =
+  (page height: ) #only pageheight #
+  (page width: ) #only pagewidth #
   sys.argv 1 get banner
   showpage
 } if
