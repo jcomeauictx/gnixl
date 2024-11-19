@@ -66,10 +66,13 @@
 
 /bannerdraw {  % array dryrun - [pathbbox]
   % dryrun setup
+  exch 1 index (bannerdraw stack: ) #only #stack
   {
     % first, a dry run to get the banner size
     % redefine `image` and `show` for that purpose
     % (must be done in userdict to work! not local definitions)
+    /image /saved.image alias
+    /show /saved.show alias
     /image {
       dup /Decode get /decoder exch def
       % translate all values to 1 (white)
@@ -101,6 +104,7 @@
     for
   [pathbbox]
   exch
+  (bannerdraw end stack: ) #only #stack
 } def
 
 /banner {  % string -
