@@ -34,36 +34,6 @@
   (stack: ) print =stack
 } def
 
-/noosepapersbanner {
-  /CloisterBlack 47 selectfont
-  save
-  % first, a dry run to get the banner size
-  % redefine `image` and `show` for that purpose
-  /image {
-    dup /Decode get /decoder exch def
-    % translate all values to 1 (white)
-    0 1 decoder length 1 sub {decoder exch 1 put} for
-    (/Decoder: ) print dup /Decode get ===
-    image
-  } bind def
-  /show {true charpath} def  % just append to path rather than show on page
-  1 inch 7 inch moveto
-  (first: ) print [pathbbox] == (The Noose ) show
-  (stack after first: ) print =stack
-  (second: ) print [pathbbox] == (gallows.pgm) (TNPp) pnminline
-  (third: ) print [pathbbox] == ( Papers) show
-  (final: ) print [pathbbox] ==
-  pathbbox exch 4 -1 roll sub 3 1 roll exch sub
-  (banner width, height for determining banner position: ) print  =stack
-  pageheight exch sub margin sub exch  % y start of banner, x width
-  pagewidth 2 div exch 2 div sub  % x start of banner
-  exch  % put x and y in order for moveto
-  3 -1 roll  % put --save-- to TOS
-  restore
-  moveto (The Noose ) show (gallows.pgm) (TNPp) pnminline ( Papers) show
-  (stack: ) print =stack
-} def
-
 /bannerdraw {  % dryrun array - pathbbox
   % dryrun setup
   save 2 index (bannerdraw stack: ) #only #stack
@@ -134,7 +104,7 @@
   exch 4 -1 roll sub 3 1 roll exch sub
   (banner width, height for determining banner position: ) #only #stack
   % calculate y top
-  pageheight exch sub #stack margin #stack sub #stack  % y start of banner
+  pageheight exch sub margin sub  % y start of banner
   (banner y top: ) #only dup #
   exch  % swap to calculate x center
   pagewidth 2 div exch 2 div sub  % x start of banner
