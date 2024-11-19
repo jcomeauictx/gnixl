@@ -64,7 +64,7 @@
   (stack: ) print =stack
 } def
 
-/bannerdraw {  % dryrun array -
+/bannerdraw {  % dryrun array - pathbbox
   % dryrun setup
   save 2 index (bannerdraw stack: ) #only #stack
   {
@@ -102,10 +102,10 @@
     for
   pop  % toss copy of word array
   (pathbbox before restore: ) #only [pathbbox] ##
+  pathbbox 5 -1 roll
   restore
-  (pathbbox after restore: ) #only [pathbbox] ##
+  6 -2 roll pop pop
   (bannerdraw end stack: ) #only #stack
-  pop pop
 } def
 
 /banner {  % string -
@@ -128,7 +128,7 @@
   % we don't want to white it out with `image`
   0 pageheight 40 sub moveto
   (before true bannerwords bannerdraw: ) #only #stack
-  true bannerwords bannerdraw pathbbox
+  true bannerwords bannerdraw
   (stack after pathbbox: ) #only #stack
   exch 4 -1 roll sub 3 1 roll exch sub
   (banner width, height for determining banner position: ) #only #stack
@@ -137,6 +137,7 @@
   exch  % x and y in order for moveto
   moveto false bannerwords bannerdraw
   end
+  (banner final stack: ) #only #stack
 } bind def
 
 % test run using `cs -- banner`
