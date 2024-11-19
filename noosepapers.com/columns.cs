@@ -1,4 +1,4 @@
-#!/usr/local/casperscript/bin/cs --
+#!/usr/local/casperscript/bin/cs -S -I. --
 % typographicwebdesign.com/setting-text/font-size-line-height-measure-alignment/
 % NOTE: if debugging messages are removed, replace each `#` with `pop`
 (starting columns.cs) #
