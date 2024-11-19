@@ -7,11 +7,14 @@ TIMESTAMP := $(shell date +'%Y%m%d%H%M%S')
 PDFS := $(shell ls -r *.pdf)
 TXTS := $(PDFS:.pdf=.txt)
 TEXTFILE ?= $(word 1, $(TXTS))
+BANNER ?= The Noose gallows.pgm Papers
 all: banner.log
 gallows.pgm: gallows.png
 	pngtopnm $< | pnmnoraw > $@
 banner.log: banner.cs
-	./$< 'The Noose gallows.pgm Papers'
+	set -euxo pipefail; \
+	{ ./$< '$(BANNER)' 2>&1 1>&3 3>&- | tee $(@:.log=.err); } \
+	 3>&1 1>&2 | tee $@
 %.log: %.pgm ../../casperscript .FORCE
 	[ -f $@ ] && mv -f $@ $*.$(TIMESTAMP).log
 	cs -- ../../casperscript/lib/viewpbm.ps $+ | tee $@
