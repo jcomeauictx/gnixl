@@ -132,9 +132,14 @@
   (stack after pathbbox: ) #only #stack
   exch 4 -1 roll sub 3 1 roll exch sub
   (banner width, height for determining banner position: ) #only #stack
-  pageheight exch sub margin sub exch  % y start of banner, x width
+  % calculate y top
+  pageheight exch sub margin sub  % y start of banner
+  (banner y top: ) #only dup #
+  exch  % swap to calculate x center
   pagewidth 2 div exch 2 div sub  % x start of banner
+  (banner x left: ) #only dup #
   exch  % x and y in order for moveto
+  (banner: stack before moveto: ) #only #stack
   moveto false bannerwords bannerdraw
   end
   (banner final stack: ) #only #stack
