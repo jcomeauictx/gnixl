@@ -78,8 +78,9 @@
   (bannerdraw end stack: ) #only #stack
 } def
 
-/banner {  % string -
-  % generic banner function
+/banner {  % string - textbottom
+  % generic banner function; returns bottom of banner
+  % (for use in layout of remainder of page)
   10 dict begin  % for local variables, languagelevel 3 will grow as needed
   dup ( ) string.count 1 add array exch () string.split /bannerwords exch def
   /images bannerwords length dict def
@@ -106,7 +107,10 @@
   exch 4 -1 roll sub 3 1 roll exch sub
   (banner width, height for determining banner position: ) #only #stack
   % calculate y baseline
-  pageheight exch sub margin sub descender sub  % y start of banner
+  pageheight exch sub margin sub
+  % return textbottom to caller, to determine columns top
+  /textbottom 1 index def
+  descender sub  % y start of banner
   (banner y top: ) #only dup #
   exch  % swap to calculate x center
   pagewidth 2 div exch 2 div sub  % x start of banner
@@ -114,8 +118,10 @@
   exch  % x and y in order for moveto
   (banner: stack before moveto: ) #only #stack
   moveto false bannerwords bannerdraw
-  end
+  pop pop pop pop  % toss pathbbox
+  textbottom
   (banner final stack: ) #only #stack
+  end
 } bind def
 
 % test run using `cs -- banner`
