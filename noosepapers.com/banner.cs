@@ -108,6 +108,8 @@
         ifelse
     }
     for
+  (discarding bannerwords: ) #only dup ## pop
+  (stack before restore: ) #only #stack
   restore
   end
 } bind def
