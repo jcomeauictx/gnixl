@@ -138,7 +138,7 @@
   end  % end local variables dict
 } bind def
 
-/columns {  % columns startcolumn source - pcount pindex
+/columns {  % ytop columns startcolumn source - pcount pindex
   (starting columns with stack: ) #only #stack
   10 dict begin
   (source: ) #only dup ##
@@ -177,7 +177,7 @@ scriptname (columns) eq {
     {pop LoremIpsum}
     ifelse /datasource exch def
   (bytes available: ) #only datasource bytesavailable #
-  2.5 1 datasource columns
+  pageheight 10 sub 2.5 1 datasource columns
   (now showing columns on page) #
   showpage
   exch (final paragraph shown: ) #only #only (, word index: ) #only #
