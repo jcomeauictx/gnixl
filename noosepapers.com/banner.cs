@@ -71,8 +71,6 @@
     % first, a dry run to get the banner size
     % redefine `image` and `show` for that purpose
     % (must be done in userdict to work! not local definitions)
-    /image /saved.image alias
-    /show /saved.show alias
     /image {
       dup /Decode get /decoder exch def
       % translate all values to 1 (white)
@@ -103,7 +101,6 @@
     }
     for
   pop  % toss copy of word array
-  2 index {/saved.image /image alias  /saved.show /show alias} #stack if
   restore
   (bannerdraw end stack: ) #only #stack
 } def
