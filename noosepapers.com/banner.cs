@@ -101,10 +101,12 @@
   true bannerwords bannerdraw
   (stack after pathbbox: ) #only #stack
   % calculate width/height from pathbbox
+  2 index pageheight sub /descender exch def
+  (descender: ) #only descender #
   exch 4 -1 roll sub 3 1 roll exch sub
   (banner width, height for determining banner position: ) #only #stack
-  % calculate y top
-  pageheight exch sub margin sub  % y start of banner
+  % calculate y baseline
+  pageheight exch sub margin sub descender sub  % y start of banner
   (banner y top: ) #only dup #
   exch  % swap to calculate x center
   pagewidth 2 div exch 2 div sub  % x start of banner
