@@ -2,7 +2,7 @@
 % typographicwebdesign.com/setting-text/font-size-line-height-measure-alignment/
 % NOTE: if debugging messages are removed, replace each `#` with `pop`
 (starting columns.cs) #
-(lorem_ipsum.cs) run
+(loremipsum.cs) run
 (latin1font.cs) run
 (paragraphs.cs) run
 /margin 10 def  % top and bottom, left and right, between columns
