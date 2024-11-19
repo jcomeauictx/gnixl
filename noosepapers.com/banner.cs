@@ -65,7 +65,6 @@
 } def
 
 /bannerdraw {  % array dryrun - [pathbbox]
-  save 3 1 roll
   % dryrun setup
   {
     % first, a dry run to get the banner size
@@ -100,9 +99,6 @@
     for
   [pathbbox]
   exch
-  (before restore: ) #only #stack
-  3 -1 roll  % put -save- object back at TOS
-  restore
 } bind def
 
 /banner {  % string -
