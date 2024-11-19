@@ -1,5 +1,6 @@
 #!/usr/local/casperscript/bin/cs --
 % typographicwebdesign.com/setting-text/font-size-line-height-measure-alignment/
+% NOTE: if debugging messages are removed, replace each `#` with `pop`
 (starting columns.cs) #
 (lorem_ipsum.cs) run
 (latin1font.cs) run
@@ -155,7 +156,7 @@
   (stack after 1 index ceiling cvi: ) #only #stack
   {
     x  % starting x of column
-    pageheight margin dup add sub  % starting y of column
+    3 index  % starting y of column
     0  % y1 of column (FIXME: may be larger if `columns` is fractional)
     filtered wordlist pcount pindex  % load stack for `column`
     column (after column: ) #only #stack
@@ -164,6 +165,7 @@
   } repeat
   (discarding file object: ) #only #
   (discarding number of columns: ) #only #
+  (discarding top of columns: ) #only #
   pcount pindex  % leave paragraph count and word index on stack
   % these will be saved for continuation on later pages or in later editions.
   end
@@ -177,7 +179,7 @@ scriptname (columns) eq {
     {pop LoremIpsum}
     ifelse /datasource exch def
   (bytes available: ) #only datasource bytesavailable #
-  pageheight 10 sub 2.5 1 datasource columns
+  pageheight margin dup add sub 2.5 1 datasource columns
   (now showing columns on page) #
   showpage
   exch (final paragraph shown: ) #only #only (, word index: ) #only #
