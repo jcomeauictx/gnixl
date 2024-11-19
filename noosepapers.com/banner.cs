@@ -127,6 +127,12 @@
   (before true bannerwords bannerdraw: ) #only #stack
   true bannerwords bannerdraw pathbbox
   (stack after pathbbox: ) #only #stack
+  exch 4 -1 roll sub 3 1 roll exch sub
+  (banner width, height for determining banner position: ) print  =stack
+  pageheight exch sub margin sub exch  % y start of banner, x width
+  pagewidth 2 div exch 2 div sub  % x start of banner
+  exch  % put x and y in order for moveto
+  moveto false bannerwords bannerdraw
   end
 } bind def
 
