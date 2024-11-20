@@ -8,7 +8,6 @@
 (end loading noosepaper) #
 scriptname (noosepaper) eq {
   /margin where {pop} {/margin 10 def} ifelse
-  /fontsize where {pop} {/fontsize 12 def} ifelse
   /lineheight where
     {pop}
     {/lineheight {currentfont font.size 1.5 mul floor} def}
@@ -17,8 +16,9 @@ scriptname (noosepaper) eq {
   {sys.argv 1 get} stopped {pop (The Noose gallows.pgm Papers)} if
   gsave /CloisterBlack 47 banner grestore
   (now painting columns) #
-  /TimesRoman 15 selectfont
-  % first subtrace margin and lineheight from banner baseline
+  /TimesRoman latin1font
+  /TimesRoman-Latin1 15 selectfont
+  % first subtract margin and lineheight from banner baseline
   lineheight sub margin sub
   2.5 1  % 2.5 columns, starting at column 1
   {sys.argv 2 get (r) file} stopped {LoremIpsum} if (Headline Goes Here) columns

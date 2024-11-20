@@ -124,13 +124,20 @@
 /columns {  % ytop columns startcolumn source headline - pcount pindex
   % NOTE: startcolumn is 1-based! using 0 puts first column to left of page!
   (starting columns with stack: ) #only #stack
+  % make sure there's a usable font loaded
+  currentfont font.size 1.0 le
+    {
+      (creating Times-Roman-Latin1) #
+      /TimesRoman latin1font
+      (selecting Times-Roman-Latin1) #
+      /TimesRoman-Latin1 14 selectfont
+      (Times-Roman-Latin1 selected) #
+    }
+    {
+      (using font ) #only currentfont dup /FontName get ##only font.size #
+    }
+    ifelse
   % the following definitions go into userdict, for use by other routines
-  /fontsize 12 def
-  (creating Times-Roman-Latin1) #
-  /Times-Roman latin1font
-  (selecting Times-Roman-Latin1) #
-  /Times-Roman-Latin1 fontsize selectfont
-  (Times-Roman-Latin1 selected) #
   /lineheight {currentfont font.size 1.5 mul floor} def
   (lineheight: ) #only lineheight #
   /MAXPARAGRAPHS 100 def  % NOTE: this is for testing with Lorem ipsum generator
