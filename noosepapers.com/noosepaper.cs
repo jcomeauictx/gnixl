@@ -10,7 +10,7 @@ scriptname (noosepaper) eq {
   (starting noosepaper: ) #only #stack
   (The Noose gallows.pgm Papers) /CloisterBlack 47 banner
   (now painting columns) #
-  2.5 0 LoremIpsum columns
+  2.5 1 LoremIpsum columns
   showpage
 }
 if

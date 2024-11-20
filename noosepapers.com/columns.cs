@@ -122,6 +122,7 @@
 } bind def
 
 /columns {  % ytop columns startcolumn source - pcount pindex
+  % NOTE: startcolumn is 1-based! using 0 puts first column to left of page!
   (starting columns with stack: ) #only #stack
   % the following definitions go into userdict, for use by other routines
   /fontsize 12 def
