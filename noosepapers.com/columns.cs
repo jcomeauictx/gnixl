@@ -125,8 +125,11 @@
   (starting columns with stack: ) #only #stack
   % the following definitions go into userdict, for use by other routines
   /fontsize 12 def
+  (creating Times-Roman-Latin1) #
   /Times-Roman latin1font
+  (selecting Times-Roman-Latin1) #
   /Times-Roman-Latin1 fontsize selectfont
+  (Times-Roman-Latin1 selected) #
   /lineheight fontsize 1.5 mul floor def (lineheight: ) #only lineheight #
   /MAXPARAGRAPHS 100 def  % NOTE: this is for testing with Lorem ipsum generator
   % NOTE on x and y width (from PLRM section 5.4):
