@@ -5,25 +5,7 @@
 /loremipsum where {pop} {(loremipsum.cs) run} ifelse
 /latin1font where {pop} {(latin1font.cs) run} ifelse
 /paragraphs where {pop} {(paragraphs.cs) run} ifelse
-/margin 10 def  % top and bottom, left and right, between columns
-/fontsize 12 def
-/Times-Roman latin1font
-/Times-Roman-Latin1 fontsize selectfont
-/lineheight fontsize 1.5 mul floor def (lineheight: ) #only lineheight #
-/MAXPARAGRAPHS 100 def  % NOTE: this is for testing with Lorem ipsum generator
-% NOTE on x and y width (from PLRM section 5.4):
-% Most Indo-European alphabets, including the Latin alphabet,
-% have a positive x width and a zero y width. Semitic alphabets have a
-% negative x width, and some Asian writing systems have a nonzero y width.
-/xwidth {stringwidth pop} bind def
-/spacewidth ( ) xwidth def
-(spacewidth: ) #only spacewidth #
-% broadsheet typically has 5 columns, tabloid 4, zine maybe 2 or 3
-/columnsperpage 3 def
-/columnwidth pagewidth margin dup add sub columnsperpage div def
-/linewidth columnwidth margin sub def
-/columnheight pageheight margin dup add sub def
-(column width: ) #only columnwidth #only (, height: ) #only columnheight #
+/margin where {pop} {/margin 10 def} ifelse
 /columnline {  % wordlist index - endofparagraph newindex string
   (starting columnline with stack: ) #only #stack
   10 dict begin  % languagelevel 3 here, so dict can grow as needed
@@ -141,6 +123,26 @@
 
 /columns {  % ytop columns startcolumn source - pcount pindex
   (starting columns with stack: ) #only #stack
+  % the following definitions go into userdict, for use by other routines
+  /fontsize 12 def
+  /Times-Roman latin1font
+  /Times-Roman-Latin1 fontsize selectfont
+  /lineheight fontsize 1.5 mul floor def (lineheight: ) #only lineheight #
+  /MAXPARAGRAPHS 100 def  % NOTE: this is for testing with Lorem ipsum generator
+  % NOTE on x and y width (from PLRM section 5.4):
+  % Most Indo-European alphabets, including the Latin alphabet,
+  % have a positive x width and a zero y width. Semitic alphabets have a
+  % negative x width, and some Asian writing systems have a nonzero y width.
+  /xwidth {stringwidth pop} bind def
+  /spacewidth ( ) xwidth def
+  (spacewidth: ) #only spacewidth #
+  % broadsheet typically has 5 columns, tabloid 4, zine maybe 2 or 3
+  /columnsperpage 3 def
+  /columnwidth pagewidth margin dup add sub columnsperpage div def
+  /linewidth columnwidth margin sub def
+  /columnheight pageheight margin dup add sub def
+  (column width: ) #only columnwidth #only (, height: ) #only columnheight #
+  % definitions from here are local to `columns`
   10 dict begin
   (source: ) #only dup ##
   (stack before setting up filter: ) #only #stack
