@@ -16,7 +16,8 @@ scriptname (noosepaper) eq {
   (now painting columns) #
   % first subtrace margin and lineheight from banner baseline
   lineheight sub margin sub
-  2.5 1 LoremIpsum columns
+  2.5 1  % 2.5 columns, starting at column 1
+  {sys.argv 2 get (r) file} stopped {LoremIpsum} if columns
   showpage
 }
 if
