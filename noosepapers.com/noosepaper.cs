@@ -11,7 +11,8 @@ scriptname (noosepaper) eq {
   /fontsize where {pop} {/fontsize 12 def} ifelse
   /lineheight where {pop} {/lineheight fontsize 1.5 mul floor def} ifelse
   (starting noosepaper: ) #only #stack
-  (The Noose gallows.pgm Papers) /CloisterBlack 47 banner
+  {sys.argv 1 get} stopped {pop (The Noose gallows.pgm Papers)} if
+  /CloisterBlack 47 banner
   (now painting columns) #
   % first subtrace margin and lineheight from banner baseline
   lineheight sub margin sub
