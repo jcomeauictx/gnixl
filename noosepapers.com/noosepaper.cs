@@ -7,9 +7,14 @@
 /loremipsum where {pop} {(loremipsum.cs) run} ifelse
 (end loading noosepaper) #
 scriptname (noosepaper) eq {
+  /margin where {pop} {/margin 10 def} ifelse
+  /fontsize where {pop} {/fontsize 12 def} ifelse
+  /lineheight where {pop} {/lineheight fontsize 1.5 mul floor def} ifelse
   (starting noosepaper: ) #only #stack
   (The Noose gallows.pgm Papers) /CloisterBlack 47 banner
   (now painting columns) #
+  % first subtrace margin and lineheight from banner baseline
+  lineheight sub margin sub
   2.5 1 LoremIpsum columns
   showpage
 }

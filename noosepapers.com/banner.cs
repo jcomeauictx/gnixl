@@ -112,7 +112,7 @@
   % return textbottom to caller, to determine columns top
   /textbottom 1 index def
   descender sub  % y start of banner
-  (banner y top: ) #only dup #
+  (banner y bottom: ) #only dup #
   exch  % swap to calculate x center
   pagewidth 2 div exch 2 div sub  % x start of banner
   (banner x left: ) #only dup #
@@ -120,7 +120,10 @@
   (banner: stack before moveto: ) #only #stack
   moveto false bannerwords bannerdraw
   pop pop pop pop  % toss pathbbox
-  textbottom
+  textbottom  % to return to caller
+  % now draw a line so we're sure we got it right
+  % comment this out or move it lower as desired later
+  dup margin exch moveto pagewidth margin dup add sub 0 rlineto stroke
   (banner final stack: ) #only #stack
   end
 } bind def
