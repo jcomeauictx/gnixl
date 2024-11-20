@@ -1,4 +1,4 @@
-#!/usr/local/casperscript/bin/bccs
+#!/usr/local/casperscript/bin/bccs --
 % font modified to use Latin-1 encoding
 % PLRM page 349
 /latin1font { %  fontname -
