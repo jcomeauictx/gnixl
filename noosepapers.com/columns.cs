@@ -121,7 +121,7 @@
   end  % end local variables dict
 } bind def
 
-/columns {  % ytop columns startcolumn source - pcount pindex
+/columns {  % ytop columns startcolumn source headline - pcount pindex
   % NOTE: startcolumn is 1-based! using 0 puts first column to left of page!
   (starting columns with stack: ) #only #stack
   % the following definitions go into userdict, for use by other routines
@@ -131,7 +131,8 @@
   (selecting Times-Roman-Latin1) #
   /Times-Roman-Latin1 fontsize selectfont
   (Times-Roman-Latin1 selected) #
-  /lineheight fontsize 1.5 mul floor def (lineheight: ) #only lineheight #
+  /lineheight {currentfont font.size 1.5 mul floor} def
+  (lineheight: ) #only lineheight #
   /MAXPARAGRAPHS 100 def  % NOTE: this is for testing with Lorem ipsum generator
   % NOTE on x and y width (from PLRM section 5.4):
   % Most Indo-European alphabets, including the Latin alphabet,
@@ -148,11 +149,12 @@
   (column width: ) #only columnwidth #only (, height: ) #only columnheight #
   % definitions from here are local to `columns`
   10 dict begin
+  /headline exch def
   (source: ) #only dup ##
   (stack before setting up filter: ) #only #stack
   paragraphs filter (stack after setting up filter: ) #only #stack
   /filtered exch def  % removes -file- from stack
-  %/defaultdevice cvx 0 .quit
+  %/defaultdevice cvx 0 .quit  % insert and uncomment this where needed
   % (startcolumn is one-based)
   exch (before zero-basing columnwidth: ) #only #stack
   1 sub columnwidth mul margin add /x exch def
@@ -160,6 +162,7 @@
   /pcount 0 def  /pindex 0 def
   1 index ceiling cvi % e.g., 1.5 columns means 2 column width
   (stack after 1 index ceiling cvi: ) #only #stack
+  % draw headline here, fontsize according to number of spanned columns
   {
     x  % starting x of column
     3 index  % starting y of column
@@ -185,7 +188,7 @@ scriptname (columns) eq {
     {pop LoremIpsum}
     ifelse /datasource exch def
   (bytes available: ) #only datasource bytesavailable #
-  pageheight margin dup add sub 2.5 1 datasource columns
+  pageheight margin dup add sub 2.5 1 datasource (Headline Goes Here) columns
   (now showing columns on page) #
   showpage
   exch (final paragraph shown: ) #only #only (, word index: ) #only #
