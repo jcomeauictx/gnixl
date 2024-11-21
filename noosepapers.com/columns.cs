@@ -162,7 +162,7 @@
   /columnwidth pagewidth margin dup add sub columnsperpage div def
   /linewidth columnwidth margin sub def
   /columnheight pageheight margin dup add sub def
-  10 columnheight red hr
+  (stack before current content top:) #only #stack 10 5 index red hr
   (column width: ) #only columnwidth #only (, height: ) #only columnheight #
   % definitions from here are local to `columns`
   10 dict begin
@@ -186,6 +186,7 @@
     currentfont dup /FontName get exch font.size 3 -1 roll mul .7 mul selectfont
     % use fontsize as a proxy for moving to baseline. make it better later.
     currentfont font.size 4 index exch sub x exch
+    (drawing green line at baseline of headline) #
     2 copy green hr
     moveto headline
     (stack before showing headline: ) #only #stack
@@ -196,7 +197,7 @@
     (after headline shown: ) #only #stack
     % clear headline before starting column contents
     #stack 3 index lineheight sub #stack 4 swap pop
-    10 3 index blue hr
+    (drawing blue line at top of columns) # 10 3 index blue hr
   grestore
   {
     x  % starting x of column
