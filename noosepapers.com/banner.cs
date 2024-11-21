@@ -63,8 +63,6 @@
           justwords () (before string.join: ) #only #stack
           string.join (after string.join: ) #only #stack
           (before pnminline: ) #only #stack pnminline
-          ( ) show  % follow with a space
-          (stack after showing space after pnmimage: ) #only #stack
         }
         {show}
         ifelse
