@@ -7,6 +7,14 @@
 /paragraphs where {pop} {(paragraphs.cs) run} ifelse
 /banner where {pop} {(banner.cs) run} ifelse
 /margin where {pop} {/margin 10 def} ifelse
+/red {255 0 0} def
+/green {0 255 0} def
+/blue {0 0 255} def
+/hr {  % x y color -  % horizontal rule, for debugging vertical space problems
+  gsave setrgbcolor pagewidth 2 index sub  % make margin on right = to left
+  3 1 roll #stack 0 #stack 3 1 roll #stack moveto #stack rlineto stroke #stack
+  grestore
+} bind def
 /columnline {  % wordlist index - endofparagraph newindex string
   (starting columnline with stack: ) #only #stack
   10 dict begin  % languagelevel 3 here, so dict can grow as needed
