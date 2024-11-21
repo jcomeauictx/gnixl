@@ -11,7 +11,7 @@
 /green {0 255 0} def
 /blue {0 0 255} def
 /hr {  % x y color -  % horizontal rule, for debugging vertical space problems
-  gsave setrgbcolor pagewidth 2 index sub  % make margin on right = to left
+  gsave setrgbcolor pagewidth 2 index dup add sub  % right margin = left
   3 1 roll #stack 0 #stack 3 1 roll #stack moveto #stack rlineto stroke #stack
   grestore
 } bind def
@@ -162,6 +162,7 @@
   /columnwidth pagewidth margin dup add sub columnsperpage div def
   /linewidth columnwidth margin sub def
   /columnheight pageheight margin dup add sub def
+  10 columnheight red hr
   (column width: ) #only columnwidth #only (, height: ) #only columnheight #
   % definitions from here are local to `columns`
   10 dict begin
@@ -185,6 +186,7 @@
     currentfont dup /FontName get exch font.size 3 -1 roll mul .7 mul selectfont
     % use fontsize as a proxy for moving to baseline. make it better later.
     currentfont font.size 4 index exch sub x exch
+    2 copy green hr
     moveto headline
     (stack before showing headline: ) #only #stack
     1 index columnsperpage lt
@@ -194,6 +196,7 @@
     (after headline shown: ) #only #stack
     % clear headline before starting column contents
     #stack 3 index lineheight sub #stack 4 swap pop
+    10 3 index blue hr
   grestore
   {
     x  % starting x of column
