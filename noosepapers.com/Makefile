@@ -11,8 +11,6 @@ BANNER ?= The Noose gallows.pgm Papers
 all: noosepaper.log
 gallows.pgm: gallows.png
 	pngtopnm $< | pnmnoraw > $@
-noosepaper.log: noosepaper.cs
-	./$< 'The Noose gallows.pgm Papers' $(TEXTFILE)
 banner.log: banner.cs
 	set -euxo pipefail; \
 	{ ./$< '$(BANNER)' 2>&1 1>&3 3>&- | tee $(@:.log=.err); } \
@@ -31,6 +29,8 @@ banner.log: banner.cs
 	([ -f $*.err ] && mv -f $*.err $*.$(TIMESTAMP).err) || true
 	if [ "$*" = "latin1font" ]; then \
 	 arg=TimesRoman; \
+	elif [ "$*" = "noosepaper" ]; then \
+	 arg="$(TEXTFILE) $(BANNER)"; \
 	else \
 	 arg=$(TEXTFILE); \
 	fi; \

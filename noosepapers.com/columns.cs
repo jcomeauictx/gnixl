@@ -177,7 +177,9 @@
     currentfont dup /FontName get exch font.size 3 -1 roll mul .7 mul selectfont
     % use fontsize as a proxy for moving to baseline. make it better later.
     currentfont font.size 4 index exch sub x exch
-    moveto headline #stack false  % FIXME: need comparison of columns to 3
+    moveto headline
+    (stack before showing headline: ) #only #stack
+    false  % FIXME: need comparison of columns to columnsperpage
       {show}
       {false true centershow}
       ifelse
