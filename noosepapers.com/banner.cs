@@ -126,7 +126,7 @@
   end
 } bind def
 
-% test run using `cs -- banner`
+% test run using `./banner.cs`
 scriptname (banner) eq {
   (page height: ) #only pageheight #
   (page width: ) #only pagewidth #

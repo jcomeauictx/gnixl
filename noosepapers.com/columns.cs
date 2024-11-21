@@ -179,7 +179,7 @@
     currentfont font.size 4 index exch sub x exch
     moveto headline
     (stack before showing headline: ) #only #stack
-    false  % FIXME: need comparison of columns to columnsperpage
+    1 index columnsperpage lt
       {show}
       {false true centershow}
       ifelse
