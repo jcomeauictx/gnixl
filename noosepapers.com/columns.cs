@@ -170,6 +170,16 @@
   1 index ceiling cvi % e.g., 1.5 columns means 2 column width
   (stack after 1 index ceiling cvi: ) #only #stack
   % draw headline here, fontsize according to number of spanned columns
+  gsave
+    dup  % save copy of rounded-up number of columns
+    % select a new font size based on number of columns
+    currentfont dup /FontName get exch font.size 3 -1 roll mul selectfont
+    % use fontsize as a proxy for moving to baseline. make it better later.
+    currentfont font.size 4 index exch sub x exch
+    moveto headline show (after headline shown: ) #only #stack
+    % clear headline before starting column contents
+    #stack 3 index lineheight sub #stack 4 swap pop
+  grestore
   {
     x  % starting x of column
     3 index  % starting y of column
