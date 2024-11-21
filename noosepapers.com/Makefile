@@ -8,6 +8,9 @@ PDFS := $(shell ls -r *.pdf)
 TXTS := $(PDFS:.pdf=.txt)
 TEXTFILE ?= $(word 1, $(TXTS))
 BANNER ?= The Noose gallows.pgm Papers
+ifneq ($(SHOWENV),)
+export
+endif
 all: noosepaper.log
 gallows.pgm: gallows.png
 	pngtopnm $< | pnmnoraw > $@
@@ -52,5 +55,11 @@ edit:
 push:
 	git push  # to default repository
 	git push githost  # to personal repo, must be added to /etc/hosts
+env:
+ifneq ($(SHOWENV),)
+	$@
+else
+	$(MAKE) SHOWENV=1 $@
+endif
 .PRECIOUS: %.ps %.log %.txt
 .FORCE:
