@@ -5,6 +5,7 @@
 /loremipsum where {pop} {(loremipsum.cs) run} ifelse
 /latin1font where {pop} {(latin1font.cs) run} ifelse
 /paragraphs where {pop} {(paragraphs.cs) run} ifelse
+/banner where {pop} {(banner.cs) run} ifelse
 /margin where {pop} {/margin 10 def} ifelse
 /columnline {  % wordlist index - endofparagraph newindex string
   (starting columnline with stack: ) #only #stack
@@ -173,10 +174,14 @@
   gsave
     dup  % save copy of rounded-up number of columns
     % select a new font size based on number of columns
-    currentfont dup /FontName get exch font.size 3 -1 roll mul selectfont
+    currentfont dup /FontName get exch font.size 3 -1 roll mul .7 mul selectfont
     % use fontsize as a proxy for moving to baseline. make it better later.
     currentfont font.size 4 index exch sub x exch
-    moveto headline show (after headline shown: ) #only #stack
+    moveto headline #stack false  % FIXME: need comparison of columns to 3
+      {show}
+      {false true centershow}
+      ifelse
+    (after headline shown: ) #only #stack
     % clear headline before starting column contents
     #stack 3 index lineheight sub #stack 4 swap pop
   grestore
