@@ -30,7 +30,7 @@ banner.log: banner.cs
 	([ -f $@ ] && mv -f $@ $*.$(TIMESTAMP).log) || true
 	([ -f $*.err ] && mv -f $*.err $*.$(TIMESTAMP).err) || true
 	if [ "$*" = "latin1font" ]; then \
-	 arg=Times-Roman; \
+	 arg=TimesRoman; \
 	else \
 	 arg=$(TEXTFILE); \
 	fi; \

@@ -128,11 +128,11 @@
   % make sure there's a usable font loaded
   currentfont font.size 1.0 le
     {
-      (creating Times-Roman-Latin1) #
+      (creating TimesRoman-Latin1) #
       /TimesRoman latin1font
-      (selecting Times-Roman-Latin1) #
+      (selecting TimesRoman-Latin1) #
       /TimesRoman-Latin1 14 selectfont
-      (Times-Roman-Latin1 selected) #
+      (TimesRoman-Latin1 selected) #
     }
     {
       (using font ) #only currentfont dup /FontName get ##only font.size #
