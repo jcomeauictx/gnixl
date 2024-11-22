@@ -185,9 +185,10 @@
     % select a new font size based on number of columns
     currentfont dup /FontName get exch font.size 3 -1 roll mul .7 mul selectfont
     % use fontsize as a proxy for moving to baseline. make it better later.
+    (stack before top green line: ) #only #stack margin 3 index green hr
     currentfont font.size 4 index exch sub x exch
     (drawing green line at baseline of headline) #
-    2 copy green hr
+    margin 1 index green hr
     moveto headline
     (stack before showing headline: ) #only #stack
     1 index columnsperpage lt
