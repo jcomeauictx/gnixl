@@ -30,12 +30,17 @@
       {
         %(stack at start of loop: ) #only #stack
         dup wordindex get dup xwidth spacewidth add
-        line strcopy string.truncate  % string with new word appended
+        line string.copy string.truncate  % string with new word appended
         xwidth add  % add to running pixel length total
         %dup (line width after addition would be ) #only #
         linewidth ge wordindex maxindex gt or %(stack after ge: ) #only #stack
           {
-            (discarding ) #only #only
+            % if only one word caused linewidth to be exceeded, this needs
+            % to be corrected, or /rangecheck signaled.
+            dup xwidth linewidth gt
+              {/rangecheck signalerror}
+              if
+            (discarding ) #only dup ##only pop
             (, exiting loop with stack: ) #only #stack
             exit
           }

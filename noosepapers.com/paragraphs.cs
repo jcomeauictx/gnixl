@@ -42,7 +42,7 @@
       (after join complete: ) #only #stack
       dup strlen 0 gt
         {%(adding line separator to concatenated string) #
-          (\n\n) stradd
+          (\n\n) string.add
         }
         {(found empty string, marking EOF, stack: ) #only #stack pop EOF}
         ifelse
