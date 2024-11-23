@@ -34,7 +34,11 @@
         xwidth add  % add to running pixel length total
         %dup (line width after addition would be ) #only #
         linewidth ge wordindex maxindex gt or %(stack after ge: ) #only #stack
-          {pop exit}
+          {
+            (discarding ) #only #only
+            (, exiting loop with stack: ) #only #stack
+            exit
+          }
           {line strlen 0 gt {line ( ) string.append} if
             line exch string.append /wordindex inc
             %(stack after append: ) #only  #stack
