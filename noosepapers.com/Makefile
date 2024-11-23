@@ -6,7 +6,8 @@ PATH := /usr/local/casperscript/bin:$(PATH)
 TIMESTAMP := $(shell date +'%Y%m%d%H%M%S')
 PDFS := $(shell ls -r *.pdf)
 TXTS := $(PDFS:.pdf=.txt)
-TEXTFILE ?= $(word 1, $(TXTS))
+# manually make default.txt symlink to test text (other than lorem ipsum)
+TEXTFILE ?= default.txt
 BANNER ?= The Noose gallows.pgm Papers
 ifneq ($(SHOWENV),)
 export
@@ -47,6 +48,9 @@ upload:
 	rsync -avuz $(DRYRUN) $(DELETE) \
 	 --exclude='Makefile' \
 	 --exclude='README.md' \
+	 --exclude='*.log' \
+	 --exclude='*.err' \
+	 --exclude='.gitignore' \
 	 . $(SERVER):$(DOCROOT)/$(SERVER)/
 %.txt: %.pdf
 	pdftotext -nopgbrk -eol unix -enc Latin1 $<

@@ -17,4 +17,7 @@ upload:
 	rsync -avuz $(DRYRUN) $(DELETE) \
 	 --exclude='Makefile' \
 	 --exclude='README.md' \
+	 --exclude='*.log' \
+	 --exclude='*.err' \
+	 --exclude='.gitignore' \
 	 . $(SERVER):$(DOCROOT)/$(SERVER)/
