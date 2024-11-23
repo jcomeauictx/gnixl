@@ -1,0 +1,2 @@
+# This is for URL-shortener redirects of the form:
+#Redirect 301 /l/testing https://testing.test/
