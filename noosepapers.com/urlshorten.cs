@@ -5,7 +5,13 @@
   (stack after creating directory name: ) #only #stack
   3
     {
-      {(../gnixl.com/l/) 1 index string.add dup 8#755 #stack .mkdir #stack} stopped
+      {
+        (../gnixl.com/l/) 1 index string.add dup 8#755
+        (stack before os.mkdir: ) #only #stack
+        os.mkdir
+        (stack after os.mkdir: ) #only #stack
+      }
+      stopped
         {(trying again, stack: ) #only #stack pop}
         {(succeeded, continuing) # exit}
         ifelse
@@ -19,6 +25,7 @@
 } bind def
 
 scriptname (urlshorten) eq
+  (running urlshorten test program) #
   {sys.argv 1 get urlshorten}
 if
 % vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2 syntax=postscr
