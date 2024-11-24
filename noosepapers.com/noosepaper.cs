@@ -21,7 +21,7 @@ scriptname (noosepaper) eq {
   /TimesRoman latin1font
   /TimesRoman-Latin1 15 selectfont
   % first subtract margin and lineheight from banner baseline
-  margin sub
+  %margin sub
   2.5 1  % 2.5 columns, starting at column 1
   {sys.argv 1 get (r) file} stopped {LoremIpsum} if (Headline Goes Here) columns
   showpage

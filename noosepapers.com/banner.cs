@@ -121,7 +121,7 @@
   textbottom  % to return to caller
   % now draw a line so we're sure we got it right
   % comment this out or move it lower as desired later
-  % dup margin exch moveto pagewidth margin dup add sub 0 rlineto stroke
+  %dup margin exch moveto pagewidth margin dup add sub 0 rlineto stroke
   (banner final stack: ) #only #stack
   end
 } bind def
