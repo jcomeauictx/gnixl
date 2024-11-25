@@ -17,16 +17,18 @@
         {(trying again, stack: ) #only #stack cleartomark mark}
         {(succeeded, continuing) # exit}
         ifelse
-      (failed after ) #only MAX_TRIES #only ( attempts) #
-      /defaultdevice cvx 1 .quit
+      counttomark 0 gt  % not a retry, so must have failed
+        {
+          (failed after ) #only MAX_TRIES #only ( attempts) #
+          /defaultdevice cvx 1 .quit
+        } if
     }
     repeat
   (after mkdir: ) #only #stack
   dup (/../../.htaccess) string.add (a) file
-  exch [2] substring  % chop '..' from start of relative path to make URL
+  exch [12] substring  % chop first part of path to form URL
   (after substring: ) #only #stack
-  (https:/) exch string.add
-  (after prepending scheme: ) #only #stack
+  (after forming URL: ) #only #stack
   (Redirect 301 ) 5 -1 roll string.add  % "from" URL added
   (first part of redirect: ) #only #stack
   ( ) string.add exch string.add
