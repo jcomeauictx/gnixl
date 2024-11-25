@@ -1,7 +1,7 @@
 #! ../../casperscript/bin/bccs --
 /urlshorten  ( url - shorturl
   generate a short URL for a long one) docstring {
-  rand 36 10 string cvrs string.lower dup
+  rand 36 10 string cvrs string.lower
   (stack after creating directory name: ) #only #stack
   3
     {
@@ -18,10 +18,17 @@
     }
     repeat
   (after mkdir: ) #only #stack
-  (../gnixl.com/.htaccess) string.add (a) file
+  dup (/../.htaccess) string.add (a) file
+  exch [2] substring  % chop '..' from start of relative path to make URL
+  (after substring: ) #only #stack
+  (https:/) exch string.add
+  (after prepending scheme: ) #only #stack
+  (Redirect 301 ) 5 -1 roll string.add  % "from" URL added
+  (first part of redirect: ) #only #stack
+  ( ) string.add 2 index string.add
+  (\n) string.add writestring
+  closefile
   #stack
-  %dup (Redirect 301 ) 4 index string.add (\n) string.add writestring
-  %closefile
 } bind def
 
 scriptname (urlshorten) eq
