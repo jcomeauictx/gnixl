@@ -1,18 +1,19 @@
 #! ../../casperscript/bin/bccs --
 /urlshorten  ( url - shorturl
   generate a short URL for a long one) docstring {
-  rand 36 10 string cvrs string.lower
-  (stack after creating directory name: ) #only #stack
-  3
+  mark  % make it easy to clean stack regardless of where it failed
+  3  % sufficient number of tries to find a unique random name
     {
       {
-        (../gnixl.com/l/) 1 index string.add dup 8#755
+        rand 36 10 string cvrs string.lower
+        (stack after creating directory name: ) #only #stack
+        (../gnixl.com/l/) exch string.add dup 8#755
         (stack before os.mkdir: ) #only #stack
         os.mkdir
         (stack after os.mkdir: ) #only #stack
       }
       stopped
-        {(trying again, stack: ) #only #stack pop}
+        {(trying again, stack: ) #only #stack cleartomark mark}
         {(succeeded, continuing) # exit}
         ifelse
     }
