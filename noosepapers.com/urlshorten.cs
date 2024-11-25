@@ -15,16 +15,16 @@
       }
       stopped
         {(trying again, stack: ) #only #stack cleartomark mark}
-        {(succeeded, continuing) # exit}
+        {(succeeded, continuing) # true exit}  % mark success with `true`
         ifelse
-      counttomark 0 gt  % not a retry, so must have failed
-        {
-          (failed after ) #only MAX_TRIES #only ( attempts) #
-          /defaultdevice cvx 1 .quit
-        } if
     }
     repeat
   (after mkdir: ) #only #stack
+  true ne  % failure would leave only a -mark- on stack
+    {
+      (failed after ) #only MAX_TRIES #only ( attempts) #
+      /defaultdevice cvx 1 .quit
+    } if
   dup (/../../.htaccess) string.add (a) file
   exch [12] substring  % chop first part of path to form URL
   (after substring: ) #only #stack
