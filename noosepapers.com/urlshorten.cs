@@ -26,8 +26,8 @@
   (after prepending scheme: ) #only #stack
   (Redirect 301 ) 5 -1 roll string.add  % "from" URL added
   (first part of redirect: ) #only #stack
-  ( ) string.add 2 index string.add
-  (\n) string.add writestring
+  ( ) string.add exch string.add
+  (\n) string.add 1 index exch writestring
   closefile
   #stack
 } bind def
