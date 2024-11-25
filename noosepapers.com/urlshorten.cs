@@ -1,8 +1,9 @@
 #! ../../casperscript/bin/bccs --
+/MAX_TRIES 3 def
 /urlshorten  ( url - shorturl
   generate a short URL for a long one) docstring {
   mark  % make it easy to clean stack regardless of where it failed
-  3  % sufficient number of tries to find a unique random name
+  MAX_TRIES  % sufficient number of tries to find a unique random name
     {
       {
         rand 36 10 string cvrs string.lower
@@ -16,6 +17,8 @@
         {(trying again, stack: ) #only #stack cleartomark mark}
         {(succeeded, continuing) # exit}
         ifelse
+      (failed after ) #only MAX_TRIES #only ( attempts) #
+      /defaultdevice cvx 1 .quit
     }
     repeat
   (after mkdir: ) #only #stack
