@@ -6,7 +6,7 @@ LINKS := $(filter-out $(NOTLINKS), $(wildcard l/*))
 
 upload:
 	rsync -avuz \
-	 $(DRYRUN) \
+	 $(DRYRUN) $(DELETE) \
 	 --exclude=.git \
 	 --exclude=Makefile \
 	 --exclude=README.md \
