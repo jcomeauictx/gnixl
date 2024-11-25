@@ -29,11 +29,12 @@
   exch [12] substring  % chop first part of path to form URL
   (after substring: ) #only #stack
   (after forming URL: ) #only #stack
-  (Redirect 301 ) 5 -1 roll string.add  % "from" URL added
+  (Redirect 301 ) exch string.add  % "from" URL added
   (first part of redirect: ) #only #stack
-  ( ) string.add exch string.add
-  (\n) string.add 1 index exch writestring
+  ( ) string.add 4 -1 roll string.add #stack
+  (\n) string.add 1 index exch writestring #stack
   closefile
+  pop  % discard `mark`
   #stack
 } bind def
 
