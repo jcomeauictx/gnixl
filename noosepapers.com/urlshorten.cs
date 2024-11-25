@@ -1,5 +1,5 @@
 #! ../../casperscript/bin/bccs --
-/MAX_TRIES 3 def
+/MAX_TRIES 10 def
 /urlshorten  ( url - shorturl
   generate a short URL for a long one) docstring {
   mark  % make it easy to clean stack regardless of where it failed
@@ -21,21 +21,20 @@
     repeat
   (after mkdir: ) #only #stack
   true ne  % failure would leave only a -mark- on stack
+    {(failed after ) #only MAX_TRIES #only ( attempts) #}
     {
-      (failed after ) #only MAX_TRIES #only ( attempts) #
-      /defaultdevice cvx 1 .quit
-    } if
-  dup (/../../.htaccess) string.add (a) file
-  exch [12] substring  % chop first part of path to form URL
-  (after substring: ) #only #stack
-  (after forming URL: ) #only #stack
-  (Redirect 301 ) exch string.add  % "from" URL added
-  (first part of redirect: ) #only #stack
-  ( ) string.add 4 -1 roll string.add #stack
-  (\n) string.add 1 index exch writestring #stack
-  closefile
-  pop  % discard `mark`
-  #stack
+      dup (/../../.htaccess) string.add (a) file
+      exch [12] substring  % chop first part of path to form URL
+      (after substring: ) #only #stack
+      (after forming URL: ) #only #stack
+      (Redirect 301 ) exch string.add  % "from" URL added
+      (first part of redirect: ) #only #stack
+      ( ) string.add 3 index string.add #stack
+      (\n) string.add 1 index exch writestring #stack
+      closefile #stack
+      pop  % discard `mark`
+    } ifelse
+    (stack after urlshorten: ) #only #stack
 } bind def
 
 scriptname (urlshorten) eq

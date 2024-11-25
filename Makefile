@@ -14,6 +14,9 @@ uploads: $(UPLOADS)
 	cd $(<D) && $(MAKE) upload
 # the following rule assumes symlinks to this Makefile from website dirs
 upload:
+	if [ "$(SERVER)" = gnixl ]; then \
+	 false; \
+	fi  # quit if attempting to use from root directory of repo
 	rsync -avuz $(DRYRUN) $(DELETE) \
 	 --exclude='Makefile' \
 	 --exclude='README.md' \
