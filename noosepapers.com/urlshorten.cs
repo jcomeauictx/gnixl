@@ -19,7 +19,7 @@
     }
     repeat
   (after mkdir: ) #only #stack
-  dup (/../.htaccess) string.add (a) file
+  dup (/../../.htaccess) string.add (a) file
   exch [2] substring  % chop '..' from start of relative path to make URL
   (after substring: ) #only #stack
   (https:/) exch string.add
