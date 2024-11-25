@@ -5,6 +5,7 @@
 /loremipsum where {pop} {(loremipsum.cs) run} ifelse
 /latin1font where {pop} {(latin1font.cs) run} ifelse
 /paragraphs where {pop} {(paragraphs.cs) run} ifelse
+/urlshorten where {pop} {(urlshorten.cs) run} ifelse
 /banner where {pop} {(banner.cs) run} ifelse
 /margin where {pop} {/margin 10 def} ifelse
 /red {255 0 0} def
@@ -38,11 +39,13 @@
             % if only one word caused linewidth to be exceeded, this needs
             % to be corrected, or /rangecheck signaled.
             dup xwidth linewidth gt
-              {/rangecheck signalerror}
-              if
-            (discarding ) #only dup ##only pop
-            (, exiting loop with stack: ) #only #stack
-            exit
+              {3 sleep /rangecheck signalerror}
+              {
+                (discarding ) #only dup ##only pop
+                (, exiting loop with stack: ) #only #stack
+                exit
+              }
+              ifelse
           }
           {line strlen 0 gt {line ( ) string.append} if
             line exch string.append /wordindex inc
