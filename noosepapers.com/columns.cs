@@ -168,8 +168,12 @@
   % make sure there's a usable font loaded
   currentfont font.size 1.0 le
     {
-      (creating TimesRoman-Latin1) #
-      /TimesRoman latin1font
+      /TimesRoman-Latin1 findfont /FontName get (-Latin1) string.endswith
+        {
+          (creating TimesRoman-Latin1) #
+          /TimesRoman latin1font
+        }
+        if
       (selecting TimesRoman-Latin1) #
       /TimesRoman-Latin1 14 selectfont
       (TimesRoman-Latin1 selected) #
