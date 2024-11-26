@@ -34,12 +34,32 @@
         line string.copy string.truncate  % string with new word appended
         xwidth add  % add to running pixel length total
         %dup (line width after addition would be ) #only #
-        linewidth ge wordindex maxindex gt or %(stack after ge: ) #only #stack
+        linewidth ge wordindex maxindex gt or (stack after ge: ) #only #stack
           {
             % if only one word caused linewidth to be exceeded, this needs
             % to be corrected, or /rangecheck signaled.
             dup xwidth linewidth gt
-              {3 sleep /rangecheck signalerror}
+              {
+                dup (http) string.startswith
+                {
+                  urlshorten
+                    {
+                      (stack after urlshorten: ) #only #stack
+                      1 index exch wordindex exch put
+                      (wordlist after shortened URL put: ) #only dup ##
+                    }
+                    {
+                      (urlshorten failed, stack: ) #only #stack
+                      /undefinedresult signalerror
+                    }
+                    ifelse
+                }
+                {
+                  3 sleep  % give chance to see how far it got
+                  /rangecheck signalerror
+                }
+                ifelse
+              }
               {
                 (discarding ) #only dup ##only pop
                 (, exiting loop with stack: ) #only #stack
