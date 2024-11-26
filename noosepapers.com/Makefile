@@ -4,6 +4,9 @@ DOCROOT := /var/www
 DRYRUN ?= --dry-run
 PATH := /usr/local/casperscript/bin:$(PATH)
 TIMESTAMP := $(shell date +'%Y%m%d%H%M%S')
+DATESTAMP := $(shell date +'%A, %B %e, %Y' | sed 's/ \+/ /g')
+VOLUME ?= $(shell cat volume.txt 2>/dev/null || echo 0.0)
+EDITION ?= Petaluma, California
 PDFS := $(shell ls -r *.pdf)
 TXTS := $(PDFS:.pdf=.txt)
 # manually make default.txt symlink to test text (other than lorem ipsum)
@@ -11,6 +14,8 @@ TEXTFILE ?= default.txt
 BANNER ?= The Noose gallows.pgm Papers
 ifneq ($(SHOWENV),)
 export
+else
+export DATESTAMP VOLUME EDITION
 endif
 all: noosepaper.log
 gallows.pgm: gallows.png
