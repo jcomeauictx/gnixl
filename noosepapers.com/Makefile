@@ -72,5 +72,7 @@ else
 endif
 cs ccs:
 	$@
+clean:
+	rm -f *.[0-9]*.log *.[0-9]*.err
 .PRECIOUS: %.ps %.log %.txt
 .FORCE:
