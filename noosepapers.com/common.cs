@@ -24,7 +24,7 @@
   dup findfont /FontName get dup length string cvs (-Latin1) string.endswith
     {
       (creating ) #only dup #
-      latin1font
+      (-Latin1) name.sub latin1font
     }
     if
   }
