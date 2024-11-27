@@ -1,4 +1,4 @@
-#!/usr/local/casperscript/bin/cs -S -I. --
+#!/usr/local/casperscript/bin/ccs -S -I. --
 /inch {72 mul} def
 /loremipsum where {pop} {(loremipsum.cs) run} ifelse
 /latin1font where {pop} {(latin1font.cs) run} ifelse
@@ -19,4 +19,17 @@
   3 1 roll #stack 0 #stack 3 1 roll #stack moveto #stack rlineto stroke #stack
   grestore
 } bind def
+[/TimesRoman-Latin1 /Helvetica-Latin1]
+  {
+  dup findfont /FontName get dup length string cvs (-Latin1) string.endswith
+    {
+      (creating ) #only dup #
+      latin1font
+    }
+    if
+  }
+  forall
+scriptname (common) eq {
+  (common definitions complete) #
+} if
 % vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2 syntax=postscr
