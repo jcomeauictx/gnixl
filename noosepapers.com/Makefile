@@ -70,5 +70,7 @@ ifneq ($(SHOWENV),)
 else
 	$(MAKE) SHOWENV=1 $@
 endif
+cs ccs:
+	$@
 .PRECIOUS: %.ps %.log %.txt
 .FORCE:
