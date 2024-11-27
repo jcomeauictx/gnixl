@@ -13,7 +13,7 @@
   } forall
   /Encoding ISOLatin1Encoding def
   currentdict end
-  (after currentdict end: ) #only #stack
+  %(after currentdict end: ) #only #stack
   1 index 128 string cvs (-Latin1) add cvn dup (new fontname: ) #only ##
   dup (made ) #only #only ( from ) #only 3 -1 roll #
   exch definefont pop  % pop extra copy of font left by `definefont`
