@@ -18,8 +18,8 @@ scriptname (noosepaper) eq {
     if
   ( ) string.join gsave /CloisterBlack 47 banner grestore
   (now painting columns) #
-  /TimesRoman latin1font
-  /TimesRoman-Latin1 15 selectfont
+  /TimesNewRoman latin1font
+  /TimesNewRoman-Latin1 15 selectfont
   % first subtract margin and lineheight from banner baseline
   %margin sub
   2.5 1  % 2.5 columns, starting at column 1

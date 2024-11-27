@@ -28,7 +28,7 @@
     grestore
   } bind def
   (common: creating Latin1 fonts) #
-  [/TimesRoman-Latin1 /Helvetica-Latin1]
+  [/TimesNewRoman-Latin1 /Helvetica-Latin1]
     {
     dup findfont /FontName get dup length string cvs (-Latin1) string.endswith
       {
