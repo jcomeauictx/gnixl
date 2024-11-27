@@ -3,6 +3,10 @@
 /pnmimage where {pop} {(pnmimage.cs) run} ifelse
 /inch {72 mul} def
 /margin 10 def  % leave a little room at top of page
+/datestamp (DATESTAMP) getenv not {(Today)} if def
+/edition (EDITION) getenv not {(Special Edition)} if def
+/volume (VOLUME) getenv not {(-1.0)} if def
+%(currentdict: ) #only currentdict ###
 /centershow { % bool bool -
   % show centered on page, vertically and/or horizontally
   /centerhorizontally exch def /centervertically exch def
@@ -79,6 +83,8 @@
 /banner {  % string fontname fontsize - textbottom
   % generic banner function; returns bottom of banner
   % (for use in layout of remainder of page)
+  (creating banner for ) #only edition #only (, volume ) #only volume #only
+    (, date ) #only datestamp #
   10 dict begin  % for local variables, languagelevel 3 will grow as needed
   (banner: stack before selectfont: ) #only #stack selectfont
   dup ( ) string.count 1 add array exch () string.split /bannerwords exch def
