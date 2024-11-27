@@ -27,9 +27,9 @@ banner.log: banner.cs
 %.log: %.pgm ../../casperscript .FORCE
 	[ -f $@ ] && mv -f $@ $*.$(TIMESTAMP).log
 	cs -- ../../casperscript/lib/viewpbm.ps $+ | tee $@
-%.gv: %.cs noosefonts.ps
-	/usr/bin/gs -sFONTMAP=$(PWD)/noosefonts.ps -I $(PWD) <(tail -n +2 $<)
-%.log: %.cs noosefonts.ps $(TXTS) .FORCE
+%.gv: %.cs
+	/usr/bin/gs -I $(PWD) <(tail -n +2 $<)
+%.log: %.cs $(TXTS) .FORCE
 	# https://stackoverflow.com/a/9113604/493161 fixes stderr pipe
 	# https://stackoverflow.com/a/6872163/493161 and
 	# https://gist.github.com/mohanpedala/1e2ff5661761d3abd0385e8223e16425
