@@ -1,4 +1,4 @@
-#!/usr/local/casperscript/bin/cs -S -I. -sFONTMAP=noosefonts.ps -sFONTPATH=. --
+#!/usr/local/casperscript/bin/cs -S -I. -sFONTPATH=. --
 (loading noosepaper imports, banner...) #
 /banner where {pop} {(banner.cs) run} ifelse
 (loading noosepaper imports, columns...) #
