@@ -42,8 +42,8 @@
 } bind def
 
 scriptname (urlshorten) eq
-  (running urlshorten test program) #
   {
+    (running urlshorten test program) #
     sys.argv 1 get urlshorten
       {(succeeded, shortened URL: ) #only #}
       {(failed to shorten URL: ) #only #}
