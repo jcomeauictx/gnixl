@@ -2,6 +2,9 @@
 /common ( -
   definitions generally useful by the noosepaper scripts) docstring {
   /inch {72 mul} def
+  /datestamp (DATESTAMP) getenv not {(Today)} if def
+  /edition (EDITION) getenv not {(Special Edition)} if def
+  /volume (VOLUME) getenv not {(-1.0)} if def
   (common: loading helper scripts) #
   /loremipsum where {pop} {(loremipsum.cs) run} ifelse
   /latin1font where {pop} {(latin1font.cs) run} ifelse

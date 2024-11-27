@@ -1,9 +1,5 @@
 #!/usr/local/casperscript/bin/cs -S -I. -sFONTPATH=. --
 % NY POST banner font is about 1/12 page height
-/datestamp (DATESTAMP) getenv not {(Today)} if def
-/edition (EDITION) getenv not {(Special Edition)} if def
-/volume (VOLUME) getenv not {(-1.0)} if def
-%(currentdict: ) #only currentdict ###
 /centershow { % bool bool -
   % show centered on page, vertically and/or horizontally
   /centerhorizontally exch def /centervertically exch def
