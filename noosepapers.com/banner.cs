@@ -1,8 +1,9 @@
 #!/usr/local/casperscript/bin/cs -S -I. -sFONTPATH=. --
 % NY POST banner font is about 1/12 page height
-/centershow { % bool bool -
-  % show centered on page, vertically and/or horizontally
-  /centerhorizontally exch def /centervertically exch def
+/centershow ( string#text bool#horizontal bool#vertical -
+  show centered on page, horizontally and/or vertically) docstring {
+  /centervertically exch def
+  /centerhorizontally exch def
   gsave
   dup true charpath
   (pathbbox: ) #only [pathbbox] ##
@@ -83,6 +84,8 @@
   dup ( ) string.count 1 add array exch () string.split /bannerwords exch def
   /images bannerwords length dict def
   /justwords bannerwords length array def
+  /halfmargin margin 2 div floor def  % vertical spacing between page elements
+  /spacing margin 3 div floor def  % minimum vertical spacing between elements
   bannerwords {
     dup (.) string.count 0 gt 1 index os.path.exists and
       {images exch true put}
@@ -117,10 +120,16 @@
   (banner: stack before moveto: ) #only #stack
   moveto false bannerwords bannerdraw
   pop pop pop pop  % toss pathbbox
-  textbottom  % to return to caller
-  % now draw a line so we're sure we got it right
-  % comment this out or move it lower as desired later
+  textbottom spacing sub  % a little space before banner descenders
+  % finish up with volume, issue, location, date, price(?)
+  % first draw line across page
   %dup margin exch moveto pagewidth margin dup add sub 0 rlineto stroke
+  (before top horizontal line: ) #only #stack
+  dup margin exch black hr
+  /Helvetica-Bold 16 selectfont 16 sub  % move baseline to show text
+  edition true false centershow
+  (before bottom horizontal line: ) #only #stack
+  dup margin exch black hr
   (banner final stack: ) #only #stack
   end
 } bind def

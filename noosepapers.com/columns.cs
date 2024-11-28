@@ -13,7 +13,7 @@
 /blue {0 0 255} def
 /hr {  % x y color -  % horizontal rule, for debugging vertical space problems
   gsave setrgbcolor pagewidth 2 index dup add sub  % right margin = left
-  3 1 roll #stack 0 #stack 3 1 roll #stack moveto #stack rlineto stroke #stack
+  3 1 roll 0 3 1 roll moveto rlineto stroke
   grestore
 } bind def
 /columnline {  % wordlist index - endofparagraph newindex string
@@ -229,7 +229,7 @@
     (stack before showing headline: ) #only #stack
     1 index columnsperpage lt
       {show}
-      {false true centershow}
+      {true false centershow}
       ifelse
     (after headline shown: ) #only #stack
     % clear headline before starting column contents
