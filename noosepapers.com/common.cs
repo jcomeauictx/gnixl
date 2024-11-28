@@ -5,6 +5,8 @@
   /datestamp (DATESTAMP) getenv not {(Today)} if def
   /edition (EDITION) getenv not {(Special Edition)} if def
   /volume (VOLUME) getenv not {(-1.0)} if def
+  % split volume number into volume and issue numbers
+  2 array volume (.) string.split aload pop /issue exch def /volume exch def
   (common: loading helper scripts) #
   /loremipsum where {pop} {(loremipsum.cs) run} ifelse
   /latin1font where {pop} {(latin1font.cs) run} ifelse
@@ -31,12 +33,13 @@
   (common: creating Latin1 fonts) #
   [/TimesNewRoman-Latin1 /Helvetica-Latin1]
     {
-    dup findfont /FontName get dup length string cvs (-Latin1) string.endswith
+      dup findfont /FontName get dup length string cvs (-Latin1) string.endswith
       {
         (creating ) #only dup #
         (-Latin1) name.sub latin1font
       }
-      if
+      {pop}
+      ifelse
     }
     forall
 } bind def
