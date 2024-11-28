@@ -74,5 +74,7 @@ cs ccs:
 	$@
 clean:
 	rm -f *.[0-9]*.log *.[0-9]*.err
+distclean: clean
+	rm -f *.log $(filter-out $(TEXTFILE), $(wildcard *.txt))
 .PRECIOUS: %.ps %.log %.txt
 .FORCE:
