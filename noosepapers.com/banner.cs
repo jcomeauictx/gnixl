@@ -126,8 +126,10 @@
   %dup margin exch moveto pagewidth margin dup add sub 0 rlineto stroke
   (before top horizontal line: ) #only #stack
   dup margin exch black hr
-  /Helvetica-Bold 16 selectfont 16 sub  % move baseline to show text
-  edition true false centershow
+  /TimesNewRoman-Bold 15 selectfont 15 sub  % move baseline to show text
+  dup margin exch moveto (Volume ) show volume show
+  (, Issue ) show issue show
+  edition (, ) string.add datestamp add true false centershow
   (before bottom horizontal line: ) #only #stack
   dup margin exch black hr
   (banner final stack: ) #only #stack
