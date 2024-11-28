@@ -11,6 +11,7 @@
   /paragraphs where {pop} {(paragraphs.cs) run} ifelse
   /urlshorten where {pop} {(urlshorten.cs) run} ifelse
   /pnmimage where {pop} {(pnmimage.cs) run} ifelse
+  /columns where {pop} {(columns.cs) run} ifelse
   /banner where {pop} {(banner.cs) run} ifelse
   (common: defining some useful words) #
   /margin where {pop} {/margin 10 def} ifelse

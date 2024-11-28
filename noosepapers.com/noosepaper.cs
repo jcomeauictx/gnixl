@@ -1,11 +1,5 @@
 #!/usr/local/casperscript/bin/cs -S -I. -sFONTPATH=. --
-(loading noosepaper imports, banner...) #
-/banner where {pop} {(banner.cs) run} ifelse
-(loading noosepaper imports, columns...) #
-/columns where {pop} {(columns.cs) run} ifelse
-(loading noosepaper imports, loremipsum...) #
-/loremipsum where {pop} {(loremipsum.cs) run} ifelse
-(end loading noosepaper) #
+(common.cs) run common
 scriptname (noosepaper) eq {
   /margin where {pop} {/margin 10 def} ifelse
   /lineheight where
