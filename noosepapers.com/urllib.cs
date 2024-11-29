@@ -26,6 +26,9 @@
 end  % urllib
 scriptname (urllib) eq
   %urllib ###
-  {sys.argv 1 get sys.argv [2] subarray #stack urllib.parse.quote}
-if
+  {
+    currentdict dictwords
+    sys.argv 1 get sys.argv [2] subarray #stack urllib.parse.quote
+  }
+  if
 % vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2 syntax=postscr
