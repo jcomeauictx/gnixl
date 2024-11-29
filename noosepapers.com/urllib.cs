@@ -10,3 +10,22 @@
           string.add def
         /DIGIT
           ([latin1.0 latin1.9 1 add] range {chr} forall] () string.join def
+        /unreserved ALPHA DIGIT string.add (-._~) string.add def
+        /gen-delims (:/?#[]@) def
+        /sub-delims (!$&'()*+,;=) def
+        /reserved gen-delims sub-delims string.add def
+        
+      end  % local variables dict
+      dup /unsafe {1 get} stopped {()} def
+      /safe {0 get} stopped {()} def
+      (safe: ) #only safe ##only (, unsafe: ) #only unsafe ##only
+      (, unreserved: ) #only unreserved ##only
+      (, reserved: ) #only reserved #
+      (unquoted: ) #only #
+    } bind def
+  end def  % urllib.parse
+end def  % urllib
+scriptname (urllib) eq
+  {sys.argv 1 get sys.argv 2 subarray urllib.parse.quote}
+if
+% vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2 syntax=postscr
