@@ -1,6 +1,6 @@
 #!/usr/local/casperscript/bin/ccs --
-/urllib 10 dict dup begin def
-  /parse 10 dict dup begin def
+/urllib 10 dict def urllib begin
+  /parse 10 dict def parse begin
     /quote ( string#unquoted [string#safe string#unsafe?] - string#quoted
       like Python3's `urllib.parse.quote`
       but allows any range of safe and unsafe characters) docstring {
