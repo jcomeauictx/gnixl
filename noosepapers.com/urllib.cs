@@ -14,7 +14,8 @@
         /gen-delims (:/?#[]@) def
         /sub-delims (!$&'()*+,;=) def
         /reserved gen-delims sub-delims string.add def
-      dup /unsafe {1 get} stopped {()} def
+      (stack before local defs: ) #only #stack
+      dup /unsafe exch #stack {1 get} stopped {pop ()} def
       /safe {0 get} stopped {()} def
       (safe: ) #only safe ##only (, unsafe: ) #only unsafe ##only
       (, unreserved: ) #only unreserved ##only
@@ -27,8 +28,8 @@ end  % urllib
 scriptname (urllib) eq
   %urllib ###
   {
-    currentdict dictwords
-    sys.argv 1 get sys.argv [2] subarray #stack urllib.parse.quote
+    {sys.argv 1 get} stopped {pop pop (this is a test)} if
+    sys.argv [2] subarray #stack urllib.parse.quote
   }
   if
 % vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2 syntax=postscr
