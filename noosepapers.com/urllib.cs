@@ -31,13 +31,17 @@
       (, reserved: ) #only reserved #
       % logic we're using:
       % REMOVE any `unsafe` characters from `unreserved`
-      % IF marked as safe, or in unreserved, pass it through unchanged
+      % ADD `safe` characters to `unreserved`
+      % IF character in unreserved, pass it through unchanged
       % ELSE escape it
       unsafe {unreserved exch () -1 string.replace /unreserved exch def} forall
       (new unreserved: ) #only unreserved #
+      unreserved safe string.add /unreserved exch def
+      (new unreserved: ) #only unreserved #
       dup length 3 mul string exch % allow for entire string to be escaped
       {
-        escape 1 index exch string.append
+        chr unreserved 1 index string.contains {escape} if
+        1 index exch string.append
       }
       forall
       (remaining stack: ) #only #stack
