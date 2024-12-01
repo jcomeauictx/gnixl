@@ -29,14 +29,17 @@
       (safe: ) #only safe ##only (, unsafe: ) #only unsafe ##only
       (, unreserved: ) #only unreserved ##only
       (, reserved: ) #only reserved #
-      % convoluted logic we're using:
-      % IF marked as safe, don't escape it
-      % ELIF marked as unsafe, escape it
-      % ELIF in unreserved, don't escape it
+      % logic we're using:
+      % REMOVE any `unsafe` characters from `unreserved`
+      % IF marked as safe, or in unreserved, pass it through unchanged
       % ELSE escape it
       dup length 3 mul string exch % allow for entire string to be escaped
-      {#stack escape 1 index #stack exch #stack string.append} forall
+      {
+        escape 1 index exch string.append
+      }
+      forall
       (remaining stack: ) #only #stack
+      string.truncate
       end  % local variables dict
     } bind def
   end  % urllib.parse
@@ -45,7 +48,7 @@ scriptname (urllib) eq
   %urllib ###
   {
     {sys.argv 1 get} stopped {pop pop (this is a test)} if
-    sys.argv [2] subarray urllib.parse.quote
+    sys.argv [2] subarray urllib.parse.quote =
   }
   if
 % vim: tabstop=8 shiftwidth=2 expandtab softtabstop=2 syntax=postscr
