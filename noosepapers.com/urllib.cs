@@ -33,6 +33,8 @@
       % REMOVE any `unsafe` characters from `unreserved`
       % IF marked as safe, or in unreserved, pass it through unchanged
       % ELSE escape it
+      unsafe {unreserved exch () -1 string.replace /unreserved exch def} forall
+      (new unreserved: ) #only unreserved #
       dup length 3 mul string exch % allow for entire string to be escaped
       {
         escape 1 index exch string.append
