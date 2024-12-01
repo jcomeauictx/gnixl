@@ -15,12 +15,12 @@
         /sub-delims (!$&'()*+,;=) def
         /reserved gen-delims sub-delims string.add def
       (stack before local defs: ) #only #stack
-      dup /unsafe exch #stack {1 get} stopped {pop ()} def
-      /safe {0 get} stopped {()} def
+      dup /unsafe exch #stack {1 get} stopped {pop pop () #stack} if def
+      /safe {0 get} stopped {pop ()} if def
       (safe: ) #only safe ##only (, unsafe: ) #only unsafe ##only
       (, unreserved: ) #only unreserved ##only
       (, reserved: ) #only reserved #
-      (unquoted: ) #only #
+      (unquoted: ) #only ##
       end  % local variables dict
     } bind def
   end  % urllib.parse
