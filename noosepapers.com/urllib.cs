@@ -1,9 +1,12 @@
 #!/usr/local/casperscript/bin/ccs --
 /urllib 10 dict def urllib begin
   /parse 10 dict def parse begin
+    /docstrings 10 dict def  % every "library" needs its own docstrings
     /quote ( string#unquoted [string#safe string#unsafe?] - string#quoted
-      like Python3's `urllib.parse.quote`
-      but allows any range of safe and unsafe characters) docstring {
+      like Python3's `urllib.parse.quote`, escapes all characters
+      that are neither in "unreserved" characters nor in `safe` arg
+      but allows any range of safe and unsafe characters
+      (removes from `unreserved` anything in `unsafe`)) docstring {
       10 dict begin  % for local variables
         /ALPHA [[latin1.A latin1.Z 1 add] range {chr} forall] () string.join
           [[latin1.a latin1.z 1 add] range {chr} forall] () string.join
@@ -11,12 +14,14 @@
         /DIGIT
           [[latin1.0 latin1.9 1 add] range {chr} forall] () string.join def
         /unreserved ALPHA DIGIT string.add (-._~) string.add def
-        /gen-delims (:/?#[]@) def
-        /sub-delims (!$&'()*+,;=) def
-        /reserved gen-delims sub-delims string.add def
-        /escape ( string#character - string#escaped
+        /gendelims (:/?#[]@) def
+        /subdelims (!$&'()*+,;=) def
+        /reserved gendelims subdelims string.add def
+        % can't safely use `%` below without risk of it being scanned
+        % as comment---using its octal escape \045 instead.
+        /escape ( int#character - string#escaped
           escape the character, i.e. ( ) becomes (\04520)) docstring {
-          ord (\045) exch 8 3 string cvrs string.append
+          (\045) exch 16 2 string cvrs string.add
         } bind def
       (stack before local defs: ) #only #stack
       dup /unsafe #stack exch {1 get} stopped {pop pop ()} if def
@@ -28,9 +33,9 @@
       % IF marked as safe, don't escape it
       % ELIF marked as unsafe, escape it
       % ELIF in unreserved, don't escape it
-      % ELIF in reserved, escape it
-      % ELSE default is to leave it unescaped (*this may need to be changed*)
+      % ELSE escape it
       dup length 3 mul string exch % allow for entire string to be escaped
+      {#stack escape 1 index #stack exch #stack string.append} forall
       (remaining stack: ) #only #stack
       end  % local variables dict
     } bind def
