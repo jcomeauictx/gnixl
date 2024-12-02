@@ -236,7 +236,10 @@
     #stack 3 index lineheight sub #stack 4 swap pop
     (drawing blue line at top of columns) # 10 3 index blue hr
   grestore
+  (stack before setting up columns `column` loop: ) #only #stack
+  0 1 3 -1 roll  % set up `for` loop
   {
+    pop % FIXME: discarding loop counter, need it for partial columns!
     x  % starting x of column
     3 index  % starting y of column
     0  % y1 of column (FIXME: may be larger if `columns` is fractional)
@@ -244,7 +247,7 @@
     column (after column: ) #only #stack
     /x x columnwidth add def
     /pindex exch def  /pcount exch def  /wordlist exch def
-  } repeat
+  } for
   (discarding file object: ) #only #
   (discarding number of columns: ) #only #
   (discarding top of columns: ) #only #
