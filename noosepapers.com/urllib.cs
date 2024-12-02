@@ -40,7 +40,7 @@
       (new unreserved: ) #only unreserved #
       dup length 3 mul string exch % allow for entire string to be escaped
       {
-        unreserved 1 index string.contains {escape} {chr} ifelse
+        unreserved 1 index string.contains {chr} {escape} ifelse
         1 index exch string.append
       }
       forall
