@@ -17,6 +17,7 @@ for the first edition of the Noosepaper.
 
 The New York Times, a broadsheet, has 6 columns to a page. The Post and Daily News, tabloids, have 5 columns.
 
+To publish legal and public notices, [these requirements](https://leginfo.legislature.ca.gov/faces/codes_displayText.xhtml?lawCode=GOV&division=7.&title=1.&part=&chapter=1.&article=1.#:~:text=A%20%E2%80%9Cnewspaper%20of%20general%20circulation%E2%80%9D%20is%20a,date%20of%20the%20publication%2C%20notice%20or%20advertisement.) must be met.
 # Developer notes
 * [Breaking words](https://meiert.com/en/blog/word-division-on-word-break-soft-hyphens-and-zero-width-spaces/) (slanted towards CSS)
 * [Postscript secrets from the Guru, Don Lancaster](https://www.tinaja.com/glib/strconv.pdf)
