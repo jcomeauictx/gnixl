@@ -195,7 +195,7 @@
   (spacewidth: ) #only spacewidth #
   % broadsheet typically has 5 columns, tabloid 4, zine maybe 2 or 3
   /columnsperpage 3 def
-  /columnwidth pagewidth margin dup add sub columnsperpage div def
+  /columnwidth pagewidth margin sub columnsperpage div def
   /linewidth columnwidth margin sub def
   /columnheight pageheight margin dup add sub def
   (stack before current content top:) #only #stack 10 5 index red hr
