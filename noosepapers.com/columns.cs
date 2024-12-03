@@ -210,10 +210,10 @@
   %/defaultdevice cvx 0 .quit  % insert and uncomment this where needed
   % (startcolumn is one-based)
   exch (before zero-basing columnwidth: ) #only #stack
-  1 sub columnwidth mul margin add /x exch def
+  dup 1 sub columnwidth mul margin add /x exch def
   /wordlist [] def  % empty so `column` knows to read source
   /pcount 0 def  /pindex 0 def
-  1 index ceiling cvi % e.g., 1.5 columns means 2 column width
+  2 index ceiling cvi % e.g., 1.5 columns means 2 column width
   (stack after 1 index ceiling cvi: ) #only #stack
   % draw headline here, fontsize according to number of spanned columns
   gsave
@@ -233,14 +233,14 @@
       ifelse
     (after headline shown: ) #only #stack
     % clear headline before starting column contents
-    #stack 3 index lineheight sub #stack 4 swap pop
-    (drawing blue line at top of columns) # 10 3 index blue hr
+    #stack 4 index lineheight sub #stack 5 swap pop
+    (drawing blue line at top of columns) # 10 4 index blue hr
   grestore
   (stack before setting up columns `column` loop: ) #only #stack
-  0 1 3 -1 roll  % set up `for` loop
+  % top of stack (TOS) should be firstcolumn lastcolumn
+  1 exch  % set up `for` loop, TOS now firstcolumn increment lastcolumn
   {
-    pop % FIXME: discarding loop counter, need it for partial columns!
-    x  % starting x of column
+    1 sub columnwidth mul margin add  % starting x of column
     3 index  % starting y of column
     0  % y1 of column (FIXME: may be larger if `columns` is fractional)
     filtered wordlist pcount pindex  % load stack for `column`
