@@ -168,7 +168,7 @@
   % make sure there's a usable font loaded
   currentfont font.size 1.0 le
     {
-      /TimesNewRoman-Latin1 findfont /FontName get (-Latin1) string.endswith
+      /TimesNewRoman-Latin1 findfont /FontName get (-Latin1) name.endswith
         {
           (creating TimesNewRoman-Latin1) #
           /TimesNewRoman latin1font
