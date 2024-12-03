@@ -240,8 +240,9 @@
   % top of stack (TOS) should be firstcolumn lastcolumn
   1 exch  % set up `for` loop, TOS now firstcolumn increment lastcolumn
   {
-    1 sub columnwidth mul margin add  % starting x of column
-    3 index  % starting y of column
+    dup 1 sub columnwidth mul margin add  % starting x of column
+    4 index  % starting y of column
+    (stack before calculating y1: ) #only #stack
     0  % y1 of column (FIXME: may be larger if `columns` is fractional)
     filtered wordlist pcount pindex  % load stack for `column`
     column (after column: ) #only #stack
