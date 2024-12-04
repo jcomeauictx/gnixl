@@ -243,8 +243,21 @@
     (stack at start of columns `column` loop: ) #only #stack
     dup 1 sub columnwidth mul margin add  % starting x of column
     6 index  % starting y of column
-    (stack before calculating y1: ) #only #stack
-    0  % y1 of column (FIXME: may be larger if `columns` is fractional)
+    (stack before y1 calculation: ) #only #stack
+    6 index  % columns, possibly fractional
+    3 index  % column (loop) number
+    5 index 1 sub  % start column, zero-based
+    sub  % number of columns that will be completed once this is drawn
+    % if start column is 1, we're on column 3, and 2.3 columns are specified,
+    % then we need to stop at 0.7 * columnheight.
+    % same goes if start column is 2 with 1.3 total columns,
+    % or start column 3 and 0.3 total.
+    exch sub  % in all the above cases this will yield 0.7
+    dup 0 ge 1 index 1 lt and  % are we on final column?
+      {columnheight mul}  % yes, calculate stopheight
+      {pop 0}  % otherwise paint all the way down the page
+      ifelse
+    (stack after y1 calculation: ) #only #stack
     filtered wordlist pcount pindex  % load stack for `column`
     column (after column: ) #only #stack
     /x x columnwidth add def

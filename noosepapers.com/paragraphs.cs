@@ -10,7 +10,8 @@
   {(stack at start of filter procedure: ) #only #stack
     3 dict begin
     {[
-      {counttomark 3 add index 8192 string (before readline: ) #only #stack
+      {counttomark 6 add index  % count back to original -file- object
+        8192 string (before readline: ) #only #stack
         readline (after readline: ) #only #stack
         not /eof exch def  % false means end-of-file
         dup strlen 0 eq  % empty string found
