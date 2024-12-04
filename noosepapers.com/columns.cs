@@ -238,10 +238,11 @@
   grestore
   (stack before setting up columns `column` loop: ) #only #stack
   % top of stack (TOS) should be firstcolumn lastcolumn
-  1 exch  % set up `for` loop, TOS now firstcolumn increment lastcolumn
+  2 copy 1 exch  % set up `for` loop, TOS now firstcolumn increment lastcolumn
   {
+    (stack at start of columns `column` loop: ) #only #stack
     dup 1 sub columnwidth mul margin add  % starting x of column
-    4 index  % starting y of column
+    6 index  % starting y of column
     (stack before calculating y1: ) #only #stack
     0  % y1 of column (FIXME: may be larger if `columns` is fractional)
     filtered wordlist pcount pindex  % load stack for `column`
