@@ -262,6 +262,7 @@
     column (after column: ) #only #stack
     /x x columnwidth add def
     /pindex exch def  /pcount exch def  /wordlist exch def
+    pop  % loop counter (column number)
   } for
   (discarding file object: ) #only #
   (discarding number of columns: ) #only #
