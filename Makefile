@@ -7,10 +7,9 @@ SERVER := $(notdir $(PWD))
 DRYRUN ?= --dry-run
 DOCROOT := /var/www
 SYMLINKS := $(shell find /var/www/ -maxdepth 1 -type l)
-SUBDOMAINS := $(wildcard /var/www/*.*.*)
-DOMAINS := $(notdir $(filter-out $(SYMLINKS) $(SUBDOMAINS), \
-	   $(wildcard /var/www/*.*)))
-WWW := $(addprefix www., $(DOMAINS))
+SUBDOMAINS := $(notdir $(wildcard /var/www/*.*.*))
+DOMAINS := $(notdir $(filter-out $(SYMLINKS), $(wildcard /var/www/*.*)))
+WWW := $(addprefix www., $(filter-out $(SUBDOMAINS), $(DOMAINS)))
 RENEW := $(shell echo $(DOMAINS) $(WWW) | tr ' ' ',')
 DRYRUN ?= --dry-run
 ifneq ($(SHOWENV),)
