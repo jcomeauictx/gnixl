@@ -6,7 +6,13 @@ UPLOADS: $(addsuffix .upload, $(WEBSITES))
 SERVER := $(notdir $(PWD))
 DRYRUN ?= --dry-run
 DOCROOT := /var/www
-DOMAINS := $(notdir $(wildcard /var/www/*.*/))
+DOMAINS := $(notdir $(wildcard /var/www/*.*))
+WWW := $(addprefix www., $(WEBSITES))
+RENEW := $(shell echo $(DOMAINS) $(WWW) | tr ' ' ',')
+DRYRUN ?= --dry-run
+ifneq ($(SHOWENV),)
+	export
+endif
 uploads: $(UPLOADS)
 %.upload: %/Makefile
 	cd $(<D) && $(MAKE) upload
@@ -26,4 +32,16 @@ upload:
 	 --exclude='.gitignore' \
 	 . $(SERVER):$(DOCROOT)/$(SERVER)/
 renew:
-	@echo renewing $(DOMAINS) >&2
+	@echo renewing $(WEBSITES) $(WWW) >&2
+	sudo certbot certonly $(DRYRUN) \
+	 --apache \
+	 --expand \
+	 --domains $(RENEW)
+env:
+ifeq ($(SHOWENV),)
+	$(MAKE) SHOWENV=1 $@
+else
+	@echo showing environment variables >&2
+	$@
+endif
+.PHONY: env
