@@ -6,6 +6,7 @@ UPLOADS: $(addsuffix .upload, $(WEBSITES))
 SERVER := $(notdir $(PWD))
 DRYRUN ?= --dry-run
 DOCROOT := /var/www
+DOMAINS := $(notdir $(wildcard /var/www/*.*/))
 uploads: $(UPLOADS)
 %.upload: %/Makefile
 	cd $(<D) && $(MAKE) upload
@@ -24,3 +25,5 @@ upload:
 	 --exclude='*.err' \
 	 --exclude='.gitignore' \
 	 . $(SERVER):$(DOCROOT)/$(SERVER)/
+renew:
+	@echo renewing $(DOMAINS) >&2
