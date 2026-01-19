@@ -6,8 +6,11 @@ UPLOADS: $(addsuffix .upload, $(WEBSITES))
 SERVER := $(notdir $(PWD))
 DRYRUN ?= --dry-run
 DOCROOT := /var/www
-DOMAINS := $(notdir $(wildcard /var/www/*.*))
-WWW := $(addprefix www., $(WEBSITES))
+SYMLINKS := $(shell find /var/www/ -maxdepth 1 -type l)
+SUBDOMAINS := $(wildcard /var/www/*.*.*)
+DOMAINS := $(notdir $(filter-out $(SYMLINKS) $(SUBDOMAINS), \
+	   $(wildcard /var/www/*.*)))
+WWW := $(addprefix www., $(DOMAINS))
 RENEW := $(shell echo $(DOMAINS) $(WWW) | tr ' ' ',')
 DRYRUN ?= --dry-run
 ifneq ($(SHOWENV),)
@@ -32,8 +35,10 @@ upload:
 	 --exclude='.gitignore' \
 	 . $(SERVER):$(DOCROOT)/$(SERVER)/
 renew:
-	@echo renewing $(WEBSITES) $(WWW) >&2
+	@echo renewing $(DOMAINS) $(WWW) >&2
 	sudo certbot certonly $(DRYRUN) \
+	 --key-type rsa \
+	 --cert-name certbot_cert \
 	 --apache \
 	 --expand \
 	 --domains $(RENEW)
